@@ -8,7 +8,7 @@ public interface PatientInfoService {
 
 	public List<PatientInfo> getAllPatientInfo();
 	public void savePatientInfo(PatientInfo patientInfo) ;
-	public PatientInfo getPatientInfoById(int id) ;
-	public void deletePatientInfoById(int id) ;
+	public PatientInfo getPatientInfoById(Long id) ;
+	public void deletePatientInfoById(Long id) ;
 
 }

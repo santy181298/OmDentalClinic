@@ -3,11 +3,12 @@ package com.Om.DentalClinic.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 
-
+@Service
 public class PatientInfoServiceImpl implements PatientInfoService {
 	
 	@Autowired
@@ -21,11 +22,11 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		this.patientInfoRepository.save(patientInfo);
 	}
 
-	public PatientInfo getPatientInfoById(int id) {
+	public PatientInfo getPatientInfoById(Long id) {
 		return patientInfoRepository.findById(id).orElse(null);
 	}
 
-	public void deletePatientInfoById(int id) {
+	public void deletePatientInfoById(Long id) {
 		this.patientInfoRepository.deleteById(id);
 	}
 
