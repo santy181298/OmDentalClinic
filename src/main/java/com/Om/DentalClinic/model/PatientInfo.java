@@ -2,15 +2,22 @@ package com.Om.DentalClinic.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 
+
+@Entity
+//@IdClass(PatientInfoId.class)
 public class PatientInfo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int patientid;
+	
+	@Id
 	private String patientnumber;
 	private String patientname;
 	private int patientage;
