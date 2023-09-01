@@ -19,8 +19,5 @@ public class MainController {
 	@GetMapping("/listPatientInfo")
 	public List<PatientInfo> getAllPatientInfo() {		
 		return  this.patientInfoService.getAllPatientInfo();
-	}	
-	
-	
-	
+	}		
 }
