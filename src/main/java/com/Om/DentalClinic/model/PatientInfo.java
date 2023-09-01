@@ -44,6 +44,7 @@ public class PatientInfo {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date patientregdate;
 	
+	
 	@Column(name = "patient_mobile")
 	private Long patientmobile;
 	
