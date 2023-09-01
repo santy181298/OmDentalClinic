@@ -37,6 +37,7 @@ public class MainController {
 	@RequestParam("patientmobile") Long patientmobile,
 	@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 	{
+	
 		return patientInfoService.savePatientInfo(file,patientnumber,patientname,patientage,patientgender,patientregdate,patientmobile,patientmedicalhistory);
 	}
 
