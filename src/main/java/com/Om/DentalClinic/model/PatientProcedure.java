@@ -4,47 +4,50 @@ import java.util.Date;
 
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "tbl_patient_procedure")
 public class PatientProcedure {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "proc_id")
 	private int procedureid;
 	
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "patientnumber")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "proc_patient_num", referencedColumnName = "patient_num")
 	private PatientInfo procedurepatientnumber;
-	
+    
+    @Column(name = "proc_date")
 	private Date proceduredate;
-	private String proceduredetail;
-	private double procedureestimateamount;
-	private String procedurepaymenttype;
-	private double procedurepaymentamount;
-	private String procedurelabname;
+	
+    @Column(name = "proc_details")
+    private String proceduredetail;
+	
+    @Column(name = "proc_estimate_amount")
+    private double procedureestimateamount;
+	
+    @Column(name = "proc_payment_type")
+    private String procedurepaymenttype;
+	
+    @Column(name = "proc_payment_amount")
+    private double procedurepaymentamount;
+	
+    @Column(name = "proc_lab_name")
+    private String procedurelabname;
 	
 	public PatientProcedure() {
 		super();
 		
-	}
-
-	public PatientProcedure(int procedureid, PatientInfo procedurepatientnumber, Date proceduredate,
-			String proceduredetail, double procedureestimateamount, String procedurepaymenttype,
-			double procedurepaymentamount, String procedurelabname) {
-		super();
-		this.procedureid = procedureid;
-		this.procedurepatientnumber = procedurepatientnumber;
-		this.proceduredate = proceduredate;
-		this.proceduredetail = proceduredetail;
-		this.procedureestimateamount = procedureestimateamount;
-		this.procedurepaymenttype = procedurepaymenttype;
-		this.procedurepaymentamount = procedurepaymentamount;
-		this.procedurelabname = procedurelabname;
 	}
 
 	public int getProcedureid() {
@@ -117,13 +120,22 @@ public class PatientProcedure {
 				+ ", proceduredate=" + proceduredate + ", proceduredetail=" + proceduredetail
 				+ ", procedureestimateamount=" + procedureestimateamount + ", procedurepaymenttype="
 				+ procedurepaymenttype + ", procedurepaymentamount=" + procedurepaymentamount + ", procedurelabname="
-				+ procedurelabname + ", getProcedureid()=" + getProcedureid() + ", getProcedurepatientnumber()="
-				+ getProcedurepatientnumber() + ", getProceduredate()=" + getProceduredate() + ", getProceduredetail()="
-				+ getProceduredetail() + ", getProcedureestimateamount()=" + getProcedureestimateamount()
-				+ ", getProcedurepaymenttype()=" + getProcedurepaymenttype() + ", getProcedurepaymentamount()="
-				+ getProcedurepaymentamount() + ", getProcedurelabname()=" + getProcedurelabname() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ procedurelabname + "]";
 	}
 
-		
+	public PatientProcedure(int procedureid, PatientInfo procedurepatientnumber, Date proceduredate,
+			String proceduredetail, double procedureestimateamount, String procedurepaymenttype,
+			double procedurepaymentamount, String procedurelabname) {
+		super();
+		this.procedureid = procedureid;
+		this.procedurepatientnumber = procedurepatientnumber;
+		this.proceduredate = proceduredate;
+		this.proceduredetail = proceduredetail;
+		this.procedureestimateamount = procedureestimateamount;
+		this.procedurepaymenttype = procedurepaymenttype;
+		this.procedurepaymentamount = procedurepaymentamount;
+		this.procedurelabname = procedurelabname;
+	}
+
+	
 }
