@@ -27,12 +27,12 @@ import com.Om.DentalClinic.service.PatientProcedureService;
 @Controller
 public class MainController {
 
-//	@Autowired
-//	private PatientInfoService patientInfoService;
-//	
-//	@Autowired
-//	private PatientProcedureService patientProcedureService;
-//	
+	@Autowired
+	private PatientInfoService patientInfoService;
+	
+	@Autowired
+	private PatientProcedureService patientProcedureService;
+	
 //	@GetMapping("/listPatientInfo")
 //	public List<PatientInfo> getAllPatientInfo() {		
 //		return  this.patientInfoService.getAllPatientInfo();
@@ -73,5 +73,19 @@ public class MainController {
 //		return patientInfoService.savePatientInfo(file,patientnumber,patientname,patientage,patientgender,patientregdate,patientmobile,patientmedicalhistory);
 //	}
 
-	//github.com/santy181298/OmDentalClinic.git
+	@PostMapping("/SavePatientInfo")
+	public String savePatientInfo(@RequestParam("file") MultipartFile file,
+	@RequestParam("patientnumber") String patientnumber,
+	@RequestParam("patientname") String patientname,
+	@RequestParam("patientage") int patientage,
+	@RequestParam("patientgender") String patientgender,
+	@RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX") Date patientregdate,
+	@RequestParam("patientmobile") Long patientmobile,
+	@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
+	{
+	
+		return patientInfoService.savePatientInfo(file,patientnumber,patientname,patientage,patientgender,patientregdate,patientmobile,patientmedicalhistory);
+	}
+
+	
 }
