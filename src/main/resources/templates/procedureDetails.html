@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Om Dental Clinic</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+ 
+  
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    
+   <main id="main" class="main">
+<div class="pagetitle">
+
+    <div class="pagetitle">
+      <h1>Patient</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Procedure Details Form</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <!-- General Form Elements -->
+        <form th:object="${company}" th:action="@{saveCompany}"  action="#" class="search-form mt-3" id="onboarding" name="onboarding" method="POST" >
+                            <div class="row mb-3"><!-- to hide field d-none -->
+		                      <label for="inputPassword" class="col-sm-2 col-form-label">Patient Number</label>
+		                      <div class="col-sm-10">
+		                          <input type="text" id="companyId" value="100" class="form-control">
+		                      </div>
+		                  </div>
+		                  <div class="row mb-3">
+                                <label for="inputDate" class="col-sm-2 col-form-label">Date of Procedure</label>
+                                <div class="col-sm-10">
+                                    <input type="date"  class="form-control" id="startDate" required max="">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+							    <label for="inputText" class="col-sm-2 col-form-label">Procedure Details</label>
+							    <div class="col-sm-10">
+							        <textarea class="form-control" id="companyName" name="companyName" required></textarea>
+							        <div id="companyNameError" class="invalid-feedback">
+							            Please enter a valid company name.
+							        </div>
+							    </div>
+							</div>
+
+                            <div class="row mb-3">
+		                      <label for="inputNumber" class="col-sm-2 col-form-label">Estimate</label>
+		                      <div class="col-sm-10">
+		                          <input type="number" class="form-control" required>
+		                      </div>
+		                  </div>
+		                  <div class="row mb-3">
+		                      <label class="col-sm-2 col-form-label">Payment Mode</label>
+		                      <div class="col-sm-10">
+		                          <select  class="form-select" aria-label="Default select example" required>
+		                              <option value="" selected>-- Please select payment mode --</option>
+		                              <option value="1">Online</option>
+		                              <option value="0">Cash</option>
+		                          </select>
+		                      </div>
+		                  </div>
+		                  <div class="row mb-3">
+		                      <label for="inputNumber" class="col-sm-2 col-form-label">Payment Amount Paid</label>
+		                      <div class="col-sm-10">
+		                          <input type="number" class="form-control" required>
+		                      </div>
+		                  </div>
+		                  <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">Lab Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ceoName" name="ceoName" required>
+                                    <div id="ceoNameError" class="invalid-feedback">
+                                        Please enter a valid CEO/MD name.
+                                    </div>
+                                </div>
+                            </div>
+		                  <div class="d-flex justify-content-center mt-5">
+					 <button type="submit" class="btn btn-primary">Save</button>
+					  <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+					</div>
+                    </form><!-- End General Form Elements -->
+</div>
+</div>
+</div>
+    </main><!-- End #main -->
+	<br>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/chart.js/chart.umd.js"></script>
+    <script src="vendor/echarts/echarts.min.js"></script>
+    <script src="vendor/quill/quill.min.js"></script>
+    <script src="vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="vendor/tinymce/tinymce.min.js"></script>
+    <script src="vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
