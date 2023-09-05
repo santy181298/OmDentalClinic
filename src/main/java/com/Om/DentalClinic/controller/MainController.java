@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +30,7 @@ public class MainController {
 	@Autowired
 	private PatientProcedureService patientProcedureService;
 	
+
 	@Autowired
 	private PatientProcedureServiceImpl patientProcedureServiceImpl;
 	
@@ -35,15 +39,7 @@ public class MainController {
 	public List<PatientInfo> getAllPatientInfo() {		
 		return  this.patientInfoService.getAllPatientInfo();
 	}	
-	
-	
-	// Patient Procedure Controller
-		@GetMapping("/procedure")
-		public String procedureHome() {
-			return "This is Patient Procedure home page";
-			
-		}
-		
+
 			
 	 @GetMapping("/list_Patient_Procedure")
 	    public List<PatientProcedure> getAllPatietProcedures() {
@@ -51,22 +47,33 @@ public class MainController {
 	        return this.patientProcedureServiceImpl.getAllPatietProcedures();
 	 }
 	 
-//	 @PostMapping("/savePatientProcedure")
-//		public String savePatientProcedure(@ModelAttribute("patientProcedure") PatientProcedure patientProcedure) {
-//			
-//			return patientProcedureServiceImpl.savePatientProcedure(patientProcedure);
-//		}
+	 @GetMapping("/")
+	 public String home()
+	 {
+		 return "home";
+	 }
+	 
+//	 @GetMapping("/procedureDetails")
+//	 public String showProcedureDetail() {
+//		 return "procedureDetails";
+//	 }
+//	 @GetMapping("/patientDetails")
+//	 public String showPatientDetail() {
+//		 return "patientDetails";
+//	 }
+
 	 
 	 @PostMapping("/savePatientProcedure")
 		public String savePatientProcedure(
-				@RequestParam("patientproceduredate")Date patientproceduredate,
+				@RequestParam("patientprocedurenumber")String patientprocedurenumber,
+				@RequestParam("patientproceduredate")@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX") Date patientproceduredate,
 				@RequestParam("patientproceduredetail")String patientproceduredetail,
 				@RequestParam("patientprocedureestimateamount")double patientprocedureestimateamount,
 				@RequestParam("patientprocedurepaymenttype")String patientprocedurepaymenttype,
 				@RequestParam("patientprocedurepaymentamount")double patientprocedurepaymentamount,
 				@RequestParam("patientprocedurelabname")String patientprocedurelabname) throws IOException
 		{
-			return patientProcedureService.savePatientProcedure(patientproceduredate, patientproceduredetail, patientprocedureestimateamount, patientprocedurepaymenttype, patientprocedurepaymentamount, patientprocedurelabname);
+			return patientProcedureService.savePatientProcedure(patientprocedurenumber,patientproceduredate, patientproceduredetail, patientprocedureestimateamount, patientprocedurepaymenttype, patientprocedurepaymentamount, patientprocedurelabname);
 		}
 
 
@@ -80,6 +87,7 @@ public class MainController {
 	@RequestParam("patientmobile") Long patientmobile,
 	@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 	{
+	
 		return patientInfoService.savePatientInfo(file,patientnumber,patientname,patientage,patientgender,patientregdate,patientmobile,patientmedicalhistory);
 	}
 

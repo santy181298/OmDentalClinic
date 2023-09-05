@@ -11,7 +11,7 @@ public interface PatientProcedureService {
 	
 	//public String savePatientProcedure(PatientProcedure patientProcedure);
 	
-	public String savePatientProcedure(Date patientproceduredate,String patientproceduredetail,
+	public String savePatientProcedure(String patientprocedurenumber, Date patientproceduredate,String patientproceduredetail,
 									 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
 									 String patientprocedurelabname) throws IOException;
 }

@@ -30,7 +30,7 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 	
 
 	@Override
-	public String savePatientProcedure(Date patientproceduredate,String patientproceduredetail,
+	public String savePatientProcedure(String patientprocedurenumber, Date patientproceduredate,String patientproceduredetail,
 			 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
 			 String patientprocedurelabname)throws IOException {
 		PatientProcedure patientProcedure=new PatientProcedure();
