@@ -34,6 +34,7 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 			 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
 			 String patientprocedurelabname)throws IOException {
 		PatientProcedure patientProcedure=new PatientProcedure();
+		patientProcedure.setPatientprocedurenumber(patientprocedurenumber);
 		patientProcedure.setPatientproceduredate(patientproceduredate);
 		patientProcedure.setPatientproceduredetail(patientproceduredetail);
 		patientProcedure.setPatientprocedureestimateamount(patientprocedureestimateamount);

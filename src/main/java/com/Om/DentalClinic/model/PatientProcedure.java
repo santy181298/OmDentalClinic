@@ -23,7 +23,7 @@ public class PatientProcedure {
 	  
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proc_patient_num", referencedColumnName = "patient_num")
-	private PatientInfo patientprocedurenumber;
+	private String patientprocedurenumber;
 	
     @Column(name = "proc_date")
 	private Date patientproceduredate;
@@ -51,11 +51,11 @@ public class PatientProcedure {
 		this.patientprocedureid = patientprocedureid;
 	}
 
-	public PatientInfo getPatientprocedurenumber() {
+	public String getPatientprocedurenumber() {
 		return patientprocedurenumber;
 	}
 
-	public void setPatientprocedurenumber(PatientInfo patientprocedurenumber) {
+	public void setPatientprocedurenumber(String patientprocedurenumber) {
 		this.patientprocedurenumber = patientprocedurenumber;
 	}
 
@@ -117,7 +117,7 @@ public class PatientProcedure {
 				+ patientprocedurelabname + "]";
 	}
 
-	public PatientProcedure(int patientprocedureid, PatientInfo patientprocedurenumber, Date patientproceduredate,
+	public PatientProcedure(int patientprocedureid, String patientprocedurenumber, Date patientproceduredate,
 			String patientproceduredetail, double patientprocedureestimateamount, String patientprocedurepaymenttype,
 			double patientprocedurepaymentamount, String patientprocedurelabname) {
 		super();
