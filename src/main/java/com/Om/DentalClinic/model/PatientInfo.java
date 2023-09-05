@@ -31,6 +31,7 @@ public class PatientInfo {
 	@Column(name = "patient_num")
 	private String patientnumber;
 	
+		
 	@Column(name = "patient_name")
 	private String patientname;
 	
@@ -50,8 +51,6 @@ public class PatientInfo {
 	@Column(name = "patient_medical_history")
 	private String patientmedicalhistory;
 	
-	@OneToMany(mappedBy = "procedurepatientnumber", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<PatientProcedure> procedures;
 	
     @Lob
     @Column(name = "patient_reports")

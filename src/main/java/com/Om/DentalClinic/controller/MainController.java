@@ -3,16 +3,10 @@ package com.Om.DentalClinic.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +15,7 @@ import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
+import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 
 
 @RestController
@@ -32,6 +27,10 @@ public class MainController {
 	@Autowired
 	private PatientProcedureService patientProcedureService;
 	
+	@Autowired
+	private PatientProcedureServiceImpl patientProcedureServiceImpl;
+	
+	
 	@GetMapping("/listPatientInfo")
 	public List<PatientInfo> getAllPatientInfo() {		
 		return  this.patientInfoService.getAllPatientInfo();
@@ -39,16 +38,36 @@ public class MainController {
 	
 	
 	// Patient Procedure Controller
-		@GetMapping("/home")
+		@GetMapping("/procedure")
 		public String procedureHome() {
 			return "This is Patient Procedure home page";
 			
 		}
 		
-	 @GetMapping("/")
-	    public List<PatientProcedure> getAllProcedures() {
-	        return patientProcedureService.getAllProcedures();
+			
+	 @GetMapping("/list_Patient_Procedure")
+	    public List<PatientProcedure> getAllPatietProcedures() {
+		 
+	        return this.patientProcedureServiceImpl.getAllPatietProcedures();
 	 }
+	 
+//	 @PostMapping("/savePatientProcedure")
+//		public String savePatientProcedure(@ModelAttribute("patientProcedure") PatientProcedure patientProcedure) {
+//			
+//			return patientProcedureServiceImpl.savePatientProcedure(patientProcedure);
+//		}
+	 
+	 @PostMapping("/savePatientProcedure")
+		public String savePatientProcedure(
+				@RequestParam("patientproceduredate")Date patientproceduredate,
+				@RequestParam("patientproceduredetail")String patientproceduredetail,
+				@RequestParam("patientprocedureestimateamount")double patientprocedureestimateamount,
+				@RequestParam("patientprocedurepaymenttype")String patientprocedurepaymenttype,
+				@RequestParam("patientprocedurepaymentamount")double patientprocedurepaymentamount,
+				@RequestParam("patientprocedurelabname")String patientprocedurelabname) throws IOException
+		{
+			return patientProcedureService.savePatientProcedure(patientproceduredate, patientproceduredetail, patientprocedureestimateamount, patientprocedurepaymenttype, patientprocedurepaymentamount, patientprocedurelabname);
+		}
 
 
 	@PostMapping("/SavePatientInfo")

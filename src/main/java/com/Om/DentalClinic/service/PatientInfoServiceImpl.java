@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Om.DentalClinic.model.PatientInfo;
+import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 
 
@@ -40,6 +41,9 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		return "file uploaded successfully";
 		
 	}
+
+
+
 
 	
 //	public PatientInfo getPatientInfoById(Long id) {

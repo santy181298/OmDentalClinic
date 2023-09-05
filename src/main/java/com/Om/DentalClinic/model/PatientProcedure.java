@@ -2,8 +2,6 @@ package com.Om.DentalClinic.model;
 
 import java.util.Date;
 
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,121 +19,122 @@ public class PatientProcedure {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "proc_id")
-	private int procedureid;
-	
+	private int patientprocedureid;
+	  
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proc_patient_num", referencedColumnName = "patient_num")
-	private PatientInfo procedurepatientnumber;
-    
+	private PatientInfo patientprocedurenumber;
+	
     @Column(name = "proc_date")
-	private Date proceduredate;
+	private Date patientproceduredate;
 	
     @Column(name = "proc_details")
-    private String proceduredetail;
+    private String patientproceduredetail;
 	
     @Column(name = "proc_estimate_amount")
-    private double procedureestimateamount;
+    private double patientprocedureestimateamount;
 	
     @Column(name = "proc_payment_type")
-    private String procedurepaymenttype;
+    private String patientprocedurepaymenttype;
 	
     @Column(name = "proc_payment_amount")
-    private double procedurepaymentamount;
+    private double patientprocedurepaymentamount;
 	
     @Column(name = "proc_lab_name")
-    private String procedurelabname;
-	
-	public PatientProcedure() {
-		super();
-		
+    private String patientprocedurelabname;
+
+	public int getPatientprocedureid() {
+		return patientprocedureid;
 	}
 
-	public int getProcedureid() {
-		return procedureid;
+	public void setPatientprocedureid(int patientprocedureid) {
+		this.patientprocedureid = patientprocedureid;
 	}
 
-	public void setProcedureid(int procedureid) {
-		this.procedureid = procedureid;
+	public PatientInfo getPatientprocedurenumber() {
+		return patientprocedurenumber;
 	}
 
-	public PatientInfo getProcedurepatientnumber() {
-		return procedurepatientnumber;
+	public void setPatientprocedurenumber(PatientInfo patientprocedurenumber) {
+		this.patientprocedurenumber = patientprocedurenumber;
 	}
 
-	public void setProcedurepatientnumber(PatientInfo procedurepatientnumber) {
-		this.procedurepatientnumber = procedurepatientnumber;
+	public Date getPatientproceduredate() {
+		return patientproceduredate;
 	}
 
-	public Date getProceduredate() {
-		return proceduredate;
+	public void setPatientproceduredate(Date patientproceduredate) {
+		this.patientproceduredate = patientproceduredate;
 	}
 
-	public void setProceduredate(Date proceduredate) {
-		this.proceduredate = proceduredate;
+	public String getPatientproceduredetail() {
+		return patientproceduredetail;
 	}
 
-	public String getProceduredetail() {
-		return proceduredetail;
+	public void setPatientproceduredetail(String patientproceduredetail) {
+		this.patientproceduredetail = patientproceduredetail;
 	}
 
-	public void setProceduredetail(String proceduredetail) {
-		this.proceduredetail = proceduredetail;
+	public double getPatientprocedureestimateamount() {
+		return patientprocedureestimateamount;
 	}
 
-	public double getProcedureestimateamount() {
-		return procedureestimateamount;
+	public void setPatientprocedureestimateamount(double patientprocedureestimateamount) {
+		this.patientprocedureestimateamount = patientprocedureestimateamount;
 	}
 
-	public void setProcedureestimateamount(double procedureestimateamount) {
-		this.procedureestimateamount = procedureestimateamount;
+	public String getPatientprocedurepaymenttype() {
+		return patientprocedurepaymenttype;
 	}
 
-	public String getProcedurepaymenttype() {
-		return procedurepaymenttype;
+	public void setPatientprocedurepaymenttype(String patientprocedurepaymenttype) {
+		this.patientprocedurepaymenttype = patientprocedurepaymenttype;
 	}
 
-	public void setProcedurepaymenttype(String procedurepaymenttype) {
-		this.procedurepaymenttype = procedurepaymenttype;
+	public double getPatientprocedurepaymentamount() {
+		return patientprocedurepaymentamount;
 	}
 
-	public double getProcedurepaymentamount() {
-		return procedurepaymentamount;
+	public void setPatientprocedurepaymentamount(double patientprocedurepaymentamount) {
+		this.patientprocedurepaymentamount = patientprocedurepaymentamount;
 	}
 
-	public void setProcedurepaymentamount(double procedurepaymentamount) {
-		this.procedurepaymentamount = procedurepaymentamount;
+	public String getPatientprocedurelabname() {
+		return patientprocedurelabname;
 	}
 
-	public String getProcedurelabname() {
-		return procedurelabname;
-	}
-
-	public void setProcedurelabname(String procedurelabname) {
-		this.procedurelabname = procedurelabname;
+	public void setPatientprocedurelabname(String patientprocedurelabname) {
+		this.patientprocedurelabname = patientprocedurelabname;
 	}
 
 	@Override
 	public String toString() {
-		return "PatientProcedure [procedureid=" + procedureid + ", procedurepatientnumber=" + procedurepatientnumber
-				+ ", proceduredate=" + proceduredate + ", proceduredetail=" + proceduredetail
-				+ ", procedureestimateamount=" + procedureestimateamount + ", procedurepaymenttype="
-				+ procedurepaymenttype + ", procedurepaymentamount=" + procedurepaymentamount + ", procedurelabname="
-				+ procedurelabname + "]";
+		return "PatientProcedure [patientprocedureid=" + patientprocedureid + ", patientprocedurenumber="
+				+ patientprocedurenumber + ", patientproceduredate=" + patientproceduredate
+				+ ", patientproceduredetail=" + patientproceduredetail + ", patientprocedureestimateamount="
+				+ patientprocedureestimateamount + ", patientprocedurepaymenttype=" + patientprocedurepaymenttype
+				+ ", patientprocedurepaymentamount=" + patientprocedurepaymentamount + ", patientprocedurelabname="
+				+ patientprocedurelabname + "]";
 	}
 
-	public PatientProcedure(int procedureid, PatientInfo procedurepatientnumber, Date proceduredate,
-			String proceduredetail, double procedureestimateamount, String procedurepaymenttype,
-			double procedurepaymentamount, String procedurelabname) {
+	public PatientProcedure(int patientprocedureid, PatientInfo patientprocedurenumber, Date patientproceduredate,
+			String patientproceduredetail, double patientprocedureestimateamount, String patientprocedurepaymenttype,
+			double patientprocedurepaymentamount, String patientprocedurelabname) {
 		super();
-		this.procedureid = procedureid;
-		this.procedurepatientnumber = procedurepatientnumber;
-		this.proceduredate = proceduredate;
-		this.proceduredetail = proceduredetail;
-		this.procedureestimateamount = procedureestimateamount;
-		this.procedurepaymenttype = procedurepaymenttype;
-		this.procedurepaymentamount = procedurepaymentamount;
-		this.procedurelabname = procedurelabname;
+		this.patientprocedureid = patientprocedureid;
+		this.patientprocedurenumber = patientprocedurenumber;
+		this.patientproceduredate = patientproceduredate;
+		this.patientproceduredetail = patientproceduredetail;
+		this.patientprocedureestimateamount = patientprocedureestimateamount;
+		this.patientprocedurepaymenttype = patientprocedurepaymenttype;
+		this.patientprocedurepaymentamount = patientprocedurepaymentamount;
+		this.patientprocedurelabname = patientprocedurelabname;
 	}
 
-	
+	public PatientProcedure() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	    
 }
