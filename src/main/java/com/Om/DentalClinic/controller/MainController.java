@@ -59,6 +59,18 @@ public class MainController {
 	 public String showPatientDetail() {
 		 return "patientDetails";
 	 }
+	 @GetMapping("/login")
+	 public String showLogin() {
+		 return "login";
+	 }
+	 @GetMapping("/patientinfo")
+	 public String showPatientinfo() {
+		 return "patientinfo";
+	 }
+	 @GetMapping("/patientList")
+	 public String showPatientList() {
+		 return "patientList";
+	 }
 
 //	@PostMapping("/SavePatientInfo")
 //	public String savePatientInfo(@RequestParam("file") MultipartFile file,
