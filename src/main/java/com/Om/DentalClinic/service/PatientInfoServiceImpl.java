@@ -25,10 +25,10 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
 
 
-	public String savePatientInfo(MultipartFile file,String patientnumber,String patientname,int patientage,String patientgender,Date patientregdate,Long patientmobile,String patientmedicalhistory) throws IOException {
+	public void savePatientInfo(MultipartFile patientReports,String patientnumber,String patientname,int patientage,String patientgender,Date patientregdate,Long patientmobile,String patientmedicalhistory) throws IOException {
 		
 		PatientInfo patientInfo = new PatientInfo();
-		patientInfo.setPatientReports(file.getBytes());
+		patientInfo.setPatientReports(patientReports.getBytes());
 		patientInfo.setPatientnumber(patientnumber);
 		patientInfo.setPatientname(patientname);
 		patientInfo.setPatientage(patientage);
@@ -38,7 +38,6 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		patientInfo.setPatientmedicalhistory(patientmedicalhistory);
 		
 		patientInfoRepository.save(patientInfo);
-		return "file uploaded successfully";
 		
 	}
 

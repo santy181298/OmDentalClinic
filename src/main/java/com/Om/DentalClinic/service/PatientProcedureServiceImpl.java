@@ -35,25 +35,37 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 		return patientProcedureRepository.findAll();
 	}
 	
-	@Override
-	public String savePatientProcedure(String patientNumber, Date patientProcedureDate, String patientProcedureDetail,
-            double patientProcedureEstimateAmount, String patientProcedurePaymentType,
-            double patientProcedurePaymentAmount, String patientProcedureLabName) throws IOException {
-		PatientInfo patientInfo = patientInfoRepository.findByPatientnumber(patientNumber);
+//	@Override
+//	public String savePatientProcedure(String patientNumber, Date patientProcedureDate, String patientProcedureDetail,
+//            double patientProcedureEstimateAmount, String patientProcedurePaymentType,
+//            double patientProcedurePaymentAmount, String patientProcedureLabName) throws IOException {
+//		PatientInfo patientInfo = patientInfoRepository.findByPatientnumber(patientNumber);
+//
+//		if (patientInfo == null) {
+//			return "Patient with patient number " + patientNumber + " not found.";
+//		}
+//
+//		PatientProcedure patientProcedure = new PatientProcedure();
+//		patientProcedure.setPatientprocedurenumber(patientInfo);
+//		patientProcedure.setPatientproceduredate(patientProcedureDate);
+//		patientProcedure.setPatientproceduredetail(patientProcedureDetail);
+//		patientProcedure.setPatientprocedureestimateamount(patientProcedureEstimateAmount);
+//		patientProcedure.setPatientprocedurepaymenttype(patientProcedurePaymentType);
+//		patientProcedure.setPatientprocedurepaymentamount(patientProcedurePaymentAmount);
+//		patientProcedure.setPatientprocedurelabname(patientProcedureLabName);
 
-		if (patientInfo == null) {
-			return "Patient with patient number " + patientNumber + " not found.";
-		}
-
-		PatientProcedure patientProcedure = new PatientProcedure();
-		patientProcedure.setPatientprocedurenumber(patientInfo);
-		patientProcedure.setPatientproceduredate(patientProcedureDate);
-		patientProcedure.setPatientproceduredetail(patientProcedureDetail);
-		patientProcedure.setPatientprocedureestimateamount(patientProcedureEstimateAmount);
-		patientProcedure.setPatientprocedurepaymenttype(patientProcedurePaymentType);
-		patientProcedure.setPatientprocedurepaymentamount(patientProcedurePaymentAmount);
-		patientProcedure.setPatientprocedurelabname(patientProcedureLabName);
-
+	public String savePatientProcedure(PatientInfo patientprocedurenumber, Date patientproceduredate,String patientproceduredetail,
+			 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
+			 String patientprocedurelabname)throws IOException {
+		PatientProcedure patientProcedure=new PatientProcedure();
+		patientProcedure.setPatientprocedurenumber(patientprocedurenumber);
+		patientProcedure.setPatientproceduredate(patientproceduredate);
+		patientProcedure.setPatientproceduredetail(patientproceduredetail);
+		patientProcedure.setPatientprocedureestimateamount(patientprocedureestimateamount);
+		patientProcedure.setPatientprocedurepaymenttype(patientprocedurepaymenttype);
+		patientProcedure.setPatientprocedurepaymentamount(patientprocedurepaymentamount);
+		patientProcedure.setPatientprocedurelabname(patientprocedurelabname);
+		
 		patientProcedureRepository.save(patientProcedure);
 		return "Data saved successfully";
 	}

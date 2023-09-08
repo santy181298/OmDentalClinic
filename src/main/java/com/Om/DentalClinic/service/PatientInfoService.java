@@ -13,7 +13,7 @@ public interface PatientInfoService {
 
 	public List<PatientInfo> getAllPatientInfo();
 
-	public String savePatientInfo(MultipartFile file,String patientnumber,String patientname,int patientage, String patientgender,Date patientregdate,Long patientmobile,String patientmedicalhistory) throws IOException;
+	public void savePatientInfo(MultipartFile patientReports,String patientnumber,String patientname,int patientage, String patientgender,Date patientregdate,Long patientmobile,String patientmedicalhistory) throws IOException;
 //	public PatientInfo getPatientInfoById(Long id) ;
 //	public void deletePatientInfoById(Long id) ;
 
