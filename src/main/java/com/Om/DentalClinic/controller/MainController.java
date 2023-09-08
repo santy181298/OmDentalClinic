@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 
 
-@RestController
+@Controller
 public class MainController {
 
 	@Autowired
@@ -29,7 +30,8 @@ public class MainController {
 	
 	@Autowired
 	private PatientProcedureService patientProcedureService;
-	
+	@Autowired
+	private PatientProcedureServiceImpl patientProcedureServiceImpl;
 //	@GetMapping("/listPatientInfo")
 //	public List<PatientInfo> getAllPatientInfo() {		
 //		return  this.patientInfoService.getAllPatientInfo();
@@ -53,7 +55,8 @@ public class MainController {
 		 return "procedureDetails";
 	 }
 	 @GetMapping("/patientDetails")
-	 public String showPatientDetail() {
+	 public String showPatientDetail(Model model) {
+		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
 		 return "patientDetails";
 	 }
 	 @GetMapping("/login")
@@ -68,9 +71,7 @@ public class MainController {
 	 public String showPatientList() {
 		 return "patientList";
 	 }
-
-	@Autowired
-	private PatientProcedureServiceImpl patientProcedureServiceImpl;
+	
 	
 	
 	@GetMapping("/listPatientInfo")
@@ -82,7 +83,7 @@ public class MainController {
 	 @GetMapping("/list_Patient_Procedure")
 	    public List<PatientProcedure> getAllPatietProcedures() {
 		 
-	        return this.patientProcedureServiceImpl.getAllPatietProcedures();
+	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
 	 }
 	 
 	 @GetMapping("/")

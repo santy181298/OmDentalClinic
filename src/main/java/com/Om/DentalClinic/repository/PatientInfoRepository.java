@@ -6,4 +6,5 @@ import com.Om.DentalClinic.model.PatientInfo;
 
 public interface PatientInfoRepository extends JpaRepository<PatientInfo,Long> {
 
+	PatientInfo findByPatientnumber(String patientNumber);
 }

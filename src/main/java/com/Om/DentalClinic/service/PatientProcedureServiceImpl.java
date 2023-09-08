@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
+import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.PatientProcedureRepository;
+
 
 @Service
 public class PatientProcedureServiceImpl implements PatientProcedureService{
@@ -18,33 +20,42 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 	@Autowired
 	private PatientProcedureRepository patientProcedureRepository;
 	
-	public List<PatientProcedure> getAllPatietProcedures() {
-		return patientProcedureRepository.findAll();
-	}
-		
+	@Autowired
+	private PatientInfoRepository patientInfoRepository;
+
+	
+//	@Override
+//	public List<PatientProcedure> getAllPatientProcedures() {
+//		
+//		return patientProcedureRepository.findAll();
+//	}
 	@Override
 	public List<PatientProcedure> getAllPatientProcedures() {
-		
+		// TODO Auto-generated method stub
 		return patientProcedureRepository.findAll();
 	}
 	
-
 	@Override
-	public String savePatientProcedure(String patientprocedurenumber, Date patientproceduredate,String patientproceduredetail,
-			 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
-			 String patientprocedurelabname)throws IOException {
-		PatientProcedure patientProcedure=new PatientProcedure();
-		patientProcedure.setPatientprocedurenumber(patientprocedurenumber);
-		patientProcedure.setPatientproceduredate(patientproceduredate);
-		patientProcedure.setPatientproceduredetail(patientproceduredetail);
-		patientProcedure.setPatientprocedureestimateamount(patientprocedureestimateamount);
-		patientProcedure.setPatientprocedurepaymenttype(patientprocedurepaymenttype);
-		patientProcedure.setPatientprocedurepaymentamount(patientprocedurepaymentamount);
-		patientProcedure.setPatientprocedurelabname(patientprocedurelabname);
-		
+	public String savePatientProcedure(String patientNumber, Date patientProcedureDate, String patientProcedureDetail,
+            double patientProcedureEstimateAmount, String patientProcedurePaymentType,
+            double patientProcedurePaymentAmount, String patientProcedureLabName) throws IOException {
+		PatientInfo patientInfo = patientInfoRepository.findByPatientnumber(patientNumber);
+
+		if (patientInfo == null) {
+			return "Patient with patient number " + patientNumber + " not found.";
+		}
+
+		PatientProcedure patientProcedure = new PatientProcedure();
+		patientProcedure.setPatientprocedurenumber(patientInfo);
+		patientProcedure.setPatientproceduredate(patientProcedureDate);
+		patientProcedure.setPatientproceduredetail(patientProcedureDetail);
+		patientProcedure.setPatientprocedureestimateamount(patientProcedureEstimateAmount);
+		patientProcedure.setPatientprocedurepaymenttype(patientProcedurePaymentType);
+		patientProcedure.setPatientprocedurepaymentamount(patientProcedurePaymentAmount);
+		patientProcedure.setPatientprocedurelabname(patientProcedureLabName);
+
 		patientProcedureRepository.save(patientProcedure);
-		return "data saved successfully";
-		
+		return "Data saved successfully";
 	}
 
 }

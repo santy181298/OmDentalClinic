@@ -31,25 +31,6 @@
 </head>
 </head>
 <body>
-<!-- 	<div align="center"> -->
-<!-- 		<h1>Startup List</h1> -->
-<!-- 		<table> -->
-<!-- 			<thead> -->
-<!-- 				<tr> -->
-<!-- 					<th>Company Name</th> -->
-<!-- 					<th>Brand Name</th> -->
-<!-- 					<th>Start Date</th> -->
-<!-- 				</tr> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 				<tr th:each="company:${listCompanies}"> -->
-<!-- 					<td th:text="${company.company_name}"></td> -->
-<!-- 					<td th:text="${company.brand_name}"></td> -->
-<!-- 					<td th:text="${company.start_date}"></td> -->
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
-<!-- 	</div> -->
 
 
  <main id="main" class="main">
@@ -64,77 +45,78 @@
 
           <div class="card">
             <div class="card-body">
-            <div class="row mb-3 mt-5">
-			    <!-- First Search Bar -->
-			  <div class="search-bar" style="width: 250px;">
-			    <div class="search-form d-flex align-items-center">
-			      <div class="input-group">
-			        <input type="text" name="query" placeholder="Patient Number" title="Enter search term" class="form-control">
-			        <button type="submit" title="Search" class="input-group-text">
-			          <i class="bi bi-search"></i>
-			        </button>
-			      </div>
-			    </div>
-			  </div>
-			
-			  <!-- Second Search Bar -->
-			  <div class="search-bar mx-3" style="width: 250px;">
-			    <div class="search-form d-flex align-items-center">
-			      <div class="input-group">
-			        <input type="text" name="query" placeholder="Patient Name" title="Enter search term" class="form-control">
-			        <button type="submit" title="Search" class="input-group-text">
-			          <i class="bi bi-search"></i>
-			        </button>
-			      </div>
-			    </div>
-			  </div>
-			
-			  <!-- Third Search Bar -->
-			  <div class="search-bar" style="width: 250px;">
-			    <div class="search-form d-flex align-items-center">
-			      <div class="input-group">
-			        <input type="text" name="query" placeholder="Mobile Number" title="Enter search term" class="form-control">
-			        <button type="submit" title="Search" class="input-group-text">
-			          <i class="bi bi-search"></i>
-			        </button>
-			      </div>
-			    </div>
-			  </div>
+              <h5 class="card-title">Patients</h5>
+              <div class="search-bars-container">
+               <div class="search-bars-container d-flex">
+				  <!-- First Search Bar -->
+				  <div class="search-bar" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Patient Number" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				
+				  <!-- Second Search Bar -->
+				  <div class="search-bar mx-3" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Patient Name" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				
+				  <!-- Third Search Bar -->
+				  <div class="search-bar" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Mobile Number" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				</div> 
+              <br>
+             
 			</div>
-
+			<div class="table-responsive">
+			    <table class="table datatable">
+			        <thead>
+			            <tr>
+			                <th scope="col">#</th>
+			                <th scope="col">Date</th>
+			                <th scope="col">Procedure</th>
+<!-- 			                <th scope="col">Estimate</th> -->
+			                <th scope="col">Payment Mode</th>
+<!-- 			                <th scope="col">Payment Amount</th> -->
+			                <th scope="col">Actions</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr th:each="patientProcedure, procedureStat : ${listPatientProcedures}">
+			                <th th:text="${procedureStat.index + 1}"></th>
+			                <td th:text="${patientProcedure.patientproceduredate}"></td>
+			                <td th:text="${patientProcedure.patientproceduredetail}"></td>
+<!-- 			                <td th:text="${patientProcedure?.patientprocedureestimateamount} ?: ''"></td> -->
+			                <td th:text="${patientProcedure.patientprocedurepaymenttype}"></td>
+<!-- 			                <td th:text="${patientProcedure.patientprocedurepaymentamount}"></td> -->
+			                <td>
+			                    <a class="btn btn-primary">Update</a>
+			                    <a class="btn btn-danger mx-2">Delete</a>
+			                    <a class="btn btn-success mx-2">Add procedure</a>
+			                </td>
+			            </tr>
+			        </tbody>
+			    </table>
 			</div>
-              <!-- Table with stripped rows -->
-              <!-- ... (previous HTML code) -->
-
-<div class="table-responsive">
-    <table class="table datatable">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Procedure</th>
-                <th scope="col">Estimate</th>
-                <th scope="col">Payment Mode</th>
-                <th scope="col">Payment Amount</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="company, companyStat : ${listCompanies}">
-                <th></th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a class="btn btn-primary">Update</a>
-                    <a class="btn btn-danger mx-2">Delete</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
               <!-- End Table with stripped rows -->
 			  
             </div>
