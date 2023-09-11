@@ -139,6 +139,12 @@ public class MainController {
 		
 		 return"redirect:/patientinfo";
 	}
+	
+	@GetMapping("/adminHome")
+	 public String adminHome()
+	 {
+		 return "adminHome";
+	 }
 		
 	
 	
