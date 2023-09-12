@@ -25,21 +25,25 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
 
 
-	public void savePatientInfo(MultipartFile patientReports,String patientnumber,String patientname,int patientage,String patientgender,Date patientregdate,Long patientmobile,String patientmedicalhistory) throws IOException {
+	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,int patientmobile1,int patientmobile2,String patientmedicalhistory) throws IOException {
 		
 		PatientInfo patientInfo = new PatientInfo();
 		patientInfo.setPatientReports(patientReports.getBytes());
-		patientInfo.setPatientnumber(patientnumber);
-		patientInfo.setPatientname(patientname);
+		patientInfo.setFirstname(firstname);
+		patientInfo.setMiddlename(middlename);
+		patientInfo.setLastname(lastname);
 		patientInfo.setPatientage(patientage);
 		patientInfo.setPatientgender(patientgender);
 		patientInfo.setPatientregdate(patientregdate);
-		patientInfo.setPatientmobile(patientmobile);
+		patientInfo.setPatientmobile1(patientmobile1);
+		patientInfo.setPatientmobile2(patientmobile2);
 		patientInfo.setPatientmedicalhistory(patientmedicalhistory);
 		
 		patientInfoRepository.save(patientInfo);
 		
 	}
+
+
 
 
 
