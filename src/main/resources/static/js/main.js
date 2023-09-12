@@ -404,3 +404,25 @@ if(form !== null){
   });
 }
 //end of submit procedureDetails form validation-------------------
+
+//calculate balance amount in procedure details
+const estimateInput = document.getElementById("estimate");
+    const paymentInput = document.getElementById("payment");
+    const balanceInput = document.getElementById("balance");
+
+    // Function to calculate and update the balance
+    function updateBalance() {
+        const estimate = parseFloat(estimateInput.value) || 0;
+        const payment = parseFloat(paymentInput.value) || 0;
+        const balance = estimate - payment;
+
+        // Update the balance input field
+        balanceInput.value = balance;
+    }
+
+    // Attach an event listener to both estimate and payment inputs to update the balance
+    estimateInput.addEventListener("input", updateBalance);
+    paymentInput.addEventListener("input", updateBalance);
+
+    // Initial calculation when the page loads
+    updateBalance();
