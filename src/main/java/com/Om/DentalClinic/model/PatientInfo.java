@@ -3,12 +3,16 @@ package com.Om.DentalClinic.model;
 
 import java.util.Arrays;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -39,6 +43,7 @@ public class PatientInfo {
 	private String patientgender;
 	
 	@Column(name = "reg_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date patientregdate;
 	
@@ -54,13 +59,18 @@ public class PatientInfo {
 	@Column(name = "info_cashier_name")
 	private String cashiername;
 	
-	@Column(name = "info_timestamp")
-	private Date timestamp;
-	
     @Lob
     @Column(name = "reports")
     private byte[] patientReports;
-
+    
+	@Column(name = "info_timestamp")
+	private Date timestamp;
+	 
+    @PrePersist
+    protected void onCreate() {
+        timestamp = new Date();
+    }
+    
 	public PatientInfo() {
 		super();
 		// TODO Auto-generated constructor stub
