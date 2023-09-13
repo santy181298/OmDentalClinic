@@ -405,25 +405,33 @@ if(form !== null){
 }
 //end of submit procedureDetails form validation-------------------
 
-//calculate balance amount in procedure details
-
+    
 const estimateInput = document.getElementById("estimate");
-    const paymentInput = document.getElementById("payment");
-    const balanceInput = document.getElementById("balance");
+const cashInput = document.getElementById("cash"); // Added
+const onlineInput = document.getElementById("online"); // Added
+const paymentInput = document.getElementById("payment");
+const balanceInput = document.getElementById("balance");
 
-    // Function to calculate and update the balance
-    function updateBalance() {
-        const estimate = parseFloat(estimateInput.value) || 0;
-        const payment = parseFloat(paymentInput.value) || 0;
-        const balance = estimate - payment;
+// Function to calculate and update the balance
+function updateBalance() {
+    const estimate = parseFloat(estimateInput.value) || 0;
+    const cashPayment = parseFloat(cashInput.value) || 0; // Added
+    const onlinePayment = parseFloat(onlineInput.value) || 0; // Added
+    const totalPayment = cashPayment + onlinePayment; // Calculate total payment
 
-        // Update the balance input field
-        balanceInput.value = balance;
-    }
+    const balance = estimate - totalPayment;
 
-    // Attach an event listener to both estimate and payment inputs to update the balance
-    estimateInput.addEventListener("input", updateBalance);
-    paymentInput.addEventListener("input", updateBalance);
+    // Update the payment input field
+    paymentInput.value = totalPayment;
 
-    // Initial calculation when the page loads
-    updateBalance();
+    // Update the balance input field
+    balanceInput.value = balance;
+}
+
+// Attach an event listener to estimate, cash, and online payment inputs to update the balance
+estimateInput.addEventListener("input", updateBalance);
+cashInput.addEventListener("input", updateBalance);
+onlineInput.addEventListener("input", updateBalance);
+
+// Initial calculation when the page loads
+updateBalance();

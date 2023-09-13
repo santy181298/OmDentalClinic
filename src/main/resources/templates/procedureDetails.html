@@ -136,6 +136,19 @@
                                     <input type="date" name="patientproceduredate" class="form-control" id="patientproceduredate" required max="">
                                 </div>
                             </div>
+                            
+                            <div class="row mb-3">
+							    <label for="inputProcedureType" class="col-sm-2 col-form-label required">Procedure Type</label>
+							    <div class="col-sm-10">
+							        <select name="proceduretype" class="form-select" aria-label="Default select example" required>
+							            <option value="" disabled selected>Select Procedure Type</option>
+							            <option value="option1">OPD</option>
+							            <option value="option2">Root Canal</option>
+							            <option value="option3">Surgery</option>
+							        </select>
+							    </div>
+							</div>
+							
                             <div class="row mb-3">
 							    <label for="inputText" class="col-sm-2 col-form-label required">Procedure Details</label>
 							    <div class="col-sm-10">
@@ -155,21 +168,21 @@
 		                  <div class="row mb-3">
 		                      <label for="inputNumber" class="col-sm-2 col-form-label">Cash Payment</label>
 		                      <div class="col-sm-10">
-		                          <input type="number" name="patientprocedurecashpayment" class="form-control" >
+		                          <input type="number" name="patientprocedurecashpayment" id="cash" class="form-control" >
 		                      </div>
 		                  </div>
 		                      
 		                   <div class="row mb-3">
 		                      <label for="inputNumber" class="col-sm-2 col-form-label">Online Payment</label>
 		                      <div class="col-sm-10">
-		                          <input type="number" name="patientprocedureonlinepayment" class="form-control" >
+		                          <input type="number" name="patientprocedureonlinepayment" id="online" class="form-control" >
 		                      </div>
 		                   </div>
 		                      
 		                  <div class="row mb-3">
 		                      <label for="inputNumber" class="col-sm-2 col-form-label">Total Amount Paid</label>
 		                      <div class="col-sm-10">
-		                          <input type="number" name="patientprocedurepaymentamount" id="payment" class="form-control" >
+		                          <input type="number" name="patientprocedurepaymentamount" id="payment" class="form-control" readonly>
 		                      </div>
 		                  </div>
 		                  
@@ -189,6 +202,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="row mb-3">
+		                      <label for="inputText" class="col-sm-2 col-form-label">External Doctor</label>
+		                      <div class="col-sm-10">
+		                          <input type="text" name="patientprocedureexternaldoctor" class="form-control" >
+		                          <div id="labNameError" class="invalid-feedback">
+                                        Please enter a valid doctor name.
+                                    </div>
+		                      </div>
+		                  </div>
+		                  
 		                  <div class="d-flex justify-content-center mt-5">
 							 <button type="submit" class="btn btn-primary">Save</button>
 							 <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
