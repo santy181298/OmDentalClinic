@@ -44,6 +44,65 @@
 </head>
 
 <body>
+	<!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- Company Pages  -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        
+        <li class="nav-item">
+     
+         
+       <ul>
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientinfo}">
+              <i></i><span>Patient Information</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/procedureDetails}">
+              <i></i><span>Procedure Details</span>
+            </a>
+          </li>
+
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientDetails}">
+              <i></i><span>Patient Details</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientList}">
+              <i></i><span>Patient List</span>
+            </a>
+          </li>
+        </ul>
+        
+      </li>
+     
+    </ul>
+
+  </aside>
+  
+  <!-- End Of Company Pages  -->
+  
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/pohome" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Om Dental Clinic</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+
+    
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
 
     <!-- ======= Header ======= -->
     
@@ -52,6 +111,12 @@
 
     <div class="pagetitle">
       <h1>Patient Procedure Details Form</h1>
+      <nav>
+        <ol class="breadcrumb">
+         	<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
+          	<li class="breadcrumb-item active">Procedure Details</li>
+        </ol>
+      	</nav>
     </div>
 
     <div class="card">
@@ -88,21 +153,26 @@
 		                      </div>
 		                  </div>
 		                  <div class="row mb-3">
-		                      <label class="col-sm-2 col-form-label">Payment Mode</label>
+		                      <label for="inputNumber" class="col-sm-2 col-form-label">Cash Payment</label>
 		                      <div class="col-sm-10">
-		                          <select  class="form-select" name="patientprocedurepaymenttype" aria-label="Default select example" >
-		                              <option value="" selected>-- Please select payment mode --</option>
-		                              <option value="1">Online</option>
-		                              <option value="0">Cash</option>
-		                          </select>
+		                          <input type="number" name="patientprocedureestimateamount" class="form-control" >
 		                      </div>
 		                  </div>
+		                      
+		                   <div class="row mb-3">
+		                      <label for="inputNumber" class="col-sm-2 col-form-label">Online Payment</label>
+		                      <div class="col-sm-10">
+		                          <input type="number" name="patientprocedureestimateamount" class="form-control" >
+		                      </div>
+		                   </div>
+		                      
 		                  <div class="row mb-3">
-		                      <label for="inputNumber" class="col-sm-2 col-form-label">Payment Amount Paid</label>
+		                      <label for="inputNumber" class="col-sm-2 col-form-label">Total Amount Paid</label>
 		                      <div class="col-sm-10">
 		                          <input type="number" name="patientprocedurepaymentamount" class="form-control" >
 		                      </div>
 		                  </div>
+		                  
 		                  <div class="row mb-3">
                                 <label for="inputText" class="col-sm-2 col-form-label">Lab Name</label>
                                 <div class="col-sm-10">
