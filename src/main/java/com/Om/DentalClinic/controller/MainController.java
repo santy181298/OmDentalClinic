@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,14 +112,8 @@ public class MainController {
 	     model.addAttribute("patientinfo", patientinfo);	     
 	     return "patientinfo";
 	 } 
+	
 	 
-//	@GetMapping("/listPatientInfo")
-//	public List<PatientInfo> getAllPatientInfo() {		
-//		return  this.patientInfoService.getAllPatientInfo();
-//	}	
-	
-	
-	
 	@PostMapping("/SavePatientInfo")
 	public String savePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
 	@RequestParam("firstname") String firstname,
@@ -139,13 +134,14 @@ public class MainController {
 		 return"redirect:/patientinfo";
 	}
 	
+	
+	
 	@GetMapping("/adminHome")
 	 public String adminHome()
 	 {
 		 return "adminHome";
 	 }
 		
-	
 	
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	

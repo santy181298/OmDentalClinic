@@ -23,6 +23,11 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		return patientInfoRepository.findAll();
 	}
 
+//	@Override
+//	public void savePatientInfo(PatientInfo patientInfo) {
+//		 patientInfoRepository.save(patientInfo);	
+//	}
+
 
 
 	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,int patientmobile1,int patientmobile2,String patientmedicalhistory) throws IOException {

@@ -406,6 +406,7 @@ if(form !== null){
 //end of submit procedureDetails form validation-------------------
 
 //calculate balance amount in procedure details
+
 const estimateInput = document.getElementById("estimate");
     const paymentInput = document.getElementById("payment");
     const balanceInput = document.getElementById("balance");
