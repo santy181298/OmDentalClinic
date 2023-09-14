@@ -29,38 +29,13 @@ public class MainController {
 	
 	@Autowired
 	private PatientProcedureService patientProcedureService;
-	@Autowired
-	private PatientProcedureServiceImpl patientProcedureServiceImpl;
-//	@GetMapping("/listPatientInfo")
-//	public List<PatientInfo> getAllPatientInfo() {		
-//		return  this.patientInfoService.getAllPatientInfo();
-//	}	
-	
-	
-//	// Patient Procedure Controller
-//		@GetMapping("/home")
-//		public String procedureHome() {
-//			return "This is Patient Procedure home page";
-//			
-//		}
-//		
-//	 @GetMapping("/")
-//	    public List<PatientProcedure> getAllProcedures() {
-//	        return patientProcedureService.getAllProcedures();
-//	 }
-//	@Autowired
-//	private PatientProcedureServiceImpl patientProcedureServiceImpl1;
-
 	 
-	 @GetMapping("/procedureDetails")
-	 public String showProcedureDetail() {
-		 return "procedureDetails";
-	 }
-	 @GetMapping("/patientDetails")
-	 public String showPatientDetail(Model model) {
-		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
-		 return "patientDetails";
-	 }
+	
+//	 @GetMapping("/patientDetails")
+//	 public String showPatientDetail(Model model) {
+//		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
+//		 return "patientDetails";
+//	 }
 	 @GetMapping("/login")
 	 public String showLogin() {
 		 return "login";
@@ -78,31 +53,19 @@ public class MainController {
 
 			
 
-	 @GetMapping("/list_Patient_Procedure")
-	    public List<PatientProcedure> getAllPatietProcedures() {
-		 
-	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
-	 }
-	 
+//	 @GetMapping("/list_Patient_Procedure")
+//	    public List<PatientProcedure> getAllPatietProcedures() {	 
+//	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
+//	 }
+//	 
 	 @GetMapping("/")
 	 public String home()
 	 {
 		 return "home";
 	 }
 
-	 
-	 @PostMapping("/savePatientProcedure")
-		public String savePatientProcedure(
-				@RequestParam("patientprocedurenumber")PatientInfo patientprocedurenumber,
-				@RequestParam("patientproceduredate")@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX") Date patientproceduredate,
-				@RequestParam("patientproceduredetail")String patientproceduredetail,
-				@RequestParam("patientprocedureestimateamount")double patientprocedureestimateamount,
-				@RequestParam("patientprocedurepaymenttype")String patientprocedurepaymenttype,
-				@RequestParam("patientprocedurepaymentamount")double patientprocedurepaymentamount,
-				@RequestParam("patientprocedurelabname")String patientprocedurelabname) throws IOException
-		{
-			return patientProcedureService.savePatientProcedure(patientprocedurenumber,patientproceduredate, patientproceduredetail, patientprocedureestimateamount, patientprocedurepaymenttype, patientprocedurepaymentamount, patientprocedurelabname);
-		}
+
+	
 
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  
@@ -113,6 +76,13 @@ public class MainController {
 	     return "patientinfo";
 	 } 
 	
+
+//		@GetMapping("/listPatientInfo")
+//		public List<PatientInfo> getAllPatientInfo() {		
+//			return  this.patientInfoService.getAllPatientInfo();
+//		}	
+		
+		
 	 
 	@PostMapping("/SavePatientInfo")
 	public String savePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
@@ -144,5 +114,32 @@ public class MainController {
 		
 	
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
+	
+
+//PatientProcedure controller 	
+	
+	 @GetMapping("/procedureDetails")
+	 public String showProcedureDetail(Model model) {
+		 PatientProcedure  patientprocedure = new  PatientProcedure();
+		 model.addAttribute("patientprocedure",patientprocedure);
+		 return "procedureDetails";
+	 }
+	 
+	 
+	@PostMapping("/SavePatientProcedure")
+	public String savePatientProcedure(  @ModelAttribute("patientProcedure") PatientProcedure patientProcedure) {
+
+		        patientProcedureService.savePatientProcedure(patientProcedure);
+
+		        return "redirect:/procedureDetails"; 
+		    }
+
+	 
+//PatientProcedure controller ENDs	
+	
+	
+	
+	
+	
 	
 }

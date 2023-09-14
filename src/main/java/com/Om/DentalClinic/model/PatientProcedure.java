@@ -2,6 +2,8 @@ package com.Om.DentalClinic.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,122 +22,170 @@ public class PatientProcedure {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "proc_id")
-	private int patientprocedureid;
+	private int procedureid;
 	  
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proc_patient_num", referencedColumnName = "patient_num")
-	private PatientInfo patientprocedurenumber;
+	private PatientInfo procedurenumber;
 	
+ 
     @Column(name = "proc_date")
-	private Date patientproceduredate;
-	
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Specify the expected date format
+    private Date proceduredate;
+
+    
     @Column(name = "proc_details")
-    private String patientproceduredetail;
+    private String proceduredetail;
 	
-    @Column(name = "proc_estimate_amount")
-    private Double patientprocedureestimateamount;
+    @Column(name = "estimate_amount")
+    private Double estimateamount;
 	
-    @Column(name = "proc_payment_type")
-    private String patientprocedurepaymenttype;
+    
+    @Column(name = "payment_amount")
+    private Double paymentamount;
 	
-    @Column(name = "proc_payment_amount")
-    private Double patientprocedurepaymentamount;
-	
-    @Column(name = "proc_lab_name")
-    private String patientprocedurelabname;
+    
+    @Column(name = "balance_amount")
+    private Double balanceamount;
+    
+    @Column(name = "lab_name")
+    private String labname;
+    
+    @Column(name = "external_doctor")
+    private String externaldoctor;
+    
+    @Column(name = "proc_cashier_name")
+    private String cashiername;
+    
+    
+ 	@Column(name = "proc_timestamp")
+ 	private Date timestamp;
+ 	 
+     @PrePersist
+     protected void onCreate() {
+         timestamp = new Date();
+     }
 
-	public int getPatientprocedureid() {
-		return patientprocedureid;
+	public PatientProcedure() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setPatientprocedureid(int patientprocedureid) {
-		this.patientprocedureid = patientprocedureid;
+	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduredetail,
+			Double estimateamount, Double paymentamount, Double balanceamount, String labname, String externaldoctor,
+			String cashiername, Date timestamp) {
+		super();
+		this.procedureid = procedureid;
+		this.procedurenumber = procedurenumber;
+		this.proceduredate = proceduredate;
+		this.proceduredetail = proceduredetail;
+		this.estimateamount = estimateamount;
+		this.paymentamount = paymentamount;
+		this.balanceamount = balanceamount;
+		this.labname = labname;
+		this.externaldoctor = externaldoctor;
+		this.cashiername = cashiername;
+		this.timestamp = timestamp;
 	}
 
-	public PatientInfo getPatientprocedurenumber() {
-		return patientprocedurenumber;
+	public int getProcedureid() {
+		return procedureid;
 	}
 
-	public void setPatientprocedurenumber(PatientInfo patientprocedurenumber) {
-		this.patientprocedurenumber = patientprocedurenumber;
+	public void setProcedureid(int procedureid) {
+		this.procedureid = procedureid;
 	}
 
-	public Date getPatientproceduredate() {
-		return patientproceduredate;
+	public PatientInfo getProcedurenumber() {
+		return procedurenumber;
 	}
 
-	public void setPatientproceduredate(Date patientproceduredate) {
-		this.patientproceduredate = patientproceduredate;
+	public void setProcedurenumber(PatientInfo procedurenumber) {
+		this.procedurenumber = procedurenumber;
 	}
 
-	public String getPatientproceduredetail() {
-		return patientproceduredetail;
+	public Date getProceduredate() {
+		return proceduredate;
 	}
 
-	public void setPatientproceduredetail(String patientproceduredetail) {
-		this.patientproceduredetail = patientproceduredetail;
+	public void setProceduredate(Date proceduredate) {
+		this.proceduredate = proceduredate;
 	}
 
-	public double getPatientprocedureestimateamount() {
-		return patientprocedureestimateamount;
+	public String getProceduredetail() {
+		return proceduredetail;
 	}
 
-	public void setPatientprocedureestimateamount(double patientprocedureestimateamount) {
-		this.patientprocedureestimateamount = patientprocedureestimateamount;
+	public void setProceduredetail(String proceduredetail) {
+		this.proceduredetail = proceduredetail;
 	}
 
-	public String getPatientprocedurepaymenttype() {
-		return patientprocedurepaymenttype;
+	public Double getEstimateamount() {
+		return estimateamount;
 	}
 
-	public void setPatientprocedurepaymenttype(String patientprocedurepaymenttype) {
-		this.patientprocedurepaymenttype = patientprocedurepaymenttype;
+	public void setEstimateamount(Double estimateamount) {
+		this.estimateamount = estimateamount;
 	}
 
-	public double getPatientprocedurepaymentamount() {
-		return patientprocedurepaymentamount;
+	public Double getPaymentamount() {
+		return paymentamount;
 	}
 
-	public void setPatientprocedurepaymentamount(double patientprocedurepaymentamount) {
-		this.patientprocedurepaymentamount = patientprocedurepaymentamount;
+	public void setPaymentamount(Double paymentamount) {
+		this.paymentamount = paymentamount;
 	}
 
-	public String getPatientprocedurelabname() {
-		return patientprocedurelabname;
+	public Double getBalanceamount() {
+		return balanceamount;
 	}
 
-	public void setPatientprocedurelabname(String patientprocedurelabname) {
-		this.patientprocedurelabname = patientprocedurelabname;
+	public void setBalanceamount(Double balanceamount) {
+		this.balanceamount = balanceamount;
+	}
+
+	public String getLabname() {
+		return labname;
+	}
+
+	public void setLabname(String labname) {
+		this.labname = labname;
+	}
+
+	public String getExternaldoctor() {
+		return externaldoctor;
+	}
+
+	public void setExternaldoctor(String externaldoctor) {
+		this.externaldoctor = externaldoctor;
+	}
+
+	public String getCashiername() {
+		return cashiername;
+	}
+
+	public void setCashiername(String cashiername) {
+		this.cashiername = cashiername;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override
 	public String toString() {
-		return "PatientProcedure [patientprocedureid=" + patientprocedureid + ", patientprocedurenumber="
-				+ patientprocedurenumber + ", patientproceduredate=" + patientproceduredate
-				+ ", patientproceduredetail=" + patientproceduredetail + ", patientprocedureestimateamount="
-				+ patientprocedureestimateamount + ", patientprocedurepaymenttype=" + patientprocedurepaymenttype
-				+ ", patientprocedurepaymentamount=" + patientprocedurepaymentamount + ", patientprocedurelabname="
-				+ patientprocedurelabname + "]";
+		return "PatientProcedure [procedureid=" + procedureid + ", procedurenumber=" + procedurenumber
+				+ ", proceduredate=" + proceduredate + ", proceduredetail=" + proceduredetail + ", estimateamount="
+				+ estimateamount + ", paymentamount=" + paymentamount + ", balanceamount=" + balanceamount
+				+ ", labname=" + labname + ", externaldoctor=" + externaldoctor + ", cashiername=" + cashiername
+				+ ", timestamp=" + timestamp + "]";
 	}
+     
 
-	public PatientProcedure(int patientprocedureid, PatientInfo patientprocedurenumber, Date patientproceduredate,
-			String patientproceduredetail, double patientprocedureestimateamount, String patientprocedurepaymenttype,
-			double patientprocedurepaymentamount, String patientprocedurelabname) {
-		super();
-		this.patientprocedureid = patientprocedureid;
-		this.patientprocedurenumber = patientprocedurenumber;
-		this.patientproceduredate = patientproceduredate;
-		this.patientproceduredetail = patientproceduredetail;
-		this.patientprocedureestimateamount = patientprocedureestimateamount;
-		this.patientprocedurepaymenttype = patientprocedurepaymenttype;
-		this.patientprocedurepaymentamount = patientprocedurepaymentamount;
-		this.patientprocedurelabname = patientprocedurelabname;
-	}
-
-	public PatientProcedure() {
-		super();
-
-	}
-
+	
 	    
 }

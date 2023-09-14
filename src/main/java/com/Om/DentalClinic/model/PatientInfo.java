@@ -3,15 +3,19 @@ package com.Om.DentalClinic.model;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -70,6 +74,10 @@ public class PatientInfo {
     protected void onCreate() {
         timestamp = new Date();
     }
+    
+    @OneToMany(mappedBy = "procedurenumber", cascade = CascadeType.ALL)
+    private List<PatientProcedure> patientprocedure ;
+
     
 	public PatientInfo() {
 		super();
