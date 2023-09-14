@@ -116,7 +116,7 @@ public class MainController {
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
 
-//PatientProcedure controller 	
+//PatientProcedure controller ------------------------------------------------------------------------------	
 	
 	 @GetMapping("/procedureDetails")
 	 public String showProcedureDetail(Model model) {
