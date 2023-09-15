@@ -1,6 +1,7 @@
 package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -37,9 +41,17 @@ public class MainController {
 //		 return "patientDetails";
 //	 }
 	 @GetMapping("/login")
-	 public String showLogin() {
-		 return "login";
-	 }
+	 public String showLogin(Model model, HttpSession session) {
+			@SuppressWarnings("unchecked")
+			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+
+			if (messages == null) {
+				messages = new ArrayList<>();
+			}
+			model.addAttribute("sessionMessages", messages);
+
+			return "login";
+		}
 
 	 @GetMapping("/patientList")
 	 public String showPatientList() {
@@ -59,8 +71,7 @@ public class MainController {
 //	 }
 //	 
 	 @GetMapping("/")
-	 public String home()
-	 {
+	 public String home() {
 		 return "home";
 	 }
 
@@ -138,6 +149,24 @@ public class MainController {
 //PatientProcedure controller ENDs	
 	
 	
+	@PostMapping("/persistMessage")
+	public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
+		if (messages == null) {
+			messages = new ArrayList<>();
+			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		}
+		messages.add(msg);
+		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		return "redirect:/login";
+	}
+
+	@PostMapping("/destroy")
+	public String destroySession(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/login";
+	}
 	
 	
 	
