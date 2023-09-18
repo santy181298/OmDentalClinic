@@ -3,7 +3,9 @@ package com.Om.DentalClinic.controller;
 import java.io.IOException;
 
 import java.security.Principal;
+
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +61,10 @@ public class MainController {
 //	 }
 
 	
-	 @GetMapping("/")
-	 public String showLogin() {
-		 return "login";
-	 }
+//	 @GetMapping("/")
+//	 public String showLogin() {
+//		 return "login";
+//	 }
 	 
 	 @GetMapping("/adminhome")
 	 public String adminHome()
@@ -75,7 +77,8 @@ public class MainController {
 		public String register() {
 			return "register";
 		}
-	 @GetMapping("/login")
+
+	 @GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
 			@SuppressWarnings("unchecked")
 			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
@@ -119,8 +122,6 @@ public class MainController {
 	public List<PatientInfo> getAllPatientInfo() {		
 		return  this.patientInfoService.getAllPatientInfo();
 	}	
-
-
 			
 
 //	 @GetMapping("/list_Patient_Procedure")
@@ -128,12 +129,7 @@ public class MainController {
 //	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
 //	 }
 //	 
-	 @GetMapping("/")
-	 public String home() {
-		 return "home";
-	 }
-
-
+	 
 
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  

@@ -22,7 +22,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		} else if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("USER"))) {
 			response.sendRedirect("/userhome"); // Redirect to user page for users with ROLE USER
 		} else {
-			response.sendRedirect("/"); // Default redirect for other roles or unauthenticated users
+			response.sendRedirect("/login"); // Default redirect for other roles or unauthenticated users
 		}
 		
 	}
