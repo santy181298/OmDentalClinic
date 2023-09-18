@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,9 +49,12 @@ public class MainController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	@Autowired
-	private BCryptPasswordEncoder bp;
-	 
+	
+	public MainController(UserServiceImpl userServiceImpl) {
+	this.userServiceImpl=userServiceImpl;
+	}
+	
+	
 	
 //	 @GetMapping("/patientDetails")
 //	 public String showPatientDetail(Model model) {
@@ -60,11 +62,6 @@ public class MainController {
 //		 return "patientDetails";
 //	 }
 
-	
-//	 @GetMapping("/")
-//	 public String showLogin() {
-//		 return "login";
-//	 }
 	 
 	 @GetMapping("/adminhome")
 	 public String adminHome()
@@ -72,12 +69,45 @@ public class MainController {
 		 return "adminHome";
 	 }
 	 
-	// Registration Controller (Prasad)
-		@GetMapping("/register")
-		public String register() {
-			return "register";
-		}
-
+//	 @PostMapping("/adminhome")
+//	 public String adminLogin(@RequestParam String username,@RequestParam String password, Model model)
+//	 {
+//		 User user = userServiceImpl.findByUsername(username);
+//	        if (user != null && user.getPassword().equals(password)) {
+//	            if ("ADMIN".equals(user.getRole())) {
+//	                return "adminHome";
+//	            }else {
+//	            	return "redirect:/";
+//	            }
+//	        }
+//			return "adminHome"; 
+//		 
+//	 }
+	 
+	 @GetMapping("/userhome")
+	 public String userHome(Model model) {
+	        
+	     return "home"; 
+	  }
+	 
+//	 @PostMapping("/home")
+//	 public String userLogin(@RequestParam String username,@RequestParam String password, Model model)
+//	 {
+//		 User user = userServiceImpl.findByUsername(username);
+//	        if (user != null && user.getPassword().equals(password)) {
+//	            if ("RECEP1".equals(user.getRole())) {
+//	                return "home";
+//	            } else if ("RECEP2".equals(user.getRole())) {
+//	                return "home";
+//	            }else if ("RECEP3".equals(user.getRole())) {
+//	                return "home";
+//	            }
+//	        }
+//	        model.addAttribute("error", "Invalid username or password.");
+//	        return "home";
+//		 
+//	 }
+	
 	 @GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
 			@SuppressWarnings("unchecked")
@@ -91,25 +121,28 @@ public class MainController {
 			return "login";
 
 		}
-
-		@PostMapping("/register")
-		public String create(@ModelAttribute("users") User user, HttpSession session) {
-
-			boolean u = userServiceImpl.checkUsername(user.getUsername());
-			if (u) {
-				System.out.println("User is already exist");
-			} else {
-				System.out.println(user);
-				// password encryption
-				user.setPassword(bp.encode(user.getPassword()));
-				// user.setRole(user.getRole());
-
-				session.setAttribute("msg", "Registration  successfully!");
-				userRepository.save(user);
-			}
-
-			return "redirect:/?success";
-		}
+	 
+	 @PostMapping("/login")
+	 public String login(@RequestParam String username,@RequestParam String password, Model model){
+		 User user = userServiceImpl.findByUsername(username);
+	        if (user != null && user.getPassword().equals(password)) {
+	            if ("ADMIN".equals(user.getRole())) {
+	                return "adminHome";
+	            } else if ("RECEP1".equals(user.getRole())) {
+	                return "home";
+	            }
+	        }
+	        model.addAttribute("error", "Invalid username or password.");
+	        return "login";
+		 
+	 }
+	 
+	 @GetMapping("/logout")
+	    public String logout() {
+	        // Add logout logic here
+	        return "redirect:/";
+	    }
+		
 	 
 // **************** Patient controller **********************************
 	 

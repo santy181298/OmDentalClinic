@@ -12,16 +12,16 @@ public class User {
 		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int userId;
 	
 	private String username;
 	private String password;
 	private String role;
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
@@ -43,11 +43,11 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
-	public User(int id, String username, String password, String role) {
+	public User(int userId, String username, String password, String role) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.role = role;

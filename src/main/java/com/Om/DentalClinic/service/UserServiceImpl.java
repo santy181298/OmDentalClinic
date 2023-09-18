@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userrepo;
 	
 	
-	public UserServiceImpl(UserRepository urepo) {
-		this.userrepo=urepo;
+	public UserServiceImpl(UserRepository userrepo) {
+		this.userrepo=userrepo;
 	}
 	
 	@Override
