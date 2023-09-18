@@ -1,6 +1,7 @@
 package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
+import com.Om.DentalClinic.model.User;
+import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
+import com.Om.DentalClinic.service.UserServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -29,6 +36,15 @@ public class MainController {
 	
 	@Autowired
 	private PatientProcedureService patientProcedureService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	private BCryptPasswordEncoder bp;
 	 
 	
 //	 @GetMapping("/patientDetails")
@@ -36,11 +52,45 @@ public class MainController {
 //		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
 //		 return "patientDetails";
 //	 }
-	 @GetMapping("/login")
+	
+	 @GetMapping("/")
 	 public String showLogin() {
 		 return "login";
 	 }
+	 
+	 @GetMapping("/adminhome")
+	 public String adminHome()
+	 {
+		 return "adminHome";
+	 }
+	 
+	// Registration Controller (Prasad)
+		@GetMapping("/register")
+		public String home() {
+			return "register";
+		}
 
+		@PostMapping("/register")
+		public String create(@ModelAttribute("users") User user, HttpSession session) {
+
+			boolean u = userServiceImpl.checkUsername(user.getUsername());
+			if (u) {
+				System.out.println("User is already exist");
+			} else {
+				System.out.println(user);
+				// password encryption
+				user.setPassword(bp.encode(user.getPassword()));
+				// user.setRole(user.getRole());
+
+				session.setAttribute("msg", "Registration  successfully!");
+				userRepository.save(user);
+			}
+
+			return "redirect:/?success";
+		}
+	 
+// **************** Patient controller **********************************
+	 
 	 @GetMapping("/patientList")
 	 public String showPatientList() {
 		 return "patientList";
@@ -51,21 +101,6 @@ public class MainController {
 		return  this.patientInfoService.getAllPatientInfo();
 	}	
 
-			
-
-//	 @GetMapping("/list_Patient_Procedure")
-//	    public List<PatientProcedure> getAllPatietProcedures() {	 
-//	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
-//	 }
-//	 
-	 @GetMapping("/")
-	 public String home()
-	 {
-		 return "home";
-	 }
-
-
-	
 
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  
@@ -104,14 +139,6 @@ public class MainController {
 		 return"redirect:/patientinfo";
 	}
 	
-	
-	
-	@GetMapping("/adminHome")
-	 public String adminHome()
-	 {
-		 return "adminHome";
-	 }
-		
 	
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
