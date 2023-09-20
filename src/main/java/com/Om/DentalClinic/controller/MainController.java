@@ -1,6 +1,11 @@
 package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
+
+import java.security.Principal;
+
+import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +21,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
+import com.Om.DentalClinic.model.User;
+import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
+import com.Om.DentalClinic.service.UserServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -31,38 +44,133 @@ public class MainController {
 	
 	@Autowired
 	private PatientProcedureService patientProcedureService;
-	 
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	
+	public MainController(UserServiceImpl userServiceImpl) {
+	this.userServiceImpl=userServiceImpl;
+	}
+	
+	
 	
 //	 @GetMapping("/patientDetails")
 //	 public String showPatientDetail(Model model) {
 //		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
 //		 return "patientDetails";
 //	 }
+
 	 @GetMapping("/login")
 	 public String showLogin() {
 		 return "login";
 	 }
+
+	 @GetMapping("/adminhome")
+	 public String adminHome()
+	 {
+		 return "adminHome";
+	 }
+	 
+//	 @PostMapping("/adminhome")
+//	 public String adminLogin(@RequestParam String username,@RequestParam String password, Model model)
+//	 {
+//		 User user = userServiceImpl.findByUsername(username);
+//	        if (user != null && user.getPassword().equals(password)) {
+//	            if ("ADMIN".equals(user.getRole())) {
+//	                return "adminHome";
+//	            }else {
+//	            	return "redirect:/";
+//	            }
+//	        }
+//			return "adminHome"; 
+//		 
+//	 }
+	 
+	 @GetMapping("/userhome")
+	 public String userHome(Model model) {
+	        
+	     return "home"; 
+	  }
+	 
+//	 @PostMapping("/home")
+//	 public String userLogin(@RequestParam String username,@RequestParam String password, Model model)
+//	 {
+//		 User user = userServiceImpl.findByUsername(username);
+//	        if (user != null && user.getPassword().equals(password)) {
+//	            if ("RECEP1".equals(user.getRole())) {
+//	                return "home";
+//	            } else if ("RECEP2".equals(user.getRole())) {
+//	                return "home";
+//	            }else if ("RECEP3".equals(user.getRole())) {
+//	                return "home";
+//	            }
+//	        }
+//	        model.addAttribute("error", "Invalid username or password.");
+//	        return "home";
+//		 
+//	 }
 	
+	 @GetMapping("/")
+	 public String showLogin(Model model, HttpSession session) {
+			@SuppressWarnings("unchecked")
+			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+
+			if (messages == null) {
+				messages = new ArrayList<>();
+			}
+			model.addAttribute("sessionMessages", messages);
+
+			return "login";
+
+		}
+	 
+	 @PostMapping("/login")
+	 public String login(@RequestParam String username,@RequestParam String password, Model model){
+		 User user = userServiceImpl.findByUsername(username);
+	        if (user != null && user.getPassword().equals(password)) {
+	            if ("ADMIN".equals(user.getRole())) {
+	                return "adminHome";
+	            } else if ("RECEP1".equals(user.getRole())) {
+	                return "home";
+	            }
+	        }
+	        model.addAttribute("error", "Invalid username or password.");
+	        return "login";
+		 
+	 }
+	 
+	 @GetMapping("/logout")
+	    public String logout() {
+	        // Add logout logic here
+	        return "redirect:/";
+	    }
+		
+	 
+// **************** Patient controller **********************************
+	 
+//	 @GetMapping("/patientList")
+//	 public String showPatientList() {
+//		 return "patientList";
+//
+//	 }
+//	
+
 //	@GetMapping("/listPatientInfo")
 //	public List<PatientInfo> getAllPatientInfo() {		
 //		return  this.patientInfoService.getAllPatientInfo();
 //	}	
 
-			
 
 //	 @GetMapping("/list_Patient_Procedure")
 //	    public List<PatientProcedure> getAllPatietProcedures() {	 
 //	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
 //	 }
 //	 
-	 @GetMapping("/")
-	 public String home()
-	 {
-		 return "home";
-	 }
-
-
-	
+	 
 
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  
@@ -136,14 +244,6 @@ public class MainController {
 		}
 	
 	
-	
-	@GetMapping("/adminHome")
-	 public String adminHome()
-	 {
-		 return "adminHome";
-	 }
-		
-	
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
 
@@ -169,6 +269,24 @@ public class MainController {
 //PatientProcedure controller ENDs	
 	
 	
+	@PostMapping("/persistMessage")
+	public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
+		if (messages == null) {
+			messages = new ArrayList<>();
+			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		}
+		messages.add(msg);
+		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+		return "redirect:/login";
+	}
+
+	@PostMapping("/destroy")
+	public String destroySession(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/login";
+	}
 	
 	
 	

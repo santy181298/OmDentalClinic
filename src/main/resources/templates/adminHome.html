@@ -90,15 +90,18 @@
   
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/pohome" class="logo d-flex align-items-center">
+      <a href="#" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Om Dental Clinic</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+	
+	<nav>
+        <span>Welcome, <span th:text="${username}"></span></span>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
 
-
-    
 
   </header><!-- End Header -->
 
@@ -108,7 +111,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1> Doctor Profile</h1>
+      <h1>Admin Profile</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -123,7 +126,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Om Dental Clinic</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

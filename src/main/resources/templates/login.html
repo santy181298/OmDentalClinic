@@ -62,6 +62,8 @@
 	<!-- Iconscout Link For Icons -->
 
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+	
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 
 
 </head>
@@ -149,10 +151,12 @@
 
 							</div>
 
-							
+						<form th:action="@{/persistMessage}" method="post">
 							<div class="col-12">
 		                      <label for="yourName" class="form-label" >Username</label>
-		                      <input type="text"  class="form-control" id="fullname" name="fullname"  autofocus="autofocus" required/>
+
+		                      <input type="text"  class="form-control" id="username" name="username"  autofocus="autofocus" required/>
+		                      
 		                      <div class="invalid-feedback">Please enter valid username</div>
 		                    </div>
 							
@@ -178,7 +182,7 @@
 								<button class="btn btn-primary w-100" type="submit">Login</button>
 
 							</div>
-
+						</form>
 
 
 						</form>
