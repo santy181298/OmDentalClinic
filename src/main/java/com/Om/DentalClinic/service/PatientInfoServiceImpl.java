@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Om.DentalClinic.model.PatientInfo;
-import com.Om.DentalClinic.model.PatientProcedure;
+
 import com.Om.DentalClinic.repository.PatientInfoRepository;
+
 
 
 @Service
@@ -22,13 +23,6 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	public List<PatientInfo> getAllPatientInfo() {
 		return patientInfoRepository.findAll();
 	}
-
-//	@Override
-//	public void savePatientInfo(PatientInfo patientInfo) {
-//		 patientInfoRepository.save(patientInfo);	
-//	}
-
-
 
 	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,int patientmobile1,int patientmobile2,String patientmedicalhistory) throws IOException {
 		
@@ -48,19 +42,15 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		
 	}
 
+	public void deletePatientInfoById(int id) {
+		this.patientInfoRepository.deleteById(id);
+	}
 
 
+	public PatientInfo getPatientInfoById(int id) {
+		return patientInfoRepository.findById(id).orElse(null);
+	}
 
-
-
-	
-//	public PatientInfo getPatientInfoById(Long id) {
-//		return patientInfoRepository.findById(id).orElse(null);
-//	}
-//
-//	public void deletePatientInfoById(Long id) {
-//		this.patientInfoRepository.deleteById(id);
-//	}
 
 
 }

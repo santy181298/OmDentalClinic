@@ -11,8 +11,8 @@ public interface PatientInfoService {
 	public List<PatientInfo> getAllPatientInfo();
 
 	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage, String patientgender,Date patientregdate,int patientmobile1,int patientmobile2,String patientmedicalhistory) throws IOException;
-//	public PatientInfo getPatientInfoById(Long id) ;
-//	public void deletePatientInfoById(Long id) ;
+	public PatientInfo getPatientInfoById(int id) ;
+	public void deletePatientInfoById(int id) ;
 //	public void savePatientInfo(PatientInfo patientInfo);
 	
 

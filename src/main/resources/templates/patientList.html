@@ -175,7 +175,7 @@
               <table class="table datatable">
                 <thead>
                   <tr >
-                    <th scope="col">Patient Number</th>
+					<th scope="col">Patient Count</th> 
                     <th scope="col">Patient Name</th>
                     <th scope="col">Age</th>
                     <th scope="col">Gender</th>
@@ -186,16 +186,17 @@
                   </tr>
                 </thead>
                <tbody>
-				    <tr th:each="company, companyStat : ${listCompanies}">
-                        <th th:utext="${companyStat.count}"></th>
-				        <td th:text="${company.company_name}"></td>
-				        <td th:text="${company.brand_name}"></td>
-				        <td th:text="${company.companyemail}"></td>
-				        <td th:text="${company.head_office_country}"></td>
-                        <td th:text="${company.head_office_country}"></td>
+				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
+                        <th th:utext="${patientinfoStat.count}"></th>
+				        <td th:text="${patientinfo.firstname}"></td>
+				        <td th:text="${patientinfo.patientage}"></td>
+				        <td th:text="${patientinfo.patientgender}"></td>
+				        <td th:text="${patientinfo.patientregdate}"></td>
+                        <td th:text="${patientinfo.patientmobile1}"></td>
 				        <td>
-				            <a th:href="@{/editCompany/{id}(id=${company.companyid})}" class="btn btn-primary">Update</a>
-				            <a th:href="@{/deleteCompany/{id}(id=${company.companyid})}" class="btn btn-danger mx-2">Delete</a>
+				            <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
+				            <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
+				            <a th:href="@{/procedureDetails}" class="btn btn-success mx-2">Add procedure</a>
 				        </td>
 				    </tr>
 				</tbody>
