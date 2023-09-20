@@ -52,10 +52,10 @@ public class PatientInfo {
 	private Date patientregdate;
 	
 	@Column(name = "mobile_one")
-	private int patientmobile1;
+	private long patientmobile1;
 	
 	@Column(name = "mobile_two")
-	private int patientmobile2;
+	private long patientmobile2;
 	
 	@Column(name = "medical_history")
 	private String patientmedicalhistory;
@@ -159,19 +159,19 @@ public class PatientInfo {
 		this.patientregdate = patientregdate;
 	}
 
-	public int getPatientmobile1() {
+	public long getPatientmobile1() {
 		return patientmobile1;
 	}
 
-	public void setPatientmobile1(int patientmobile1) {
-		this.patientmobile1 = patientmobile1;
+	public void setPatientmobile1(long patientmobile12) {
+		this.patientmobile1 = patientmobile12;
 	}
 
-	public int getPatientmobile2() {
+	public long getPatientmobile2() {
 		return patientmobile2;
 	}
 
-	public void setPatientmobile2(int patientmobile2) {
+	public void setPatientmobile2(long patientmobile2) {
 		this.patientmobile2 = patientmobile2;
 	}
 

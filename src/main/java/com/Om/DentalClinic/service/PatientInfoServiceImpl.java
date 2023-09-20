@@ -24,7 +24,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		return patientInfoRepository.findAll();
 	}
 
-	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,int patientmobile1,int patientmobile2,String patientmedicalhistory) throws IOException {
+	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,long patientmobile1,long patientmobile2,String patientmedicalhistory) throws IOException {
 		
 		PatientInfo patientInfo = new PatientInfo();
 		patientInfo.setPatientReports(patientReports.getBytes());

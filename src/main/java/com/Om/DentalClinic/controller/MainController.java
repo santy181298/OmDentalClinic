@@ -210,8 +210,8 @@ public class MainController {
 		@RequestParam("patientage") int patientage,
 		@RequestParam("patientgender") String patientgender,
 		@RequestParam("patientregdate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
-		@RequestParam("patientmobile1") int patientmobile1,
-		@RequestParam("patientmobile2") int patientmobile2,
+		@RequestParam("patientmobile1") long patientmobile1,
+		@RequestParam("patientmobile2") long patientmobile2,
 		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 		{
 		    if (patientReports.isEmpty()) {
@@ -231,8 +231,8 @@ public class MainController {
 		@RequestParam("patientage") int patientage,
 		@RequestParam("patientgender") String patientgender,
 		@RequestParam("patientregdate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
-		@RequestParam("patientmobile1") int patientmobile1,
-		@RequestParam("patientmobile2") int patientmobile2,
+		@RequestParam("patientmobile1") long patientmobile1,
+		@RequestParam("patientmobile2") long patientmobile2,
 		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 		{
 		    if (patientReports.isEmpty()) {
