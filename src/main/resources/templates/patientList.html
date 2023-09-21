@@ -1,56 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Patient List</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <title>Om Dental Clinic</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+ 
+  
 </head>
-</head>
+
 <body>
-<!-- 	<div align="center"> -->
-<!-- 		<h1>Startup List</h1> -->
-<!-- 		<table> -->
-<!-- 			<thead> -->
-<!-- 				<tr> -->
-<!-- 					<th>Company Name</th> -->
-<!-- 					<th>Brand Name</th> -->
-<!-- 					<th>Start Date</th> -->
-<!-- 				</tr> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 				<tr th:each="company:${listCompanies}"> -->
-<!-- 					<td th:text="${company.company_name}"></td> -->
-<!-- 					<td th:text="${company.brand_name}"></td> -->
-<!-- 					<td th:text="${company.start_date}"></td> -->
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
-<!-- 	</div> -->
-<!-- ======= Header ======= -->
+	<!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
@@ -60,7 +54,7 @@
         <li class="nav-item">
      
          
-       <ul>
+       
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Information</span>
@@ -84,7 +78,7 @@
               <i></i><span>Patient List</span>
             </a>
           </li>
-        </ul>
+        
         
       </li>
      
@@ -96,47 +90,22 @@
   
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/pohome" class="logo d-flex align-items-center">
+      <a class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Om Dental Clinic</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-	
-	<nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <!-- End Search Icon-->
-
-       <!-- End Notification Nav -->
 
 
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <span>Welcome, <span th:text="${username}"></span></span>
-        	  <a th:href="@{/logout}">Logout</a>
-            </li>
-            
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-
+    
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
 
+    <!-- ======= Header ======= -->
+    
 <main id="main" class="main">
 	
 	<div class="pagetitle">
@@ -202,10 +171,8 @@
               <table class="table datatable">
                 <thead>
                   <tr >
-					<th scope="col">Patient Count</th> 
+                    <th scope="col">Patient Number</th>
                     <th scope="col">Patient Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
                     <th scope="col">Date of Registration</th>
                     <th scope="col">Mobile Number</th>
                     <th scope="col">Actions</th>
@@ -213,17 +180,14 @@
                   </tr>
                 </thead>
                <tbody>
-				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
-                        <th th:utext="${patientinfoStat.count}"></th>
-				        <td th:text="${patientinfo.firstname}"></td>
-				        <td th:text="${patientinfo.patientage}"></td>
-				        <td th:text="${patientinfo.patientgender}"></td>
-				        <td th:text="${patientinfo.patientregdate}"></td>
-                        <td th:text="${patientinfo.patientmobile1}"></td>
+				    <tr th:each="company, companyStat : ${listCompanies}">
+                        <th th:utext="${companyStat.count}"></th>
+				        <td th:text="${company.company_name}"></td>
+				        <td th:text="${company.head_office_country}"></td>
+                        <td th:text="${company.head_office_country}"></td>
 				        <td>
-				            <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
-				            <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
-				            <a th:href="@{/procedureDetails}" class="btn btn-success mx-2">Add procedure</a>
+				            <a th:href="@{/editCompany/{id}(id=${company.companyid})}" class="btn btn-primary">Update</a>
+				            <a th:href="@{/deleteCompany/{id}(id=${company.companyid})}" class="btn btn-danger mx-2">Delete</a>
 				        </td>
 				    </tr>
 				</tbody>

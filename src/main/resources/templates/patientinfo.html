@@ -54,7 +54,7 @@
         <li class="nav-item">
      
          
-       <ul>
+       
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Information</span>
@@ -78,7 +78,7 @@
               <i></i><span>Patient List</span>
             </a>
           </li>
-        </ul>
+        
         
       </li>
      
@@ -90,46 +90,19 @@
   
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/pohome" class="logo d-flex align-items-center">
+      <a class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Om Dental Clinic</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-  
-     <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <!-- End Search Icon-->
-
-       <!-- End Notification Nav -->
 
 
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <span>Welcome, <span th:text="${username}"></span></span>
-        	  <a th:href="@{/logout}">Logout</a>
-            </li>
-            
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
     
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-
 
     <!-- ======= Header ======= -->
     
@@ -139,7 +112,7 @@
           <h1>Patient Information Form</h1>
           <nav>
         	<ol class="breadcrumb">
-          		<li class="breadcrumb-item"><a href="/adminHome">Home</a></li>
+          		<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
           		<li class="breadcrumb-item active">Patient Information</li>
         	</ol>
       		</nav>
@@ -148,7 +121,7 @@
             <div class="card-body">
               <h5 class="card-title"></h5>
     
-              <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}  /updatePatientInfo"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
+              <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
 		<form th:object="${patientinfo}" th:action="@{SavePatientInfo}" action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data">
 
@@ -211,14 +184,14 @@
                 <div class="row mb-3">
                     <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
                     <div class="col-sm-10">
-                      <input type="text" th:field="*{patientmobile1}"  name="number" id="patientPhoneNumber" class="form-control " maxlength="10" required>                     
+                      <input type="text" th:field="*{patientmobile1}"  name="number" id="patientPhoneNumber" class="form-control " required>                     
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label for="inputText" class="col-sm-2 col-form-label ">Mobile Number 2</label>
                     <div class="col-sm-10">
-                      <input type="text" th:field="*{patientmobile2}"  name="number" id="patientPhoneNumber" class="form-control " maxlength="10">                     
+                      <input type="text" th:field="*{patientmobile2}"  name="number" id="patientPhoneNumber" class="form-control " required>                     
                     </div>
                   </div>
 
@@ -250,18 +223,10 @@
                 </div>
                 </div>
               </div>
-              
-               <div class="row mb-3 d-none"><!-- to hide field d-none -->
-		      <label for="inputPassword" class="col-sm-2 col-form-label required">PatientID</label>
-		      <div class="col-sm-10">
-               <input type="text" id="patientnumber"  th:field="*{patientnumber}" class="form-control" readonly>
-		       </div>
-	          </div>           
-            
 
                <div class="d-flex justify-content-center mt-5">
 				 <button type="submit" class="btn btn-primary">Save</button>
-				 <button type="reset" class="btn btn-secondary" style="margin-left:2em;" onclick="resetForm()">Reset</button>
+				 <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
 			  </div>
 
               </form>   
