@@ -46,6 +46,9 @@ public class MainController {
 	private PatientProcedureService patientProcedureService;
 	
 	@Autowired
+	private PatientProcedureServiceImpl patientProcedureServiceImpl;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -56,11 +59,15 @@ public class MainController {
 	this.userServiceImpl=userServiceImpl;
 	}
 	
-	
+	 @GetMapping("/patientDetails")
+	 public String showPatientDetail(Model model) {
+		 model.addAttribute("listPatientProcedures");
+		 return "patientDetails";
+	 }
 	
 //	 @GetMapping("/patientDetails")
 //	 public String showPatientDetail(Model model) {
-//		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
+//		 model.addAttribute("listPatientProcedures", PatientProcedureServiceImpl.getAllPatientProcedures());
 //		 return "patientDetails";
 //	 }
 
