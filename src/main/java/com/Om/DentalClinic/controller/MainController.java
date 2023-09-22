@@ -69,7 +69,7 @@ public class MainController {
 		 return "login";
 	 }
 
-	 @GetMapping("/adminhome")
+	 @GetMapping("/adminHome")
 	 public String adminHome()
 	 {
 		 return "adminHome";
