@@ -13,6 +13,8 @@ import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.PatientProcedureRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class PatientProcedureServiceImpl implements PatientProcedureService{
@@ -42,7 +44,5 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 //		patientProcedureRepository.save(patientProcedure);
 //		return "Data saved successfully";
 //	}
-
-	
 	
 }

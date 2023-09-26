@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
@@ -29,7 +32,7 @@ import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 import com.Om.DentalClinic.service.UserServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
-
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -189,8 +192,14 @@ public class MainController {
 	 } 
 	 
 		@GetMapping("/patientList")
-		public String showPatientList(Model model) {
-			model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
+		public String showPatientList(Model model,Principal principal) {
+			
+//			// Get the currently logged in user
+//	        User user = userServiceImpl.findByUsername(principal.getName());
+//	     // Pass the user's role to the Thymeleaf template
+//	        model.addAttribute("userRole", user.getRole());
+	        
+	        model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
 			return "patientList";
 		}
 		
