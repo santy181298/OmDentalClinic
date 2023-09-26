@@ -34,6 +34,7 @@ import com.Om.DentalClinic.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -139,8 +140,9 @@ public class MainController {
 		}
 	 
 	 @PostMapping("/login")
-	 public String login(@RequestParam String username,@RequestParam String password, Model model){
-		 User user = userServiceImpl.findByUsername(username);
+	    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException { // Declare IOException
+	        User user = userServiceImpl.findByUsername(username);
+
 	        if (user != null && user.getPassword().equals(password)) {
 	            if ("ADMIN".equals(user.getRole())) {
 	                return "adminHome";
@@ -148,10 +150,22 @@ public class MainController {
 	                return "home";
 	            }
 	        }
+
+	        if (user == null) {
+	            System.out.println("Invalid Details");
+	        } 
+	        
+	        else {
+	            HttpSession session = request.getSession();
+	            session.setAttribute("currentUser", user);
+	            response.sendRedirect("adminHome.html");
+	             
+	            
+	        } 
+
 	        model.addAttribute("error", "Invalid username or password.");
 	        return "login";
-		 
-	 }
+	    }
 	 
 	 @GetMapping("/logout")
 	    public String logout() {
