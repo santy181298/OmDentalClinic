@@ -8,4 +8,5 @@ import com.Om.DentalClinic.model.PatientProcedure;
 @Repository
 public interface PatientProcedureRepository extends JpaRepository<PatientProcedure, Integer>{
 
+	
 }

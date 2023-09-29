@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
@@ -30,8 +33,9 @@ import com.Om.DentalClinic.service.UserServiceImpl;
 
 
 import jakarta.servlet.http.HttpSession;
-
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -47,6 +51,9 @@ public class MainController {
 	private PatientProcedureService patientProcedureService;
 	
 	@Autowired
+	private PatientProcedureServiceImpl patientProcedureServiceImpl;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -57,11 +64,15 @@ public class MainController {
 	this.userServiceImpl=userServiceImpl;
 	}
 	
-	
+	 @GetMapping("/patientDetails")
+	 public String showPatientDetail(Model model) {
+		 model.addAttribute("listPatientProcedures");
+		 return "patientDetails";
+	 }
 	
 //	 @GetMapping("/patientDetails")
 //	 public String showPatientDetail(Model model) {
-//		 model.addAttribute("listPatientProcedures", patientProcedureServiceImpl.getAllPatientProcedures());
+//		 model.addAttribute("listPatientProcedures", PatientProcedureServiceImpl.getAllPatientProcedures());
 //		 return "patientDetails";
 //	 }
 
@@ -130,8 +141,9 @@ public class MainController {
 		}
 	 
 	 @PostMapping("/login")
-	 public String login(@RequestParam String username,@RequestParam String password, Model model){
-		 User user = userServiceImpl.findByUsername(username);
+	    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException { // Declare IOException
+	        User user = userServiceImpl.findByUsername(username);
+
 	        if (user != null && user.getPassword().equals(password)) {
 	            if ("ADMIN".equals(user.getRole())) {
 	                return "adminHome";
@@ -139,10 +151,22 @@ public class MainController {
 	                return "home";
 	            }
 	        }
+
+	        if (user == null) {
+	            System.out.println("Invalid Details");
+	        } 
+	        
+	        else {
+	            HttpSession session = request.getSession();
+	            session.setAttribute("currentUser", user);
+	            response.sendRedirect("adminHome.html");
+	             
+	            
+	        } 
+
 	        model.addAttribute("error", "Invalid username or password.");
 	        return "login";
-		 
-	 }
+	    }
 	 
 	 @GetMapping("/logout")
 	    public String logout() {
@@ -183,8 +207,14 @@ public class MainController {
 	 } 
 	 
 		@GetMapping("/patientList")
-		public String showPatientList(Model model) {
-			model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
+		public String showPatientList(Model model,Principal principal) {
+			
+//			// Get the currently logged in user
+//	        User user = userServiceImpl.findByUsername(principal.getName());
+//	     // Pass the user's role to the Thymeleaf template
+//	        model.addAttribute("userRole", user.getRole());
+	        
+	        model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
 			return "patientList";
 		}
 		
