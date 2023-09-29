@@ -34,15 +34,6 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 		patientProcedureRepository.save(patientProcedure);
 	}
 
-//	public String savePatientProcedure(PatientInfo patientprocedurenumber, Date patientproceduredate,String patientproceduredetail,
-//			 double patientprocedureestimateamount,String patientprocedurepaymenttype,double patientprocedurepaymentamount,
-//			 String patientprocedurelabname)throws IOException {
-//		PatientProcedure patientProcedure=new PatientProcedure();
-//		
-//		patientProcedureRepository.save(patientProcedure);
-//		return "Data saved successfully";
-//	}
 
-	
 	
 }

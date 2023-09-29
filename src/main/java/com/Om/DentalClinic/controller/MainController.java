@@ -28,6 +28,7 @@ import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 import com.Om.DentalClinic.service.UserServiceImpl;
 
+
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -249,25 +250,30 @@ public class MainController {
 
 //PatientProcedure controller ------------------------------------------------------------------------------	
 	
-	 @GetMapping("/procedureDetails")
-	 public String showProcedureDetail(Model model) {
-		 PatientProcedure  patientprocedure = new  PatientProcedure();
-		 model.addAttribute("patientprocedure",patientprocedure);
-		 return "procedureDetails";
-	 }
-	 
-	 
-	@PostMapping("/SavePatientProcedure")
-	public String savePatientProcedure(  @ModelAttribute("patientProcedure") PatientProcedure patientProcedure) {
+		
+		   @GetMapping("/procedureDetails/{patientId}")
+		   public String showProcedureDetail(@PathVariable("patientId") int patientId, Model model) {
+		       PatientProcedure patientprocedure = new PatientProcedure();
+		       model.addAttribute("patientprocedure", patientprocedure);
+		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
+		        model.addAttribute("patientinfo", patientInfo);
+		       return "procedureDetails";
+		   }
 
-		        patientProcedureService.savePatientProcedure(patientProcedure);
 
-		        return "redirect:/procedureDetails"; 
-		    }
+		   @PostMapping("/SavePatientProcedure/{patientnumber}")
+		   public String savePatientProcedure(
+		       @ModelAttribute PatientProcedure patientProcedure,
+		       @PathVariable("patientnumber") int patientNumber) {
+		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);
+		       patientProcedure.setProcedurenumber(patientInfo);
+		       patientProcedureService.savePatientProcedure(patientProcedure);
+		       return "redirect:/patientList";
+		   }
 
-	 
-//PatientProcedure controller ENDs	
-	
+
+		   
+//PatientProcedure controller ENDs		
 	
 	@PostMapping("/persistMessage")
 	public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
@@ -288,7 +294,11 @@ public class MainController {
 		return "redirect:/login";
 	}
 	
+		
 	
-	
-	
+	 @GetMapping("/patientDetails")
+		public String showProcedureDetails(Model model) {
+			model.addAttribute("listprocedure", patientProcedureService.getAllPatientProcedures());
+			return "patientDetails";
+		}
 }

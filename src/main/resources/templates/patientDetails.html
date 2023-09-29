@@ -194,13 +194,11 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <tr th:each="patientProcedure, procedureStat : ${listPatientProcedures}">
+			            <tr th:each="patientProcedure, procedureStat : ${listprocedure}">
 			                <th th:text="${procedureStat.index + 1}"></th>
 			                <td th:text="${patientProcedure.patientproceduredate}"></td>
 			                <td th:text="${patientProcedure.patientproceduredetail}"></td>
-<!-- 			                <td th:text="${patientProcedure?.patientprocedureestimateamount} ?: ''"></td> -->
 			                <td th:text="${patientProcedure.patientprocedurepaymenttype}"></td>
-<!-- 			                <td th:text="${patientProcedure.patientprocedurepaymentamount}"></td> -->
 			                <td>
 			                    <a class="btn btn-primary">Update</a>
 			                    <a class="btn btn-danger mx-2">Delete</a>
