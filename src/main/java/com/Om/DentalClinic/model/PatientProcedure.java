@@ -33,6 +33,9 @@ public class PatientProcedure {
     @DateTimeFormat(pattern = "yyyy-MM-dd") // Specify the expected date format
     private Date proceduredate;
 
+    @Column(name = "proc_type")
+    private String proceduretype;
+    
     
     @Column(name = "proc_details")
     private String proceduredetail;
@@ -71,13 +74,16 @@ public class PatientProcedure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduredetail,
-			Double estimateamount, Double paymentamount, Double balanceamount, String labname, String externaldoctor,
-			String cashiername, Date timestamp) {
+	
+	
+	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduretype,
+			String proceduredetail, Double estimateamount, Double paymentamount, Double balanceamount, String labname,
+			String externaldoctor, String cashiername, Date timestamp) {
 		super();
 		this.procedureid = procedureid;
 		this.procedurenumber = procedurenumber;
 		this.proceduredate = proceduredate;
+		this.proceduretype = proceduretype;
 		this.proceduredetail = proceduredetail;
 		this.estimateamount = estimateamount;
 		this.paymentamount = paymentamount;
@@ -110,6 +116,14 @@ public class PatientProcedure {
 
 	public void setProceduredate(Date proceduredate) {
 		this.proceduredate = proceduredate;
+	}
+
+	public String getProceduretype() {
+		return proceduretype;
+	}
+
+	public void setProceduretype(String proceduretype) {
+		this.proceduretype = proceduretype;
 	}
 
 	public String getProceduredetail() {
@@ -179,12 +193,11 @@ public class PatientProcedure {
 	@Override
 	public String toString() {
 		return "PatientProcedure [procedureid=" + procedureid + ", procedurenumber=" + procedurenumber
-				+ ", proceduredate=" + proceduredate + ", proceduredetail=" + proceduredetail + ", estimateamount="
-				+ estimateamount + ", paymentamount=" + paymentamount + ", balanceamount=" + balanceamount
-				+ ", labname=" + labname + ", externaldoctor=" + externaldoctor + ", cashiername=" + cashiername
-				+ ", timestamp=" + timestamp + "]";
+				+ ", proceduredate=" + proceduredate + ", proceduretype=" + proceduretype + ", proceduredetail="
+				+ proceduredetail + ", estimateamount=" + estimateamount + ", paymentamount=" + paymentamount
+				+ ", balanceamount=" + balanceamount + ", labname=" + labname + ", externaldoctor=" + externaldoctor
+				+ ", cashiername=" + cashiername + ", timestamp=" + timestamp + "]";
 	}
-     
 
 	
 	    

@@ -9,7 +9,15 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+	@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+	@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+
 :root {
+	
   scroll-behavior: smooth;
 }
 
@@ -1332,9 +1340,6 @@ h6 {
 --------------------------------------------------------------*/
 
 /* Import Google Font - Poppins */
-@import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap')
-	;
 
 
 .content .search {
@@ -1406,9 +1411,7 @@ h6 {
 	background: #f2f2f2;
 }
 /* Google Fonts - Poppins */
-@import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap')
-	;
+
 
 .container {
 	position: relative;
