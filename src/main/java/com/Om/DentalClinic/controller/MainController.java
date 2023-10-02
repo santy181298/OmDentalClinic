@@ -70,11 +70,6 @@ public class MainController {
 		 return "patientDetails";
 	 }
 	
-//	 @GetMapping("/patientDetails")
-//	 public String showPatientDetail(Model model) {
-//		 model.addAttribute("listPatientProcedures", PatientProcedureServiceImpl.getAllPatientProcedures());
-//		 return "patientDetails";
-//	 }
 
 	 @GetMapping("/login")
 	 public String showLogin() {
@@ -175,27 +170,7 @@ public class MainController {
 	    }
 		
 	 
-// **************** Patient controller **********************************
-	 
-//	 @GetMapping("/patientList")
-//	 public String showPatientList() {
-//		 return "patientList";
-//
-//	 }
-//	
 
-//	@GetMapping("/listPatientInfo")
-//	public List<PatientInfo> getAllPatientInfo() {		
-//		return  this.patientInfoService.getAllPatientInfo();
-//	}	
-
-
-//	 @GetMapping("/list_Patient_Procedure")
-//	    public List<PatientProcedure> getAllPatietProcedures() {	 
-//	        return this.patientProcedureServiceImpl.getAllPatientProcedures();
-//	 }
-//	 
-	 
 
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  
@@ -208,13 +183,7 @@ public class MainController {
 	 
 		@GetMapping("/patientList")
 		public String showPatientList(Model model,Principal principal) {
-			
-//			// Get the currently logged in user
-//	        User user = userServiceImpl.findByUsername(principal.getName());
-//	     // Pass the user's role to the Thymeleaf template
-//	        model.addAttribute("userRole", user.getRole());
-	        
-	        model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
+		   model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
 			return "patientList";
 		}
 		
@@ -325,10 +294,5 @@ public class MainController {
 	}
 	
 		
-	
-	 @GetMapping("/showProcedureDetails")
-		public String showProcedureDetails(Model model) {
-			model.addAttribute("listprocedure", patientProcedureService.getAllPatientProcedures());
-			return "patientDetails";
-		}
+
 }
