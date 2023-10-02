@@ -326,7 +326,7 @@ public class MainController {
 	
 		
 	
-	 @GetMapping("/patientDetails")
+	 @GetMapping("/showProcedureDetails")
 		public String showProcedureDetails(Model model) {
 			model.addAttribute("listprocedure", patientProcedureService.getAllPatientProcedures());
 			return "patientDetails";
