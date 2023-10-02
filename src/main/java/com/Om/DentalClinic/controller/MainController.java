@@ -81,21 +81,7 @@ public class MainController {
 	 {
 		 return "adminHome";
 	 }
-	 
-//	 @PostMapping("/adminhome")
-//	 public String adminLogin(@RequestParam String username,@RequestParam String password, Model model)
-//	 {
-//		 User user = userServiceImpl.findByUsername(username);
-//	        if (user != null && user.getPassword().equals(password)) {
-//	            if ("ADMIN".equals(user.getRole())) {
-//	                return "adminHome";
-//	            }else {
-//	            	return "redirect:/";
-//	            }
-//	        }
-//			return "adminHome"; 
-//		 
-//	 }
+
 	 
 	 @GetMapping("/userhome")
 	 public String userHome(Model model) {
