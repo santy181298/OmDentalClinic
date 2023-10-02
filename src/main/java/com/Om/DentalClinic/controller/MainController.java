@@ -81,21 +81,7 @@ public class MainController {
 	 {
 		 return "adminHome";
 	 }
-	 
-//	 @PostMapping("/adminhome")
-//	 public String adminLogin(@RequestParam String username,@RequestParam String password, Model model)
-//	 {
-//		 User user = userServiceImpl.findByUsername(username);
-//	        if (user != null && user.getPassword().equals(password)) {
-//	            if ("ADMIN".equals(user.getRole())) {
-//	                return "adminHome";
-//	            }else {
-//	            	return "redirect:/";
-//	            }
-//	        }
-//			return "adminHome"; 
-//		 
-//	 }
+
 	 
 	 @GetMapping("/userhome")
 	 public String userHome(Model model) {
@@ -103,23 +89,7 @@ public class MainController {
 	     return "home"; 
 	  }
 	 
-//	 @PostMapping("/home")
-//	 public String userLogin(@RequestParam String username,@RequestParam String password, Model model)
-//	 {
-//		 User user = userServiceImpl.findByUsername(username);
-//	        if (user != null && user.getPassword().equals(password)) {
-//	            if ("RECEP1".equals(user.getRole())) {
-//	                return "home";
-//	            } else if ("RECEP2".equals(user.getRole())) {
-//	                return "home";
-//	            }else if ("RECEP3".equals(user.getRole())) {
-//	                return "home";
-//	            }
-//	        }
-//	        model.addAttribute("error", "Invalid username or password.");
-//	        return "home";
-//		 
-//	 }
+
 	
 	 @GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
