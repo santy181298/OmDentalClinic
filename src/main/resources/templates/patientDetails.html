@@ -20,13 +20,13 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
@@ -49,31 +49,18 @@
     <ul class="sidebar-nav" id="sidebar-nav">
         
         <li class="nav-item">
-     
-         
-       
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Information</span>
             </a>
           </li>
-          
-
-
-          <li>
-            <a class="nav-link collapsed" th:href="@{/patientDetails}">
-              <i></i><span>Patient Details</span>
-            </a>
-          </li>
-          
+   
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
               <i></i><span>Patient List</span>
             </a>
           </li>
-        
-        
-      </li>
+      	</li>
      
     </ul>
 
@@ -182,32 +169,28 @@
              
 			</div>
 			<div class="table-responsive">
-			    <table class="table datatable">
-			        <thead>
-			            <tr>
-			                <th scope="col">#</th>
-			                <th scope="col">Date</th>
-			                <th scope="col">Procedure</th>
-<!-- 			                <th scope="col">Estimate</th> -->
-			                <th scope="col">Payment Mode</th>
-<!-- 			                <th scope="col">Payment Amount</th> -->
-			                <th scope="col">Actions</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			            <tr th:each="patientProcedure, procedureStat : ${listprocedure}">
-			                <th th:text="${procedureStat.index + 1}"></th>
-			                <td th:text="${patientProcedure.patientproceduredate}"></td>
-			                <td th:text="${patientProcedure.patientproceduredetail}"></td>
-			                <td th:text="${patientProcedure.patientprocedurepaymenttype}"></td>
-			                <td>
-			                    <a class="btn btn-primary">Update</a>
-			                    <a class="btn btn-danger mx-2">Delete</a>
-			                    <a class="btn btn-success mx-2">Add procedure</a>
-			                </td>
-			            </tr>
-			        </tbody>
-			    </table>
+			<table class="table">
+			    <thead>
+			        <tr>
+			            <th>#</th>
+			            <th>Procedure Date</th>
+			            <th>Procedure Detail</th>
+			            <th>Actions</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
+			            <td th:text="${procedureStat.index + 1}"></td>
+			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'yyyy-MM-dd')}"></td>
+			            <td th:text="${patientProcedure.proceduredetail}"></td>
+			            <td>
+			                <a class="btn btn-primary" th:href="@{/editProcedure/{procedureId}(procedureId=${patientProcedure.procedureid})}">Update</a>
+			                <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{procedureId}(procedureId=${patientProcedure.procedureid})}">Delete</a>
+			            </td>
+			        </tr>
+			    </tbody>
+			</table>
+
 			</div>
               <!-- End Table with stripped rows -->
 			  
