@@ -57,14 +57,7 @@
               <i></i><span>Patient Information</span>
             </a>
           </li>
-          
-
-
-          <li>
-            <a class="nav-link collapsed" th:href="@{/patientDetails}">
-              <i></i><span>Patient Details</span>
-            </a>
-          </li>
+         
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
@@ -142,16 +135,7 @@
               <div class="search-bars-container">
                <div class="search-bars-container d-flex">
 				  <!-- First Search Bar -->
-				  <div class="search-bar" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Patient Number" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
-				    </div>
-				  </div>
+
 				
 				  <!-- Second Search Bar -->
 				  <div class="search-bar mx-3" style="width: 250px;">
@@ -184,10 +168,8 @@
               <table class="table datatable">
                 <thead>
                   <tr >
-					<th scope="col">Patient Count</th> 
+	
                     <th scope="col">Patient Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
                     <th scope="col">Date of Registration</th>
                     <th scope="col">Mobile Number</th>
                     <th scope="col">Actions</th>
@@ -196,21 +178,17 @@
                 </thead>
                <tbody>
 				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
-                        <th th:utext="${patientinfoStat.count}"></th>
-				        <td th:text="${patientinfo.firstname}"></td>
-				        <td th:text="${patientinfo.patientage}"></td>
-				        <td th:text="${patientinfo.patientgender}"></td>
-				        <td th:text="${patientinfo.patientregdate}"></td>
-                        <td th:text="${patientinfo.patientmobile1}"></td>
+                  
+						<td th:text="${patientinfo.firstname} + ' ' + ${patientinfo.middlename} + ' ' + ${patientinfo.lastname}"></td>
+				        <td th:text="${#dates.format(patientinfo.patientregdate, 'yyyy-MM-dd')}"></td>
+		                <td th:text="${patientinfo.patientmobile1}"></td>
+				       
 				        <td>
-
 		                <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
 		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
-						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2">Add procedure</a>
-
-
-
-				        </td>
+						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2">Add Proc</a>
+						<a th:href="@{/patientDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-warning mx-2">View Proc</a>
+			        </td>
 				    </tr>
 				</tbody>
 

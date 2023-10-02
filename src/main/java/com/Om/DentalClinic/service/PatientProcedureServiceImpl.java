@@ -36,6 +36,10 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 		patientProcedureRepository.save(patientProcedure);
 	}
 
-
+    @Override
+    public List<PatientProcedure> getProceduresByPatientId(int patientId) {
+   
+        return patientProcedureRepository.findByProcedurenumber_Patientnum(patientId);
+    }
 	
 }

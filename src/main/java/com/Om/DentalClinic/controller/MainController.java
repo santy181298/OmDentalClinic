@@ -64,12 +64,6 @@ public class MainController {
 	this.userServiceImpl=userServiceImpl;
 	}
 	
-	 @GetMapping("/patientDetails")
-	 public String showPatientDetail(Model model) {
-		 model.addAttribute("listPatientProcedures");
-		 return "patientDetails";
-	 }
-	
 
 	 @GetMapping("/login")
 	 public String showLogin() {
@@ -219,6 +213,14 @@ public class MainController {
 
 //PatientProcedure controller ------------------------------------------------------------------------------	
 	
+		
+		 @GetMapping("/patientDetails/{patientId}")
+		 public String showPatientDetail(@PathVariable("patientId") int patientId,Model model) {
+			 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
+			 model.addAttribute("patientProcedures", patientProcedures);
+			 return "patientDetails";
+		 }
+		
 		
 		   @GetMapping("/procedureDetails/{patientId}")
 		   public String showProcedureDetail(@PathVariable("patientId") int patientId, Model model) {

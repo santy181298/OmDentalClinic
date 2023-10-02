@@ -60,14 +60,7 @@
               <i></i><span>Patient Information</span>
             </a>
           </li>
-          
-
-
-          <li>
-            <a class="nav-link collapsed" th:href="@{/patientDetails}">
-              <i></i><span>Patient Details</span>
-            </a>
-          </li>
+         
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
@@ -203,19 +196,19 @@
                   </div>
                 </div>
                 
-                <div class="row mb-3">
-                    <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
-                    <div class="col-sm-10">
-                      <input type="text" th:field="*{patientmobile1}"  name="number" id="patientPhoneNumber" class="form-control " required>                     
-                    </div>
-                  </div>
-
-                  <div class="row mb-3">
-                    <label for="inputText" class="col-sm-2 col-form-label ">Mobile Number 2</label>
-                    <div class="col-sm-10">
-                      <input type="text" th:field="*{patientmobile2}"  name="number" id="patientPhoneNumber" class="form-control " required>                     
-                    </div>
-                  </div>
+				<div class="row mb-3">
+				    <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
+				    <div class="col-sm-10">
+				        <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required  maxlength="10">
+				    </div>
+				</div>
+				
+				<div class="row mb-3">
+				    <label for="inputText" class="col-sm-2 col-form-label">Mobile Number 2</label>
+				    <div class="col-sm-10">
+				        <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control"  maxlength="10">
+				    </div>
+				</div>
 
                 <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Medical History</label>
