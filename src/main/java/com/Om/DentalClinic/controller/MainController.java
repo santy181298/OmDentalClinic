@@ -147,7 +147,7 @@ public class MainController {
 	 
 		@GetMapping("/patientList")
 		public String showPatientList(Model model,Principal principal) {
-		   model.addAttribute("listpatients", patientInfoService.getAllPatientInfo());
+		   model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
 			return "patientList";
 		}
 		

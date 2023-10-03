@@ -181,7 +181,7 @@
 			    <tbody>
 			        <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
 			            <td th:text="${procedureStat.index + 1}"></td>
-			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'yyyy-MM-dd')}"></td>
+			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
 			            <td th:text="${patientProcedure.proceduredetail}"></td>
 			            <td>
 			                <a class="btn btn-primary" th:href="@{/editProcedure/{procedureId}(procedureId=${patientProcedure.procedureid})}">Update</a>

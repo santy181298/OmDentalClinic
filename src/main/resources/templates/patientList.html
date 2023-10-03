@@ -180,9 +180,8 @@
 				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
                   
 						<td th:text="${patientinfo.firstname} + ' ' + ${patientinfo.middlename} + ' ' + ${patientinfo.lastname}"></td>
-				        <td th:text="${#dates.format(patientinfo.patientregdate, 'yyyy-MM-dd')}"></td>
-		                <td th:text="${patientinfo.patientmobile1}"></td>
-				       
+				        <td th:text="${#dates.format(patientinfo.patientregdate, 'dd-MM-yyyy')}"></td> 
+		                <td th:text="${patientinfo.patientmobile1}"></td>				       
 				        <td>
 		                <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
 		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
