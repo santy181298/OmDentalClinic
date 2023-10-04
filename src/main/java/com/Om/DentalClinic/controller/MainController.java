@@ -178,9 +178,9 @@ public class MainController {
 		@RequestParam("patientmobile2") long patientmobile2,
 		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 		{
-		    if (patientReports.isEmpty()) {
-		        return "redirect:/patientinfo?fileError=1";
-		    }
+//		    if (patientReports.isEmpty()) {
+//		        return "redirect:/patientinfo?fileError=1";
+//		    }
 			 patientInfoService.savePatientInfo(patientReports,firstname,middlename,lastname,patientage,patientgender,patientregdate,patientmobile1,patientmobile2,patientmedicalhistory);
 			
 			 return"redirect:/patientList";
@@ -199,9 +199,9 @@ public class MainController {
 		@RequestParam("patientmobile2") long patientmobile2,
 		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
 		{
-		    if (patientReports.isEmpty()) {
-		        return "redirect:/patientinfo?fileError=1"; // Redirect with an error code
-		    }
+//		    if (patientReports.isEmpty()) {
+//		        return "redirect:/patientinfo?fileError=1"; // Redirect with an error code
+//		    }
 			 patientInfoService.savePatientInfo(patientReports,firstname,middlename,lastname,patientage,patientgender,patientregdate,patientmobile1,patientmobile2,patientmedicalhistory);
 			
 			 return"redirect:/patientList";
