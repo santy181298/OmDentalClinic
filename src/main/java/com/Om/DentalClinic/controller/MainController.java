@@ -67,19 +67,34 @@ public class MainController {
 
 	 @GetMapping("/login")
 	 public String showLogin() {
+//		 HttpSession session = request.getSession();
+//		 String username = (String) session.getAttribute("username");
+//
+//	     // Pass the username to the view
+//	     model.addAttribute("username", username);
 		 return "login";
 	 }
 
 	 @GetMapping("/adminHome")
-	 public String adminHome()
+	 public String adminHome(HttpServletRequest request, Model model)
 	 {
+		 HttpSession session = request.getSession();
+	     String username = (String) session.getAttribute("username");
+
+	     // Pass the username to the view
+	     model.addAttribute("username", username);
+
 		 return "adminHome";
 	 }
 
 	 
 	 @GetMapping("/userhome")
-	 public String userHome(Model model) {
-	        
+	 public String userHome(HttpServletRequest request,Model model) {
+		 HttpSession session = request.getSession();
+	     String username = (String) session.getAttribute("username");
+
+	     // Pass the username to the view
+	     model.addAttribute("username", username);   
 	     return "home"; 
 	  }
 	 
@@ -87,41 +102,87 @@ public class MainController {
 	
 	 @GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
-			@SuppressWarnings("unchecked")
-			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
-
-			if (messages == null) {
-				messages = new ArrayList<>();
-			}
-			model.addAttribute("sessionMessages", messages);
+//			@SuppressWarnings("unchecked")
+//			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
+//
+//			if (messages == null) {
+//				messages = new ArrayList<>();
+//			}
+//			model.addAttribute("sessionMessages", messages);
 
 			return "login";
 
 		}
+//		@PostMapping("/persistMessage")
+//		public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
+//			@SuppressWarnings("unchecked")
+//			List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
+//			if (messages == null) {
+//				messages = new ArrayList<>();
+//				request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+//			}
+//			messages.add(msg);
+//			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
+//			return "redirect:/login";
+//		}
+	//
+//		@PostMapping("/destroy")
+//		public String destroySession(HttpServletRequest request) {
+//			request.getSession().invalidate();
+//			return "redirect:/login";
+//		}
 	 
+//	 @PostMapping("/login")
+//	    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException { // Declare IOException
+//		 User user = userServiceImpl.findByUsername(username);
+//
+//	        if (user != null && user.getPassword().equals(password)) {
+////	        	HttpSession session=request.getSession();
+////	        	session.setAttribute("currentUser", user);
+//	        	
+//	        	if ("ADMIN".equals(user.getRole())) {
+//	        			                
+//	        		return "adminHome";
+//	            } else if ("RECEP1".equals(user.getRole()) || "RECEP2".equals(user.getRole()) || "RECEP3".equals(user.getRole())) {
+//	            	// Update patient_info and patient_procedure tables
+//	            	
+//	            	return "home";
+//	            }
+//	        }
+
+//	        if (user == null) {
+//	            System.out.println("Invalid Details");
+//	        } 
+//	        
+//	        else {
+//	            HttpSession session = request.getSession();
+//	            user.setUsername(username);
+//	            session.setAttribute("currentUser", user);
+//	            //response.sendRedirect("adminHome.html");
+//	             
+//	            
+//	        } 
+
+//	        model.addAttribute("error", "Invalid username or password.");
+//	        return "login";
+//	    }
+
 	 @PostMapping("/login")
-	    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException { // Declare IOException
+	    public String login(HttpServletRequest request, @RequestParam String username, @RequestParam String password, Model model) {
 	        User user = userServiceImpl.findByUsername(username);
 
 	        if (user != null && user.getPassword().equals(password)) {
+	            HttpSession session = request.getSession();
+	            session.setAttribute("username", username);
+
 	            if ("ADMIN".equals(user.getRole())) {
-	                return "adminHome";
-	            } else if ("RECEP1".equals(user.getRole())) {
-	                return "home";
+	                return "redirect:/adminHome";
+	            } else if ("RECEP1".equals(user.getRole()) || "RECEP2".equals(user.getRole()) || "RECEP3".equals(user.getRole())) {
+	                // Update patient_info and patient_procedure tables
+
+	                return "redirect:/userhome";
 	            }
 	        }
-
-	        if (user == null) {
-	            System.out.println("Invalid Details");
-	        } 
-	        
-	        else {
-	            HttpSession session = request.getSession();
-	            session.setAttribute("currentUser", user);
-	            response.sendRedirect("adminHome.html");
-	             
-	            
-	        } 
 
 	        model.addAttribute("error", "Invalid username or password.");
 	        return "login";
@@ -139,15 +200,26 @@ public class MainController {
 // Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
  
 	 @GetMapping("/patientinfo")
-	 public String showPatientinfo(Model model) {
+	 public String showPatientinfo(HttpServletRequest request, Model model) {
+		 HttpSession session = request.getSession();
+	     String username = (String) session.getAttribute("username");
+
+	     // Pass the username to the view
+	     model.addAttribute("username", username); 
+		 
 	     PatientInfo patientinfo = new PatientInfo(); 
 	     model.addAttribute("patientinfo", patientinfo);	     
 	     return "patientinfo";
 	 } 
 	 
 		@GetMapping("/patientList")
-		public String showPatientList(Model model,Principal principal) {
-		   model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
+		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
+			HttpSession session = request.getSession();
+		     String username = (String) session.getAttribute("username");
+
+		     // Pass the username to the view
+		     model.addAttribute("username", username); 
+		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
 			return "patientList";
 		}
 		
@@ -159,7 +231,13 @@ public class MainController {
 		}
 		
 		@GetMapping("/editPatientinfo/{id}")
-		public String editPatientInfoForm(@PathVariable("id") int id, Model model) {
+		public String editPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
+			HttpSession session = request.getSession();
+		     String username = (String) session.getAttribute("username");
+
+		     // Pass the username to the view
+		     model.addAttribute("username", username); 
+			
 			PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
 			model.addAttribute("patientinfo", patientinfo);
 			return "editPatientInfo";
@@ -214,17 +292,29 @@ public class MainController {
 //PatientProcedure controller ------------------------------------------------------------------------------	
 	
 		
-		 @GetMapping("/patientDetails/{patientId}")
-		 public String showPatientDetail(@PathVariable("patientId") int patientId,Model model) {
-			 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
-			 model.addAttribute("patientProcedures", patientProcedures);
-			 return "patientDetails";
-		 }
+			 @GetMapping("/patientDetails/{patientId}")
+			 public String showPatientDetail(HttpServletRequest request, @PathVariable("patientId") int patientId,Model model) {
+				 HttpSession session = request.getSession();
+			     String username = (String) session.getAttribute("username");
+	
+			     // Pass the username to the view
+			     model.addAttribute("username", username); 
+				 
+				 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
+				 model.addAttribute("patientProcedures", patientProcedures);
+				 return "patientDetails";
+			 }
 		
 		
 		   @GetMapping("/procedureDetails/{patientId}")
-		   public String showProcedureDetail(@PathVariable("patientId") int patientId, Model model) {
-		       PatientProcedure patientprocedure = new PatientProcedure();
+		   public String showProcedureDetail(HttpServletRequest request, @PathVariable("patientId") int patientId, Model model) {
+			     HttpSession session = request.getSession();
+			     String username = (String) session.getAttribute("username");
+
+			     // Pass the username to the view
+			     model.addAttribute("username", username); 
+			   
+			   PatientProcedure patientprocedure = new PatientProcedure();
 		       model.addAttribute("patientprocedure", patientprocedure);
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
 		        model.addAttribute("patientinfo", patientInfo);
@@ -246,24 +336,7 @@ public class MainController {
 		   
 //PatientProcedure controller ENDs		
 	
-	@PostMapping("/persistMessage")
-	public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
-		@SuppressWarnings("unchecked")
-		List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
-		if (messages == null) {
-			messages = new ArrayList<>();
-			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-		}
-		messages.add(msg);
-		request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-		return "redirect:/login";
-	}
 
-	@PostMapping("/destroy")
-	public String destroySession(HttpServletRequest request) {
-		request.getSession().invalidate();
-		return "redirect:/login";
-	}
 	
 		
 
