@@ -65,107 +65,29 @@ public class MainController {
 	}
 	
 
-	 @GetMapping("/login")
-	 public String showLogin() {
-//		 HttpSession session = request.getSession();
-//		 String username = (String) session.getAttribute("username");
-//
-//	     // Pass the username to the view
-//	     model.addAttribute("username", username);
-		 return "login";
-	 }
-
-	 @GetMapping("/adminHome")
-	 public String adminHome(HttpServletRequest request, Model model)
-	 {
-		 HttpSession session = request.getSession();
-	     String username = (String) session.getAttribute("username");
-
-	     // Pass the username to the view
-	     model.addAttribute("username", username);
-
-		 return "adminHome";
-	 }
-
-	 
-	 @GetMapping("/userhome")
-	 public String userHome(HttpServletRequest request,Model model) {
-		 HttpSession session = request.getSession();
-	     String username = (String) session.getAttribute("username");
-
-	     // Pass the username to the view
-	     model.addAttribute("username", username);   
-	     return "home"; 
-	  }
-	 
-
 	
+	 
+
+//Controller for Login-----------------------------------------------------------------------------------------	
 	 @GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
-//			@SuppressWarnings("unchecked")
-//			List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES");
-//
-//			if (messages == null) {
-//				messages = new ArrayList<>();
-//			}
-//			model.addAttribute("sessionMessages", messages);
 
 			return "login";
 
 		}
-//		@PostMapping("/persistMessage")
-//		public String persistMessage(@RequestParam("msg") String msg, HttpServletRequest request) {
-//			@SuppressWarnings("unchecked")
-//			List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
-//			if (messages == null) {
-//				messages = new ArrayList<>();
-//				request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-//			}
-//			messages.add(msg);
-//			request.getSession().setAttribute("MY_SESSION_MESSAGES", messages);
-//			return "redirect:/login";
-//		}
-	//
-//		@PostMapping("/destroy")
-//		public String destroySession(HttpServletRequest request) {
-//			request.getSession().invalidate();
-//			return "redirect:/login";
-//		}
 	 
-//	 @PostMapping("/login")
-//	    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException { // Declare IOException
-//		 User user = userServiceImpl.findByUsername(username);
-//
-//	        if (user != null && user.getPassword().equals(password)) {
-////	        	HttpSession session=request.getSession();
-////	        	session.setAttribute("currentUser", user);
-//	        	
-//	        	if ("ADMIN".equals(user.getRole())) {
-//	        			                
-//	        		return "adminHome";
-//	            } else if ("RECEP1".equals(user.getRole()) || "RECEP2".equals(user.getRole()) || "RECEP3".equals(user.getRole())) {
-//	            	// Update patient_info and patient_procedure tables
-//	            	
-//	            	return "home";
-//	            }
-//	        }
+	 @GetMapping("/login")
+	 public String showLogin() {
 
-//	        if (user == null) {
-//	            System.out.println("Invalid Details");
-//	        } 
-//	        
-//	        else {
-//	            HttpSession session = request.getSession();
-//	            user.setUsername(username);
-//	            session.setAttribute("currentUser", user);
-//	            //response.sendRedirect("adminHome.html");
-//	             
-//	            
-//	        } 
+		 return "login";
+	 }
+	 
+	 @GetMapping("/logout")
+	    public String logout() {
+	        // Add logout logic here
+	        return "redirect:/";
+	    }
 
-//	        model.addAttribute("error", "Invalid username or password.");
-//	        return "login";
-//	    }
 
 	 @PostMapping("/login")
 	    public String login(HttpServletRequest request, @RequestParam String username, @RequestParam String password, Model model) {
@@ -188,16 +110,34 @@ public class MainController {
 	        return "login";
 	    }
 	 
-	 @GetMapping("/logout")
-	    public String logout() {
-	        // Add logout logic here
-	        return "redirect:/";
-	    }
-		
 	 
+//User Controller------------------------------------------------------------------------------	 
+	 		
+	 @GetMapping("/adminHome")
+	 public String adminHome(HttpServletRequest request, Model model)
+	 {
+		 HttpSession session = request.getSession();
+	     String username = (String) session.getAttribute("username");
+
+	     // Pass the username to the view
+	     model.addAttribute("username", username);
+
+		 return "adminHome";
+	 }
+
+	 
+	 @GetMapping("/userhome")
+	 public String userHome(HttpServletRequest request,Model model) {
+		 HttpSession session = request.getSession();
+	     String username = (String) session.getAttribute("username");
+
+	     // Pass the username to the view
+	     model.addAttribute("username", username);   
+	     return "home"; 
+	  }
 
 
-// Santosh's Controller for PatientInfo------------------------------------------------------------------------------	 
+//Controller for PatientInfo------------------------------------------------------------------------------	 
  
 	 @GetMapping("/patientinfo")
 	 public String showPatientinfo(HttpServletRequest request, Model model) {
@@ -244,46 +184,57 @@ public class MainController {
 		}
 		
 		
+
+		
 		@PostMapping("/updatePatientInfo")
 		public String updatePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
-		@RequestParam("firstname") String firstname,
-		@RequestParam("middlename") String middlename,
-		@RequestParam("lastname") String lastname,
-		@RequestParam("patientage") int patientage,
-		@RequestParam("patientgender") String patientgender,
-		@RequestParam("patientregdate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
-		@RequestParam("patientmobile1") long patientmobile1,
-		@RequestParam("patientmobile2") long patientmobile2,
-		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
-		{
-//		    if (patientReports.isEmpty()) {
-//		        return "redirect:/patientinfo?fileError=1";
-//		    }
-			 patientInfoService.savePatientInfo(patientReports,firstname,middlename,lastname,patientage,patientgender,patientregdate,patientmobile1,patientmobile2,patientmedicalhistory);
-			
-			 return"redirect:/patientList";
+		                              @RequestParam("firstname") String firstname,
+		                              @RequestParam("middlename") String middlename,
+		                              @RequestParam("lastname") String lastname,
+		                              @RequestParam("patientage") int patientage,
+		                              @RequestParam("patientgender") String patientgender,
+		                              @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
+		                              @RequestParam("patientmobile1") long patientmobile1,
+		                              @RequestParam("patientmobile2") long patientmobile2,
+		                              @RequestParam("patientmedicalhistory") String patientmedicalhistory,
+		                              HttpServletRequest request) throws IOException {
+		    
+		    // Get username from session
+		    HttpSession session = request.getSession();
+		    String username = (String) session.getAttribute("username");
+
+		    // Save patient information along with the cashier's username
+		    patientInfoService.savePatientInfo(patientReports, firstname, middlename, lastname, patientage, patientgender, patientregdate, patientmobile1, patientmobile2, patientmedicalhistory, username);
+		    
+		    return "redirect:/patientList";
 		}
 	
 		 
+
+		
 		@PostMapping("/SavePatientInfo")
 		public String savePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
-		@RequestParam("firstname") String firstname,
-		@RequestParam("middlename") String middlename,
-		@RequestParam("lastname") String lastname,
-		@RequestParam("patientage") int patientage,
-		@RequestParam("patientgender") String patientgender,
-		@RequestParam("patientregdate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
-		@RequestParam("patientmobile1") long patientmobile1,
-		@RequestParam("patientmobile2") long patientmobile2,
-		@RequestParam("patientmedicalhistory") String patientmedicalhistory) throws IOException
-		{
-//		    if (patientReports.isEmpty()) {
-//		        return "redirect:/patientinfo?fileError=1"; // Redirect with an error code
-//		    }
-			 patientInfoService.savePatientInfo(patientReports,firstname,middlename,lastname,patientage,patientgender,patientregdate,patientmobile1,patientmobile2,patientmedicalhistory);
-			
-			 return"redirect:/patientList";
+		                              @RequestParam("firstname") String firstname,
+		                              @RequestParam("middlename") String middlename,
+		                              @RequestParam("lastname") String lastname,
+		                              @RequestParam("patientage") int patientage,
+		                              @RequestParam("patientgender") String patientgender,
+		                              @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
+		                              @RequestParam("patientmobile1") long patientmobile1,
+		                              @RequestParam("patientmobile2") long patientmobile2,
+		                              @RequestParam("patientmedicalhistory") String patientmedicalhistory,
+		                              HttpServletRequest request) throws IOException {
+		    
+		    // Get username from session
+		    HttpSession session = request.getSession();
+		    String username = (String) session.getAttribute("username");
+
+		    // Save patient information along with the cashier's username
+		    patientInfoService.savePatientInfo(patientReports, firstname, middlename, lastname, patientage, patientgender, patientregdate, patientmobile1, patientmobile2, patientmedicalhistory, username);
+		    
+		    return "redirect:/patientList";
 		}
+
 	
 	
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
@@ -322,15 +273,32 @@ public class MainController {
 		   }
 
 
+
+		   
 		   @PostMapping("/SavePatientProcedure/{patientnumber}")
 		   public String savePatientProcedure(
-		       @ModelAttribute PatientProcedure patientProcedure,
-		       @PathVariable("patientnumber") int patientNumber) {
+		           @ModelAttribute PatientProcedure patientProcedure,
+		           @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+
+		       // Get username from session
+		       HttpSession session = request.getSession();
+		       String username = (String) session.getAttribute("username");
+
+		       // Fetch patient information
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);
+
+		       // Set proc_cashier_name and procedure number
+		       patientProcedure.setCashiername(username);
 		       patientProcedure.setProcedurenumber(patientInfo);
+
+		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
+
 		       return "redirect:/patientList";
 		   }
+
+
+		   
 
 
 		   
