@@ -64,6 +64,44 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 		return patientInfoRepository.findById(id).orElse(null);
 	}
 
+	public void updatePatientInfo(
+	        int patientNumber, // Add the patient number as a parameter to identify the patient to update
+	        MultipartFile patientReports, 
+	        String firstname,
+	        String middlename,
+	        String lastname,
+	        int patientage,
+	        String patientgender,
+	        Date patientregdate,
+	        long patientmobile1,
+	        long patientmobile2,
+	        String patientmedicalhistory,
+	        String cashierName) throws IOException {
+
+	    // Find the existing patient information by ID
+	    PatientInfo existingPatientInfo = patientInfoRepository.findById(patientNumber)
+	            .orElseThrow();
+
+	    // Update the patient information fields
+	    existingPatientInfo.setFirstname(firstname);
+	    existingPatientInfo.setMiddlename(middlename);
+	    existingPatientInfo.setLastname(lastname);
+	    existingPatientInfo.setPatientage(patientage);
+	    existingPatientInfo.setPatientgender(patientgender);
+	    existingPatientInfo.setPatientregdate(patientregdate);
+	    existingPatientInfo.setPatientmobile1(patientmobile1);
+	    existingPatientInfo.setPatientmobile2(patientmobile2);
+	    existingPatientInfo.setPatientmedicalhistory(patientmedicalhistory);
+	    existingPatientInfo.setCashiername(cashierName);
+
+	    // Update the patientReports if a new file is provided
+	    if (patientReports != null && !patientReports.isEmpty()) {
+	        existingPatientInfo.setPatientReports(patientReports.getBytes());
+	    }
+
+	    // Save the updated patient information
+	    patientInfoRepository.save(existingPatientInfo);
+	}
 
 
 }
