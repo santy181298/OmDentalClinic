@@ -183,8 +183,8 @@
 				        <td th:text="${#dates.format(patientinfo.patientregdate, 'dd-MM-yyyy')}"></td> 
 		                <td th:text="${patientinfo.patientmobile1}"></td>				       
 				        <td>
-		                <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
-		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
+		                <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>		      
+		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
 						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2">Add Proc</a>
 						<a th:href="@{/patientDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-warning mx-2">View Proc</a>
 			        </td>

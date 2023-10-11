@@ -15,4 +15,8 @@ public interface PatientProcedureService {
 	
 	public List<PatientProcedure> getProceduresByPatientId(int patientId);
 
+	public void deletePatientProcedureById(int id);
+	
+	public PatientProcedure getPatientProcedureById(int id);
+
 }
