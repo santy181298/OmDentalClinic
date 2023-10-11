@@ -24,22 +24,31 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 
 	
 	@Override
-	public List<PatientProcedure> getAllPatientProcedures() {
-	
+	public List<PatientProcedure> getAllPatientProcedures() {	
 		return patientProcedureRepository.findAll();
 	}
 
 
 	@Override
-	public void savePatientProcedure(PatientProcedure patientProcedure) {
-	
+	public void savePatientProcedure(PatientProcedure patientProcedure) {	
 		patientProcedureRepository.save(patientProcedure);
 	}
 
     @Override
     public List<PatientProcedure> getProceduresByPatientId(int patientId) {
-   
         return patientProcedureRepository.findByProcedurenumber_Patientnum(patientId);
     }
+    
+    
+	public void deletePatientProcedureById(int id) {
+		this.patientProcedureRepository.deleteById(id);	
+	
+	}
+
+
+	public PatientProcedure getPatientProcedureById(int id) {
+		return patientProcedureRepository.findById(id).orElse(null);
+	}
+
 	
 }

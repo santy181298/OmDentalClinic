@@ -27,24 +27,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	public  List<PatientInfo> findAllByOrderByPatientregdateDesc(){
 		return patientInfoRepository.findAllByOrderByPatientregdateDesc();
 	}
-
-//	public void savePatientInfo(MultipartFile patientReports,String firstname,String middlename,String lastname,int patientage,String patientgender,Date patientregdate,long patientmobile1,long patientmobile2,String patientmedicalhistory) throws IOException {
-//		
-//		PatientInfo patientInfo = new PatientInfo();
-//		patientInfo.setPatientReports(patientReports.getBytes());
-//		patientInfo.setFirstname(firstname);
-//		patientInfo.setMiddlename(middlename);
-//		patientInfo.setLastname(lastname);
-//		patientInfo.setPatientage(patientage);
-//		patientInfo.setPatientgender(patientgender);
-//		patientInfo.setPatientregdate(patientregdate);
-//		patientInfo.setPatientmobile1(patientmobile1);
-//		patientInfo.setPatientmobile2(patientmobile2);
-//		patientInfo.setPatientmedicalhistory(patientmedicalhistory);
-//		
-//		patientInfoRepository.save(patientInfo);
-//		
-//	}
+ 
 	
 	public void savePatientInfo(MultipartFile patientReports, String firstname, String middlename, String lastname,
             int patientage, String patientgender, Date patientregdate, long patientmobile1,

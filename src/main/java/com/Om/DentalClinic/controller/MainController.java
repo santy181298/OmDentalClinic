@@ -65,11 +65,9 @@ public class MainController {
 	}
 	
 
-	
-	 
-
 //Controller for Login-----------------------------------------------------------------------------------------	
-	 @GetMapping("/")
+
+	@GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
 
 			return "login";
@@ -114,14 +112,11 @@ public class MainController {
 //User Controller------------------------------------------------------------------------------	 
 	 		
 	 @GetMapping("/adminHome")
-	 public String adminHome(HttpServletRequest request, Model model)
-	 {
+	 public String adminHome(HttpServletRequest request, Model model){
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
-
 	     // Pass the username to the view
 	     model.addAttribute("username", username);
-
 		 return "adminHome";
 	 }
 
@@ -152,11 +147,23 @@ public class MainController {
 	     return "patientinfo";
 	 } 
 	 
-		@GetMapping("/patientList")
+//		@GetMapping("/patientList")
+//		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
+//			HttpSession session = request.getSession();
+//		     String username = (String) session.getAttribute("username");
+//		     // Pass the username to the view
+//		     model.addAttribute("username", username); 
+//		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
+//			return "patientList";
+//		}
+		
+	 @GetMapping("/patientList")
 		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
 			HttpSession session = request.getSession();
-		     String username = (String) session.getAttribute("username");
-		     
+
+
+		     String username = (String) session.getAttribute("username");		     
+
 		     //get user by username
 		     User user=userServiceImpl.findByUsername(username);
 		     // Pass the user's role to the view
@@ -167,7 +174,6 @@ public class MainController {
 		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
 			return "patientList";
 		}
-		
 		
 		@GetMapping("/deletePatientInfo/{id}")
 		public String deletePatientInfo(@PathVariable(value = "id") int id) {
@@ -246,22 +252,22 @@ public class MainController {
 	
 
 //PatientProcedure controller ------------------------------------------------------------------------------	
-	
-		
+
 			 @GetMapping("/patientDetails/{patientId}")
 			 public String showPatientDetail(HttpServletRequest request, @PathVariable("patientId") int patientId,Model model) {
-				 HttpSession session = request.getSession();
-			     String username = (String) session.getAttribute("username");
-			     
-			   //get user by username
-			     User user=userServiceImpl.findByUsername(username);
-			     // Pass the user's role to the view
-			     model.addAttribute("userRole", user.getRole());
 
-	
-			     // Pass the username to the view
-			     model.addAttribute("username", username); 
-				 
+					HttpSession session = request.getSession();
+				     String username = (String) session.getAttribute("username");		     
+				     //get user by username
+				     User user=userServiceImpl.findByUsername(username);
+				     // Pass the user's role to the view
+				     model.addAttribute("userRole", user.getRole());
+				     // Pass the username to the view
+				     model.addAttribute("username", username); 
+			     PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
+			        model.addAttribute("patientinfo", patientInfo);
+			        
+
 				 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
 				 model.addAttribute("patientProcedures", patientProcedures);
 				 return "patientDetails";
@@ -272,10 +278,8 @@ public class MainController {
 		   public String showProcedureDetail(HttpServletRequest request, @PathVariable("patientId") int patientId, Model model) {
 			     HttpSession session = request.getSession();
 			     String username = (String) session.getAttribute("username");
-
 			     // Pass the username to the view
-			     model.addAttribute("username", username); 
-			   
+			     model.addAttribute("username", username); 	   
 			   PatientProcedure patientprocedure = new PatientProcedure();
 		       model.addAttribute("patientprocedure", patientprocedure);
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
@@ -284,35 +288,58 @@ public class MainController {
 		   }
 
 
-
-		   
 		   @PostMapping("/SavePatientProcedure/{patientnumber}")
-		   public String savePatientProcedure(
-		           @ModelAttribute PatientProcedure patientProcedure,
-		           @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
-
-		       // Get username from session
-		       HttpSession session = request.getSession();
+		   public String savePatientProcedure(@ModelAttribute PatientProcedure patientProcedure,
+				   @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {				   
+		       HttpSession session = request.getSession(); // Get username from session
 		       String username = (String) session.getAttribute("username");
-
-		       // Fetch patient information
-		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);
-
-		       // Set proc_cashier_name and procedure number
-		       patientProcedure.setCashiername(username);
+		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
 		       patientProcedure.setProcedurenumber(patientInfo);
-
 		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
-
 		       return "redirect:/patientList";
 		   }
-
-
 		   
 
+		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
+		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+		       // Your controller logic here
+			   HttpSession session = request.getSession(); // Get username from session
+		       String username = (String) session.getAttribute("username");
+		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
+		       patientProcedure.setProcedurenumber(patientInfo);
+		       // Save patient procedure
+		       patientProcedureService.savePatientProcedure(patientProcedure);
+		       return "redirect:/patientDetails/" + patientNumber;
 
-		   
+		   }
+
+	
+			
+			@GetMapping("editProcedure/{patientId}/{procedureId}")
+			public String editProcedureForm(HttpServletRequest request,@PathVariable(value = "patientId") int patientId,
+					@PathVariable("procedureId") int procedureId, Model model) {
+				HttpSession session = request.getSession();
+			     String username = (String) session.getAttribute("username");
+			     // Pass the username to the view
+			     model.addAttribute("username", username); 				
+			    PatientProcedure patientProcedure = patientProcedureService.getPatientProcedureById(procedureId);
+				model.addAttribute("patientProcedure", patientProcedure);
+			    PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
+			    model.addAttribute("patientinfo", patientInfo);
+				return "editProcedure";
+			}
+			
+		   @GetMapping("/deleteProcedure/{patientId}/{procedureId}")
+		   public String deletePatientProcedure(@PathVariable(value = "patientId") int patientId,
+				   @PathVariable(value = "procedureId") int procedureId) {
+		       this.patientProcedureService.deletePatientProcedureById(procedureId);
+		       return "forward:/patientDetails/" + patientId; // Use "forward" to stay on the same page
+		   }
+
+ 
 //PatientProcedure controller ENDs		
 	
 

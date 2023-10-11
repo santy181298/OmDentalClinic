@@ -187,8 +187,11 @@
 			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
 			            <td th:text="${patientProcedure.proceduredetail}"></td>
 			            <td>
-			                <a class="btn btn-primary" th:href="@{/editProcedure/{procedureId}(procedureId=${patientProcedure.procedureid})}">Update</a>
-			                <a th:if="${userRole == 'ADMIN'}" class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{procedureId}(procedureId=${patientProcedure.procedureid})}">Delete</a>
+
+			              <a class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}">Update</a>
+			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
+
+
 			            </td>
 			        </tr>
 			    </tbody>

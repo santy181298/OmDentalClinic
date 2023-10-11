@@ -616,7 +616,6 @@ h6 {
 --------------------------------------------------------------*/
  
 
-
 ._table {
     width:97%;
     margin-left: 15px;
@@ -1433,6 +1432,8 @@ h6 {
 	border: 1.5px solid #c0c0c0;
 }
 
+
+
 .select-btn .btn-text {
 	font-size: 17px;
 	font-weight: 400;
@@ -1454,6 +1455,17 @@ h6 {
 
 .select-btn.open .arrow-dwn {
 	transform: rotate(-180deg);
+}
+
+.btn {
+    height: 30px;
+    line-height: 30px; /* Vertically center the text */
+    text-align: center; /* Horizontally center the text */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide any overflowing text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 0 10px; /* Optional padding for left and right spacing */
 }
 
 .list-items {
