@@ -160,11 +160,15 @@ public class MainController {
 	 @GetMapping("/patientList")
 		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
 			HttpSession session = request.getSession();
+
+
 		     String username = (String) session.getAttribute("username");		     
+
 		     //get user by username
 		     User user=userServiceImpl.findByUsername(username);
 		     // Pass the user's role to the view
 		     model.addAttribute("userRole", user.getRole());
+
 		     // Pass the username to the view
 		     model.addAttribute("username", username); 
 		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
@@ -251,6 +255,7 @@ public class MainController {
 
 			 @GetMapping("/patientDetails/{patientId}")
 			 public String showPatientDetail(HttpServletRequest request, @PathVariable("patientId") int patientId,Model model) {
+
 					HttpSession session = request.getSession();
 				     String username = (String) session.getAttribute("username");		     
 				     //get user by username
@@ -262,6 +267,7 @@ public class MainController {
 			     PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
 			        model.addAttribute("patientinfo", patientInfo);
 			        
+
 				 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
 				 model.addAttribute("patientProcedures", patientProcedures);
 				 return "patientDetails";
