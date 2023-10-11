@@ -81,6 +81,9 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+    <!-- Back Button -->
+    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm">Back</button> 
+	<button onclick="goForward()" type="button" class="btn btn-secondary rounded-pill btn-sm">Next</button> 
 	
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
@@ -184,7 +187,7 @@
 		                <td th:text="${patientinfo.patientmobile1}"></td>				       
 				        <td>
 		                <a th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary">Update</a>
-		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2">Delete</a>
+		                <a  th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
 						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2">Add Proc</a>
 						<a th:href="@{/patientDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-warning mx-2">View Proc</a>
 			        </td>
@@ -218,6 +221,20 @@
 
     <!-- Template Main JS File -->
     <script src="js/main.js"></script> 
+    
+    <!-- Back Button Scripts -->
+    <!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
+	
   
 </body>
 </html>

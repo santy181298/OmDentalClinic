@@ -86,6 +86,9 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+    <!-- Back Button -->
+    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm">Back</button> 
+	<button onclick="goForward()" type="button" class="btn btn-secondary rounded-pill btn-sm">Next</button>
 	
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
@@ -174,6 +177,17 @@
   text-align: center;
 }
 </style>
+<!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
 
 </body>
 

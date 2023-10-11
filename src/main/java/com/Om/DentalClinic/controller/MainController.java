@@ -156,6 +156,11 @@ public class MainController {
 		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
 			HttpSession session = request.getSession();
 		     String username = (String) session.getAttribute("username");
+		     
+		     //get user by username
+		     User user=userServiceImpl.findByUsername(username);
+		     // Pass the user's role to the view
+		     model.addAttribute("userRole", user.getRole());
 
 		     // Pass the username to the view
 		     model.addAttribute("username", username); 
@@ -247,6 +252,12 @@ public class MainController {
 			 public String showPatientDetail(HttpServletRequest request, @PathVariable("patientId") int patientId,Model model) {
 				 HttpSession session = request.getSession();
 			     String username = (String) session.getAttribute("username");
+			     
+			   //get user by username
+			     User user=userServiceImpl.findByUsername(username);
+			     // Pass the user's role to the view
+			     model.addAttribute("userRole", user.getRole());
+
 	
 			     // Pass the username to the view
 			     model.addAttribute("username", username); 
