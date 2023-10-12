@@ -180,14 +180,14 @@
 					<div class="row mb-3">
 					    <label for="cash" class="col-sm-2 col-form-label">Cash Payment</label>
 					    <div class="col-sm-10">
-					        <input type="number" name="patientprocedurecashpayment" id="cash" class="form-control">
+					        <input type="number" th:field="*{cashpayment}" name="patientprocedurecashpayment" id="cash" class="form-control">
 					    </div>
 					</div>
 					
 					<div class="row mb-3">
 					    <label for="online" class="col-sm-2 col-form-label">Online Payment</label>
 					    <div class="col-sm-10">
-					        <input type="number" name="patientprocedureonlinepayment" id="online" class="form-control">
+					        <input type="number" th:field="*{onlinepayment}" name="patientprocedureonlinepayment" id="online" class="form-control">
 					    </div>
 					</div>
 					
