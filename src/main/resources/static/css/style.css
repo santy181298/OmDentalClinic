@@ -247,7 +247,7 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 15px 0 5px 0;
   font-size: 18px;
   font-weight: 500;
   color: #012970;
@@ -380,7 +380,7 @@ h6 {
 
 .logo img {
   max-height: 26px;
-  margin-right: 6px;
+  
 }
 
 .logo span {
@@ -1465,7 +1465,7 @@ h6 {
     overflow: hidden; /* Hide any overflowing text */
     text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
     font-size: 14px; /* Adjust the font size as needed */
-    padding: 0 10px; /* Optional padding for left and right spacing */
+    padding: 0 7px; /* Optional padding for left and right spacing */
 }
 
 .list-items {
@@ -1530,3 +1530,4 @@ h6 {
 .item.checked .check-icon {
 	transform: scale(1);
 }
+

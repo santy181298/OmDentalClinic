@@ -74,6 +74,7 @@
   <!-- End Of Company Pages  -->
   
 
+
     <div class="d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -82,6 +83,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
     
+
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -131,8 +133,8 @@
     </div>
 
     <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
+            <div class="card-body"  style="margin-top: 5px;">
+              <h5></h5>
 
 
 		<form th:object="${patientProcedure}" th:action="@{'/UpdatePatientProcedure/' + ${patientinfo.patientnumber}}" method="POST">
@@ -230,6 +232,14 @@
 					        </div>
 					    </div>
 					</div>
+					
+	         <div class="row mb-3 d-none"><!-- to hide field d-none -->
+		        <label for="inputPassword" class="col-sm-2 col-form-label required">ProcedureID</label>
+		        <div class="col-sm-10">
+		            <input type="text" id="procedureId"  th:field="*{procedureid}" class="form-control" readonly>
+		        </div>
+		     </div>
+
 
 
 		                  <div class="d-flex justify-content-center mt-5">
