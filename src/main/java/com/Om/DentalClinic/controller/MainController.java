@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.model.User;
+import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
@@ -58,6 +59,9 @@ public class MainController {
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	private PatientInfoRepository patientInfoRepository;
 	
 	
 	public MainController(UserServiceImpl userServiceImpl) {
@@ -185,10 +189,7 @@ public class MainController {
 		public String editPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
 		     String username = (String) session.getAttribute("username");
-
-		     // Pass the username to the view
-		     model.addAttribute("username", username); 
-			
+		     model.addAttribute("username", username); 			
 			PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
 			model.addAttribute("patientinfo", patientinfo);
 			return "editPatientInfo";
@@ -197,30 +198,52 @@ public class MainController {
 		
 
 		
+		
 		@PostMapping("/updatePatientInfo")
 		public String updatePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
-		                              @RequestParam("firstname") String firstname,
-		                              @RequestParam("middlename") String middlename,
-		                              @RequestParam("lastname") String lastname,
-		                              @RequestParam("patientage") int patientage,
-		                              @RequestParam("patientgender") String patientgender,
-		                              @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
-		                              @RequestParam("patientmobile1") long patientmobile1,
-		                              @RequestParam("patientmobile2") long patientmobile2,
-		                              @RequestParam("patientmedicalhistory") String patientmedicalhistory,
-		                              HttpServletRequest request) throws IOException {
-		    
-		    // Get username from session
+		                                @RequestParam("firstname") String firstname,
+		                                @RequestParam("middlename") String middlename,
+		                                @RequestParam("lastname") String lastname,
+		                                @RequestParam("patientage") int patientage,
+		                                @RequestParam("patientgender") String patientgender,
+		                                @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
+		                                @RequestParam("patientmobile1") long patientmobile1,
+		                                @RequestParam("patientmobile2") long patientmobile2,
+		                                @RequestParam("patientmedicalhistory") String patientmedicalhistory,
+		                                @RequestParam("patientnumber") int patientnumber,
+		                                HttpServletRequest request) throws IOException {
 		    HttpSession session = request.getSession();
 		    String username = (String) session.getAttribute("username");
 
-		    // Save patient information along with the cashier's username
-		    patientInfoService.savePatientInfo(patientReports, firstname, middlename, lastname, patientage, patientgender, patientregdate, patientmobile1, patientmobile2, patientmedicalhistory, username);
-		    
+		    // Load the existing patient information from the database
+		    PatientInfo existingPatientInfo = patientInfoService.getPatientInfoById(patientnumber);
+
+		    // Check if the patient information exists
+		    if (existingPatientInfo != null) {
+		        // Update the fields of the existing patient information
+		        existingPatientInfo.setFirstname(firstname);
+		        existingPatientInfo.setMiddlename(middlename);
+		        existingPatientInfo.setLastname(lastname);
+		        existingPatientInfo.setPatientage(patientage);
+		        existingPatientInfo.setPatientgender(patientgender);
+		        existingPatientInfo.setPatientregdate(patientregdate);
+		        existingPatientInfo.setPatientmobile1(patientmobile1);
+		        existingPatientInfo.setPatientmobile2(patientmobile2);
+		        existingPatientInfo.setPatientmedicalhistory(patientmedicalhistory);
+		        existingPatientInfo.setCashiername(username);
+
+		        // Update the patientReports if a new file is provided
+		        if (patientReports != null && !patientReports.isEmpty()) {
+		            existingPatientInfo.setPatientReports(patientReports.getBytes());
+		        }
+		        // Save the updated patient information using the .save method
+		        patientInfoRepository.save(existingPatientInfo);
+		    }
+
 		    return "redirect:/patientList";
 		}
-	
-		 
+
+
 
 		
 		@PostMapping("/SavePatientInfo")
@@ -258,13 +281,10 @@ public class MainController {
 
 					HttpSession session = request.getSession();
 				     String username = (String) session.getAttribute("username");		     
-				     //get user by username
 				     User user=userServiceImpl.findByUsername(username);
-				     // Pass the user's role to the view
 				     model.addAttribute("userRole", user.getRole());
-				     // Pass the username to the view
 				     model.addAttribute("username", username); 
-			     PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
+			        PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
 			        model.addAttribute("patientinfo", patientInfo);
 			        
 

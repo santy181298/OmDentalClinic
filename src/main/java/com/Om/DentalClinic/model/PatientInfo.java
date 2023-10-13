@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -48,7 +49,6 @@ public class PatientInfo {
 	
 	@Column(name = "reg_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date patientregdate;
 	
 	@Column(name = "mobile_one")
@@ -72,6 +72,11 @@ public class PatientInfo {
 	 
     @PrePersist
     protected void onCreate() {
+        timestamp = new Date();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
         timestamp = new Date();
     }
     
