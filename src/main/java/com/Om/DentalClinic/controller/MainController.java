@@ -151,15 +151,6 @@ public class MainController {
 	     return "patientinfo";
 	 } 
 	 
-//		@GetMapping("/patientList")
-//		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
-//			HttpSession session = request.getSession();
-//		     String username = (String) session.getAttribute("username");
-//		     // Pass the username to the view
-//		     model.addAttribute("username", username); 
-//		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
-//			return "patientList";
-//		}
 		
 	 @GetMapping("/patientList")
 		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
