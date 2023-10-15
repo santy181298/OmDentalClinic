@@ -362,7 +362,68 @@ public class MainController {
  
 //PatientProcedure controller ENDs		
 	
+		   @GetMapping("/displayAmount")
+		   public String showAmount(HttpServletRequest request, Model model) {
+		       // Initialize fromDate and toDate with default values if needed
+		       Date fromDate = null; // Set your default fromDate value here
+		       Date toDate = null; // Set your default toDate value here
 
+		       // Add fromDate and toDate to the model so they can be pre-populated in the form
+		       HttpSession session = request.getSession();
+			   String username = (String) session.getAttribute("username");
+			   model.addAttribute("username", username); 	
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+
+		       return "displayAmount";
+		   }
+
+//		   @PostMapping("/filterData")
+//		   public String filterData(@RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+//		                            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+//		                            Model model) {
+//		       // Call your service method to get filtered data based on fromDate and toDate
+//		       List<PatientProcedure> filteredData = patientProcedureService.getFilteredProcedures(fromDate, toDate);
+//
+//		       // Add filtered data to the model
+//		       model.addAttribute("patientProcedures", filteredData);
+//
+//		       // Add fromDate and toDate to the model so they can be pre-populated in the form
+//		       model.addAttribute("fromDate", fromDate);
+//		       model.addAttribute("toDate", toDate);
+//
+//		       // Return the name of the Thymeleaf template where you want to display the filtered data
+//		       return "displayAmount";
+//		   }
+		   
+		   @PostMapping("/filterData")
+		    public String filterProcedures(
+		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		            @RequestParam("session") String session, HttpServletRequest request,
+		            Model model) {
+			   
+		        // Get filtered procedures based on dates and session
+		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+		        
+		        HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+		        // Add the filtered procedures to the model for displaying in the view
+		        model.addAttribute("patientProcedures", filteredProcedures);
+		        // Add fromDate and toDate to the model for display in the view if needed
+		        model.addAttribute("fromDate", fromDate);
+		        model.addAttribute("toDate", toDate);
+		        model.addAttribute("session", session);
+		        
+		        // Add other necessary attributes and logic for your view as needed
+
+		        // Return the name of the Thymeleaf template where you want to display the filtered data
+		        return "displayAmount";
+		    }
+
+
+		   
 	
 		
 

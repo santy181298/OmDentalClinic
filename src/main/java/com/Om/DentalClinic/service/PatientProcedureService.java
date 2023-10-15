@@ -18,5 +18,7 @@ public interface PatientProcedureService {
 	public void deletePatientProcedureById(int id);
 	
 	public PatientProcedure getPatientProcedureById(int id);
+	
+	public List<PatientProcedure> getFilteredProcedures(Date fromDate, Date toDate, String session);
 
 }
