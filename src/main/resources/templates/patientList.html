@@ -140,35 +140,33 @@
                <div class="search-bars-container d-flex">
 				  <!-- First Search Bar -->
 
-				  <!-- Second Search Bar -->
-				  <form action="/searchPatients" method="GET">
-				  <div class="search-bar mx-3" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Patient Name" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
-				    </div>
-				  </div>
-				  </form>
+
 				
-				  <!-- Third Search Bar -->
-				  <form action="/searchPatients" method="GET">
-				  <div class="search-bar" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Mobile Number" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
+				<!-- Second Search Bar for Patient Name -->
+				<div class="search-bar mx-3" style="width: 250px;">
+				  <div class="search-form d-flex align-items-center">
+				    <div class="input-group">
+				      <input type="text" name="query" id="name-search-input" placeholder="Search by Patient Name" title="Enter search term" class="form-control">
+				      <button type="submit" title="Search" class="input-group-text">
+				        <i class="bi bi-search"></i>
+				      </button>
 				    </div>
 				  </div>
-				  </form>
-				  
-				</div> 
+				</div>
+				
+				<!-- Third Search Bar for Mobile Number -->
+				<div class="search-bar" style="width: 250px;">
+				  <div class="search-form d-flex align-items-center">
+				    <div class="input-group">
+				      <input type="text" name="query" id="mobile-search-input" placeholder="Search by Mobile Number" title="Enter search term" class="form-control">
+				      <button type="submit" title="Search" class="input-group-text">
+				        <i class="bi bi-search"></i>
+				      </button>
+				    </div>
+				  </div>
+				</div>
+					</div> 
+
               <br>
               
               
@@ -241,6 +239,39 @@
         window.history.forward();
     }
 	</script>
+	
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const nameSearchInput = document.getElementById("name-search-input");
+        const mobileSearchInput = document.getElementById("mobile-search-input");
+        const table = document.querySelector(".datatable");
+        const rows = table.getElementsByTagName("tr");
+
+        const filterRows = function () {
+            const nameQuery = nameSearchInput.value.trim().toLowerCase();
+            const mobileQuery = mobileSearchInput.value.trim().toLowerCase();
+
+            for (let i = 1; i < rows.length; i++) {
+                const nameCell = rows[i].getElementsByTagName("td")[0].innerText.toLowerCase(); // Index 0 for the name
+                const mobileCell = rows[i].getElementsByTagName("td")[2].innerText.toLowerCase(); // Index 2 for the mobile number
+
+                const nameMatch = nameCell.includes(nameQuery);
+                const mobileMatch = mobileCell.includes(mobileQuery);
+
+                if (nameMatch && mobileMatch) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        };
+
+        nameSearchInput.addEventListener("input", filterRows);
+        mobileSearchInput.addEventListener("input", filterRows);
+    });
+</script>
+
+
 	
   
 </body>

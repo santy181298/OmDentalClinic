@@ -9,7 +9,15 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+	@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+	@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+
 :root {
+	
   scroll-behavior: smooth;
 }
 
@@ -239,7 +247,7 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 15px 0 5px 0;
   font-size: 18px;
   font-weight: 500;
   color: #012970;
@@ -372,7 +380,7 @@ h6 {
 
 .logo img {
   max-height: 26px;
-  margin-right: 6px;
+  
 }
 
 .logo span {
@@ -607,7 +615,6 @@ h6 {
 # Dynamic table css starts from here (SANTOSH's Candidate form)
 --------------------------------------------------------------*/
  
-
 
 ._table {
     width:97%;
@@ -1332,9 +1339,6 @@ h6 {
 --------------------------------------------------------------*/
 
 /* Import Google Font - Poppins */
-@import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap')
-	;
 
 
 .content .search {
@@ -1406,9 +1410,7 @@ h6 {
 	background: #f2f2f2;
 }
 /* Google Fonts - Poppins */
-@import
-	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap')
-	;
+
 
 .container {
 	position: relative;
@@ -1429,6 +1431,8 @@ h6 {
 	background-color: white;
 	border: 1.5px solid #c0c0c0;
 }
+
+
 
 .select-btn .btn-text {
 	font-size: 17px;
@@ -1451,6 +1455,17 @@ h6 {
 
 .select-btn.open .arrow-dwn {
 	transform: rotate(-180deg);
+}
+
+.btn {
+    height: 30px;
+    line-height: 30px; /* Vertically center the text */
+    text-align: center; /* Horizontally center the text */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide any overflowing text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 0 7px; /* Optional padding for left and right spacing */
 }
 
 .list-items {
@@ -1515,3 +1530,4 @@ h6 {
 .item.checked .check-icon {
 	transform: scale(1);
 }
+

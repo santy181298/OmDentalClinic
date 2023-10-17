@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.model.User;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.UserRepository;
+import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
@@ -63,6 +66,8 @@ public class MainController {
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
 	
+	@Autowired
+	private AppointmentService appointmentService;
 	
 	public MainController(UserServiceImpl userServiceImpl) {
 	this.userServiceImpl=userServiceImpl;
@@ -415,5 +420,84 @@ public class MainController {
  
 //PatientProcedure controller ENDs		
 	
-	
+
+		   @GetMapping("/displayAmount")
+		   public String showAmount(HttpServletRequest request, Model model) {
+		       // Initialize fromDate and toDate with default values if needed
+		       Date fromDate = null; // Set your default fromDate value here
+		       Date toDate = null; // Set your default toDate value here
+
+		       // Add fromDate and toDate to the model so they can be pre-populated in the form
+		       HttpSession session = request.getSession();
+			   String username = (String) session.getAttribute("username");
+			   model.addAttribute("username", username); 	
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+
+		       return "displayAmount";
+		   }
+
+		   
+		   @PostMapping("/filterData")
+		    public String filterProcedures(
+		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		            @RequestParam("session") String session, HttpServletRequest request,
+		            Model model) {
+			   
+		        // Get filtered procedures based on dates and session
+		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+		        
+		        HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+		        // Add the filtered procedures to the model for displaying in the view
+		        model.addAttribute("patientProcedures", filteredProcedures);
+		        // Add fromDate and toDate to the model for display in the view if needed
+		        model.addAttribute("fromDate", fromDate);
+		        model.addAttribute("toDate", toDate);
+		        model.addAttribute("session", session);
+		        
+		        // Add other necessary attributes and logic for your view as needed
+
+		        // Return the name of the Thymeleaf template where you want to display the filtered data
+		        return "displayAmount";
+		    }
+
+
+
+		   @GetMapping("/viewAppointment")
+		   public String showAppointmentView(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+				
+				return "viewAppointment";
+		   }
+
+//Appointment controller--------------------------------------------------------------------------------------------------------		
+		   
+		   
+		   
+		   @GetMapping("/appointment")
+		   public String showAppointment(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+				
+				Appointment appointment = new Appointment();
+				model.addAttribute("appointment", appointment); 
+				return "appointment";
+		   }
+		   
+		   
+		   
+		   @PostMapping("/saveAppointment")
+		   public String saveAppointment(@ModelAttribute Appointment appointment) {				     
+			   appointmentService.saveAppointment(appointment);
+		       return "redirect:/patientList";
+		   }
+		      
+		   
+
 }

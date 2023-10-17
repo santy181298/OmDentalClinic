@@ -43,7 +43,12 @@ public class PatientProcedure {
 	
     @Column(name = "estimate_amount")
     private Double estimateamount;
-	
+
+    @Column(name = "cash_payment")
+    private Double cashpayment;
+    
+    @Column(name = "online_payment")
+    private Double onlinepayment;
     
     @Column(name = "payment_amount")
     private Double paymentamount;
@@ -80,11 +85,10 @@ public class PatientProcedure {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
 	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduretype,
-			String proceduredetail, Double estimateamount, Double paymentamount, Double balanceamount, String labname,
-			String externaldoctor, String cashiername, Date timestamp) {
+			String proceduredetail, Double estimateamount, Double cashpayment, Double onlinepayment,
+			Double paymentamount, Double balanceamount, String labname, String externaldoctor, String cashiername,
+			Date timestamp) {
 		super();
 		this.procedureid = procedureid;
 		this.procedurenumber = procedurenumber;
@@ -92,6 +96,8 @@ public class PatientProcedure {
 		this.proceduretype = proceduretype;
 		this.proceduredetail = proceduredetail;
 		this.estimateamount = estimateamount;
+		this.cashpayment = cashpayment;
+		this.onlinepayment = onlinepayment;
 		this.paymentamount = paymentamount;
 		this.balanceamount = balanceamount;
 		this.labname = labname;
@@ -148,6 +154,22 @@ public class PatientProcedure {
 		this.estimateamount = estimateamount;
 	}
 
+	public Double getCashpayment() {
+		return cashpayment;
+	}
+
+	public void setCashpayment(Double cashpayment) {
+		this.cashpayment = cashpayment;
+	}
+
+	public Double getOnlinepayment() {
+		return onlinepayment;
+	}
+
+	public void setOnlinepayment(Double onlinepayment) {
+		this.onlinepayment = onlinepayment;
+	}
+
 	public Double getPaymentamount() {
 		return paymentamount;
 	}
@@ -200,11 +222,12 @@ public class PatientProcedure {
 	public String toString() {
 		return "PatientProcedure [procedureid=" + procedureid + ", procedurenumber=" + procedurenumber
 				+ ", proceduredate=" + proceduredate + ", proceduretype=" + proceduretype + ", proceduredetail="
-				+ proceduredetail + ", estimateamount=" + estimateamount + ", paymentamount=" + paymentamount
-				+ ", balanceamount=" + balanceamount + ", labname=" + labname + ", externaldoctor=" + externaldoctor
-				+ ", cashiername=" + cashiername + ", timestamp=" + timestamp + "]";
+				+ proceduredetail + ", estimateamount=" + estimateamount + ", cashpayment=" + cashpayment
+				+ ", onlinepayment=" + onlinepayment + ", paymentamount=" + paymentamount + ", balanceamount="
+				+ balanceamount + ", labname=" + labname + ", externaldoctor=" + externaldoctor + ", cashiername="
+				+ cashiername + ", timestamp=" + timestamp + "]";
 	}
 
-	
+
 	    
 }
