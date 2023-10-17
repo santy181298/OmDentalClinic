@@ -141,54 +141,55 @@
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
-			<form th:action="@{/scheduleAppointment}" method="post" class="search-form" id="appointmentForm"
-                    name="appointmentForm">
+
+		<form th:object="${appointment}" th:action="@{saveAppointment}" action="#" class="search-form" id="appointmentForm" name="appointmentForm" method="POST">
+				
                     <div class="row mb-3">
                         <label for="startTime" class="col-sm-2 col-form-label required">Start Time:</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control" id="startTime" name="startTime" required>
+                            <input type="datetime-local" th:field="*{starttime}" class="form-control" id="startTime" name="startTime" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="endTime" class="col-sm-2 col-form-label required">End Time:</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" class="form-control" id="endTime" name="endTime" required>
+                            <input type="datetime-local" th:field="*{endtime}" class="form-control" id="endTime" name="endTime" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-2 col-form-label required">First Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            <input type="text" th:field="*{firstname}" class="form-control" id="firstName" name="firstName" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="middleName" class="col-sm-2 col-form-label required">Middle Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="middleName" name="middleName">
+                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName">
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="treatment" class="col-sm-2 col-form-label required">Treatment:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="treatment" name="treatment" required></textarea>
+                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" required></textarea>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="mobileNumber" class="col-sm-2 col-form-label required">Mobile Number:</label>
                         <div class="col-sm-10">
-                            <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required>
+                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" required>
                         </div>
                     </div>
 
