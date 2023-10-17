@@ -13,7 +13,6 @@ import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 
 
-
 @Service
 public class PatientInfoServiceImpl implements PatientInfoService {
 	
@@ -103,5 +102,5 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	    patientInfoRepository.save(existingPatientInfo);
 	}
 
-
+	
 }

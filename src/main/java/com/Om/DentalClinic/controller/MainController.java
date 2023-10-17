@@ -124,9 +124,17 @@ public class MainController {
 	 public String adminHome(HttpServletRequest request, Model model){
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
-	     // Pass the username to the view
-	     model.addAttribute("username", username);
-		 return "adminHome";
+	     if(username!=null) {
+	    	 model.addAttribute("username", username);
+			 return "adminHome";
+	     }
+	     model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+	     
+//	     // Pass the username to the view
+//	     model.addAttribute("username", username);
+//		 return "adminHome";
+	
 	 }
 
 	 
@@ -134,10 +142,17 @@ public class MainController {
 	 public String userHome(HttpServletRequest request,Model model) {
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
-
+	     
+	     if(username!=null) {
+	    	 model.addAttribute("username", username);
+			 return "home";
+	     }
+	     model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+			
 	     // Pass the username to the view
-	     model.addAttribute("username", username);   
-	     return "home"; 
+//	     model.addAttribute("username", username);   
+//	     return "home"; 
 	  }
 
 
@@ -147,41 +162,52 @@ public class MainController {
 	 public String showPatientinfo(HttpServletRequest request, Model model) {
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
-
+	     
+	     // 
+	     if(username!=null) {
+	    	  PatientInfo patientinfo = new PatientInfo();
+	    	  if(patientinfo!=null) {
+	    		 
+	    	// Pass the username to the view
+	 	    	model.addAttribute("username", username);
+	 	    	model.addAttribute("patientinfo", patientinfo);
+	 			return "patientinfo";
+	    	  }
+	    	
+	     }
+	     model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+	     
+	     
 	     // Pass the username to the view
-	     model.addAttribute("username", username); 
+	     // model.addAttribute("username", username); 
 		 
-	     PatientInfo patientinfo = new PatientInfo(); 
-	     model.addAttribute("patientinfo", patientinfo);	     
-	     return "patientinfo";
+	     // PatientInfo patientinfo = new PatientInfo(); 
+	     // model.addAttribute("patientinfo", patientinfo);	     
+	     // return "patientinfo";
 	 } 
 	 
-//		@GetMapping("/patientList")
-//		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
-//			HttpSession session = request.getSession();
-//		     String username = (String) session.getAttribute("username");
-//		     // Pass the username to the view
-//		     model.addAttribute("username", username); 
-//		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
-//			return "patientList";
-//		}
-		
+	
 	 @GetMapping("/patientList")
 		public String showPatientList(HttpServletRequest request, Model model,Principal principal) {
 			HttpSession session = request.getSession();
-
-
-		     String username = (String) session.getAttribute("username");		     
-
-		     //get user by username
-		     User user=userServiceImpl.findByUsername(username);
-		     // Pass the user's role to the view
-		     model.addAttribute("userRole", user.getRole());
-
-		     // Pass the username to the view
-		     model.addAttribute("username", username); 
-		    model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
-			return "patientList";
+			String username = (String) session.getAttribute("username");		     
+			
+			if(username!=null) {
+				User user=userServiceImpl.findByUsername(username);
+				if(user !=null) {
+					model.addAttribute("userRole", user.getRole());
+					model.addAttribute("username", username);
+					model.addAttribute("listpatients", patientInfoService.findAllByOrderByPatientregdateDesc());
+					return "patientList";
+					
+				}
+				
+			}
+ 
+			model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+		    
 		}
 		
 		@GetMapping("/deletePatientInfo/{id}")
@@ -193,15 +219,30 @@ public class MainController {
 		@GetMapping("/editPatientinfo/{id}")
 		public String editPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
-		     String username = (String) session.getAttribute("username");
-		     model.addAttribute("username", username); 			
-			PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
-			model.addAttribute("patientinfo", patientinfo);
-			return "editPatientInfo";
+		    String username = (String) session.getAttribute("username");
+		     
+		    // by prasad 
+		    if(username!=null) {
+		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
+				if(patientinfo !=null) {
+					
+					model.addAttribute("username", username);
+					model.addAttribute("patientinfo", patientinfo);
+					return "editPatientInfo";
+					
+				}
+				
+			}
+ 
+			model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+		    
+		     
+		    // model.addAttribute("username", username); 			
+			//PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
+			//model.addAttribute("patientinfo", patientinfo);
+			//return "editPatientInfo";
 		}
-		
-		
-
 		
 		
 		@PostMapping("/updatePatientInfo")
@@ -273,9 +314,8 @@ public class MainController {
 		    
 		    return "redirect:/patientList";
 		}
-
-	
-	
+		
+			
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
 
@@ -285,17 +325,30 @@ public class MainController {
 			 public String showPatientDetail(HttpServletRequest request, @PathVariable("patientId") int patientId,Model model) {
 
 					HttpSession session = request.getSession();
-				     String username = (String) session.getAttribute("username");		     
-				     User user=userServiceImpl.findByUsername(username);
-				     model.addAttribute("userRole", user.getRole());
-				     model.addAttribute("username", username); 
-			        PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
-			        model.addAttribute("patientinfo", patientInfo);
-			        
+				     String username = (String) session.getAttribute("username");	
+				     if (username != null) {
+				         User user = userServiceImpl.findByUsername(username);
 
-				 List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
-				 model.addAttribute("patientProcedures", patientProcedures);
-				 return "patientDetails";
+				         if (user != null) {
+				             // Pass the user's role to the view
+				             model.addAttribute("userRole", user.getRole());
+
+				             // Pass the username to the view
+				             model.addAttribute("username", username);
+				             PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
+				             model.addAttribute("patientinfo", patientInfo);
+
+				             List<PatientProcedure> patientProcedures = patientProcedureService.getProceduresByPatientId(patientId);
+				             model.addAttribute("patientProcedures", patientProcedures);
+				             return "patientDetails";
+				         }
+				     }
+
+				     // Handle the case where the user is null
+				     model.addAttribute("error", "User not found.");
+				     return "redirect:/login";
+
+				     
 			 }
 		
 		
@@ -367,6 +420,7 @@ public class MainController {
  
 //PatientProcedure controller ENDs		
 	
+
 		   @GetMapping("/displayAmount")
 		   public String showAmount(HttpServletRequest request, Model model) {
 		       // Initialize fromDate and toDate with default values if needed
@@ -445,5 +499,5 @@ public class MainController {
 		   }
 		      
 		   
-		   
+
 }
