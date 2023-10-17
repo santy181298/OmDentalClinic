@@ -49,6 +49,8 @@ public interface PatientInfoService {
 	        long patientmobile2,
 	        String patientmedicalhistory,
 	        String cashierName) throws IOException;
+	
+	
 }
 
 
