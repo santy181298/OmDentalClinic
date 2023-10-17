@@ -57,15 +57,11 @@
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
-              <i></i><span>Patient Information</span>
+              <i></i><span>Patient Registration</span>
             </a>
           </li>
           
-          <li>
-            <a class="nav-link collapsed" th:href="@{/procedureDetails}">
-              <i></i><span>Procedure Details</span>
-            </a>
-          </li>
+
 
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
@@ -83,13 +79,15 @@
   <!-- End Of Company Pages  -->
   
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="#" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Om Dental Clinic</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    <div class="d-flex align-items-center justify-content-between" style="position: relative; left: -20px;">
+    <a href="#" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block" style="margin-left: 20px;">Om Dental Clinic</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+	</div><!-- End Logo -->
+    <!-- Back Button -->
+    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm">Back</button> 
+	<button onclick="goForward()" type="button" class="btn btn-secondary rounded-pill btn-sm">Next</button>
 	
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
@@ -178,6 +176,17 @@
   text-align: center;
 }
 </style>
+<!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
 
 </body>
 

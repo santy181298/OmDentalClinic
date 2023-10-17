@@ -31,6 +31,12 @@
 
     <!-- Template Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
+    
+
+
+    <!-- FullCalendar JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+    
 
     <!-- =======================================================
   * Template Name: NiceAdmin
@@ -78,17 +84,16 @@
   <!-- End Of Company Pages  -->
   
 
-    <div class="d-flex align-items-center justify-content-between" style="position: relative; left: -20px;">
-    <a href="#" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block" style="margin-left: 20px;">Om Dental Clinic</span>
-    </a>
-    <i class="bi bi-list toggle-sidebar-btn"></i>
-	</div><!-- End Logo -->
-    <!-- Back Button -->
-    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm">Back</button> 
-	<button onclick="goForward()" type="button" class="btn btn-secondary rounded-pill btn-sm">Next</button> 
 
-	<!-- User Profile nav -->	
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Om Dental Clinic</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+   	<!-- User Profile nav -->	
+
 	<nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -126,11 +131,13 @@
  <main id="main" class="main">
 
         <div class="pagetitle">
-          <h1>Money Received</h1>
+        <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+    	<i class="fas fa-arrow-left"></i>Back</button>
+          <h1>Doctor's Calendar</h1>
           <nav>
         	<ol class="breadcrumb">
           		<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
-          		<li class="breadcrumb-item active">Money Received</li>
+          		<li class="breadcrumb-item active">Calendar</li>
         	</ol>
       		</nav>
         </div>
@@ -139,79 +146,20 @@
               <h5></h5>
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
-          		<form action="/filterData" method="post">
-				    <div class="row mb-3">
-				        <label for="fromDate" class="col-sm-2 col-form-label required">From Date</label>
-				        <div class="col-sm-10">
-				            <input type="date" class="form-control" id="fromDate" name="fromDate" th:value="${#dates.format(fromDate, 'yyyy-MM-dd')}" required>
-				        </div>
-				    </div>
-				    <div class="row mb-3">
-				        <label for="toDate" class="col-sm-2 col-form-label required">To Date</label>
-				        <div class="col-sm-10">
-				            <input type="date" class="form-control" id="toDate" name="toDate" th:value="${#dates.format(toDate, 'yyyy-MM-dd')}" required>
-				        </div>
-				    </div>
-				     <div class="row mb-3">
-					    <label for="session" class="col-sm-2 col-form-label required">Session</label>
-					    <div class="col-sm-10">
-					        <select class="form-control" id="session" name="session" aria-label="Default select example" required>
-					            <option value="" disabled selected>Select Session</option>
-					            <option value="morning">Morning</option>
-					            <option value="evening">Evening</option>
-					        </select>
-					    </div>
-					</div>
+          
+			<div class="row mb-3">
+                    <label for="viewMode" class="col-sm-2 col-form-label required">View Mode:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="viewMode" name="viewMode">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+                </div>
 
-				    
-				    <div class="row mb-3">
-				        <div class="col-sm-10 offset-sm-2">
-				            <button type="submit" class="btn btn-primary">Apply Filters</button>
-				        </div>
-				    </div>
-				</form>
-
-			    <div class="row">
-			        <div class="col-sm-12">
-			            <div id="filteredData">
-			              <div class="table-responsive">
-							    <table class="table">
-							        <thead>
-							            <tr>
-							                <th scope="col">Date</th>
-							                <th scope="col">Patient Name</th>
-							                <th scope="col">Payment Amount</th>
-							            </tr>
-							        </thead>
-							        <tbody>
-							            <!-- Initialize totalPaymentAmount variable to store the sum of payment amounts -->
-							            <th:block th:with="totalPaymentAmount=0"></th:block>
-							            <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
-							                <!-- Format the date as per your requirement using Thymeleaf -->
-							                <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
-							                <!-- Access the patient's name assuming it's a property of PatientProcedure -->
-							                <td th:text="${patientProcedure.procedurenumber.firstname} + ' ' + ${patientProcedure.procedurenumber.middlename} + ' ' + ${patientProcedure.procedurenumber.lastname}"></td>
-							                <!-- Access the payment amount property of PatientProcedure -->
-							                <td th:text="${patientProcedure.paymentamount}"></td>
-							                <!-- Add the current payment amount to the totalPaymentAmount variable -->
-							                <!--<th:block th:with="totalPaymentAmount=${totalPaymentAmount + (patientProcedure.paymentamount ?: 0)}"></th:block><-->
-							            </tr>
-							            <!-- Display the total payment amount below the payment amounts -->
-							            <!--<tr>
-							                <td></td>
-							                <td><strong>Total Payment Amount:</strong></td>
-							                <td th:text="${totalPaymentAmount}"></td>
-							            </tr>-->
-							        </tbody>
-							    </table>
-							</div>
-
-			            </div>
-			        </div>
-			    </div>
-			</div>
-			
-            </main>
+                <!-- Calendar container -->
+                <div id="calendar"></div>
+       		</main>
     
 	<br>
 
@@ -244,8 +192,19 @@
     }
 	</script>
 	
-	
-	
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+	        // Configuration options
+	        plugins: ['dayGrid'],
+	        defaultView: 'dayGridMonth', // Initial view mode
+	        // Add more configurations and event sources as needed
+    	});
+    calendar.render();
+	});
+
+	</script>
 	
 </body>
 

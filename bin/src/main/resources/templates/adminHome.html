@@ -57,21 +57,10 @@
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
-              <i></i><span>Patient Information</span>
+              <i></i><span>Patient Registration</span>
             </a>
           </li>
           
-          <li>
-            <a class="nav-link collapsed" th:href="@{/procedureDetails}">
-              <i></i><span>Procedure Details</span>
-            </a>
-          </li>
-
-          <li>
-            <a class="nav-link collapsed" th:href="@{/patientDetails}">
-              <i></i><span>Patient Details</span>
-            </a>
-          </li>
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
@@ -89,6 +78,7 @@
   <!-- End Of Company Pages  -->
   
 
+
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -96,6 +86,7 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+
 	
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
@@ -133,6 +124,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
+    
       <h1>Admin Profile</h1>
       <nav>
         <ol class="breadcrumb">
@@ -184,7 +176,31 @@
   text-align: center;
 }
 </style>
+	<script type="text/css">
+.pagination {
+    text-align: center;
+}
+.pagination button {
+    margin: 10px;
+}
 
+	</script>  
+	
+	<!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
+	
+	
+	
+		
 </body>
 
 </html>
