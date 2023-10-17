@@ -136,48 +136,8 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Patients</h5>
-              <div class="search-bars-container">
-               <div class="search-bars-container d-flex">
-				  <!-- First Search Bar -->
-				  <div class="search-bar" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Patient Number" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
-				    </div>
-				  </div>
-				
-				  <!-- Second Search Bar -->
-				  <div class="search-bar mx-3" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Patient Name" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
-				    </div>
-				  </div>
-				
-				  <!-- Third Search Bar -->
-				  <div class="search-bar" style="width: 250px;">
-				    <div class="search-form d-flex align-items-center">
-				      <div class="input-group">
-				        <input type="text" name="query" placeholder="Mobile Number" title="Enter search term" class="form-control">
-				        <button type="submit" title="Search" class="input-group-text">
-				          <i class="bi bi-search"></i>
-				        </button>
-				      </div>
-				    </div>
-				  </div>
-				</div> 
-              <br>
-             
-			</div>
+              <h5 class="card-title">Patients Procedure</h5>
+
 			<div class="table-responsive">
 			<table class="table">
 			    <thead>
@@ -197,7 +157,7 @@
 			            <td th:text="${patientProcedure.balanceamount}"></td>
 			            
 			            <td>
-<!-- 			              <a class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}">Update</a> -->
+		          <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}">Update</a> 
 			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
 
 

@@ -131,10 +131,6 @@ public class MainController {
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 	     
-//	     // Pass the username to the view
-//	     model.addAttribute("username", username);
-//		 return "adminHome";
-	
 	 }
 
 	 
@@ -149,10 +145,7 @@ public class MainController {
 	     }
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
-			
-	     // Pass the username to the view
-//	     model.addAttribute("username", username);   
-//	     return "home"; 
+
 	  }
 
 
@@ -167,8 +160,7 @@ public class MainController {
 	     if(username!=null) {
 	    	  PatientInfo patientinfo = new PatientInfo();
 	    	  if(patientinfo!=null) {
-	    		 
-	    	// Pass the username to the view
+
 	 	    	model.addAttribute("username", username);
 	 	    	model.addAttribute("patientinfo", patientinfo);
 	 			return "patientinfo";
@@ -179,12 +171,7 @@ public class MainController {
 			return "redirect:/login";
 	     
 	     
-	     // Pass the username to the view
-	     // model.addAttribute("username", username); 
-		 
-	     // PatientInfo patientinfo = new PatientInfo(); 
-	     // model.addAttribute("patientinfo", patientinfo);	     
-	     // return "patientinfo";
+
 	 } 
 	 
 	
@@ -236,12 +223,7 @@ public class MainController {
  
 			model.addAttribute("error","User Not Found");
 			return "redirect:/login";
-		    
-		     
-		    // model.addAttribute("username", username); 			
-			//PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
-			//model.addAttribute("patientinfo", patientinfo);
-			//return "editPatientInfo";
+
 		}
 		
 		
@@ -457,10 +439,6 @@ public class MainController {
 		        model.addAttribute("fromDate", fromDate);
 		        model.addAttribute("toDate", toDate);
 		        model.addAttribute("session", session);
-		        
-		        // Add other necessary attributes and logic for your view as needed
-
-		        // Return the name of the Thymeleaf template where you want to display the filtered data
 		        return "displayAmount";
 		    }
 
