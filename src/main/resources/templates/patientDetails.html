@@ -145,6 +145,8 @@
 			            <th>#</th>
 			            <th>Procedure Date</th>
 			            <th>Procedure Detail</th>
+			             <th>Estimated</th>
+			             <th>Amount Paid</th>
 			            <th>Balance</th>
 			            <th>Actions</th>
 			        </tr>
@@ -154,6 +156,8 @@
 			            <td th:text="${procedureStat.index + 1}"></td>
 			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
 			            <td th:text="${patientProcedure.proceduredetail}"></td>
+			            <td th:text="${patientProcedure.estimateamount}"></td>
+			            <td th:text="${patientProcedure.paymentamount}"></td>
 			            <td th:text="${patientProcedure.balanceamount}"></td>
 			            
 			            <td>
