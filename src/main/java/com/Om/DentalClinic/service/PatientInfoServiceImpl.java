@@ -7,7 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.Om.DentalClinic.model.PatientInfo;
 
 import com.Om.DentalClinic.repository.PatientInfoRepository;
@@ -102,5 +109,45 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	    patientInfoRepository.save(existingPatientInfo);
 	}
 
+	
+    public ByteArrayOutputStream exportPatientsToExcel() throws IOException {
+        List<PatientInfo> patients = patientInfoRepository.findAll();
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Patients");
+
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Patient Number");
+        headerRow.createCell(1).setCellValue("First Name");
+        headerRow.createCell(2).setCellValue("Middle Name");
+        headerRow.createCell(3).setCellValue("Last Name");
+        headerRow.createCell(4).setCellValue("Age");
+        headerRow.createCell(5).setCellValue("Gender");
+        headerRow.createCell(6).setCellValue("Registration Date");
+        headerRow.createCell(7).setCellValue("Mobile 1");
+        headerRow.createCell(8).setCellValue("Mobile 2");
+        headerRow.createCell(9).setCellValue("Cashier Name");
+
+        int rowNum = 1;
+        for (PatientInfo patient : patients) {
+            Row dataRow = sheet.createRow(rowNum++);
+            dataRow.createCell(0).setCellValue(patient.getPatientnumber());
+            dataRow.createCell(1).setCellValue(patient.getFirstname());
+            dataRow.createCell(2).setCellValue(patient.getMiddlename());
+            dataRow.createCell(3).setCellValue(patient.getLastname());
+            dataRow.createCell(4).setCellValue(patient.getPatientage());
+            dataRow.createCell(5).setCellValue(patient.getPatientgender());
+            dataRow.createCell(6).setCellValue(patient.getPatientregdate().toString());
+            dataRow.createCell(7).setCellValue(patient.getPatientmobile1());
+            dataRow.createCell(8).setCellValue(patient.getPatientmobile2());
+            dataRow.createCell(9).setCellValue(patient.getCashiername());
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        return outputStream;
+    }
 	
 }

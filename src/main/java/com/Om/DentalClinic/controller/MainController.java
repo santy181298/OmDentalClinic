@@ -3,7 +3,7 @@ package com.Om.DentalClinic.controller;
 import java.io.IOException;
 
 import java.security.Principal;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -41,7 +41,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.io.ByteArrayOutputStream;
 
 
 
@@ -297,6 +297,21 @@ public class MainController {
 		    return "redirect:/patientList";
 		}
 		
+		
+		
+		@GetMapping("/patients/excel")
+		public void exportPatientsToExcel(HttpServletResponse response) throws IOException {
+		    ByteArrayOutputStream excelData = patientInfoService.exportPatientsToExcel();
+		    // Generate the file name with the current date
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		    String currentDate = dateFormat.format(new Date());
+		    String fileName = "patient_" + currentDate + ".xlsx";
+		    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		    response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		    excelData.writeTo(response.getOutputStream());
+		    excelData.close();
+		}
+
 			
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
@@ -468,14 +483,25 @@ public class MainController {
 				return "appointment";
 		   }
 		   
-		   
-		   
+
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@ModelAttribute Appointment appointment) {				     
 			   appointmentService.saveAppointment(appointment);
-		       return "redirect:/patientList";
+		       return "redirect:/adminHome";
 		   }
 		      
+		   @GetMapping("/appointment/excel")
+		    public void exportAppointmentsToExcel(HttpServletResponse response) throws IOException {
+		        ByteArrayOutputStream excelData = appointmentService.exportAppointmentsToExcel();
+		        // Generate the file name with the current date
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		        String currentDate = dateFormat.format(new Date());
+		        String fileName = "appointments_" + currentDate + ".xlsx";
+		        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		        excelData.writeTo(response.getOutputStream());
+		        excelData.close();
+		    }
 		   
 
 }
