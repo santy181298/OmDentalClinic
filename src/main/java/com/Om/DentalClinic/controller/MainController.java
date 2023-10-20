@@ -298,14 +298,13 @@ public class MainController {
 		}
 		
 		
-		
 		@GetMapping("/patients/excel")
-		public void exportPatientsToExcel(HttpServletResponse response) throws IOException {
-		    ByteArrayOutputStream excelData = patientInfoService.exportPatientsToExcel();
+		public void exportPatientsAndProceduresToExcel(HttpServletResponse response) throws IOException {
+		    ByteArrayOutputStream excelData = patientInfoService.exportPatientsAndProceduresToExcel();
 		    // Generate the file name with the current date
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		    String currentDate = dateFormat.format(new Date());
-		    String fileName = "patient_" + currentDate + ".xlsx";
+		    String fileName = "patient_and_procedure_" + currentDate + ".xlsx";
 		    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		    response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 		    excelData.writeTo(response.getOutputStream());

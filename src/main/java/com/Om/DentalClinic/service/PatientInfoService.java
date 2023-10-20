@@ -29,7 +29,7 @@ public interface PatientInfoService {
 	        String patientmedicalhistory,
 	        String cashierName) throws IOException;
 	
-	public ByteArrayOutputStream exportPatientsToExcel() throws IOException;
+	public ByteArrayOutputStream exportPatientsAndProceduresToExcel() throws IOException;
 	
 }
 
