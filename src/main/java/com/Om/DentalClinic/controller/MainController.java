@@ -458,14 +458,6 @@ public class MainController {
 
 
 
-		   @GetMapping("/viewAppointment")
-		   public String showAppointmentView(HttpServletRequest request, Model model) {
-			   HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-				
-				return "viewAppointment";
-		   }
 
 //Appointment controller--------------------------------------------------------------------------------------------------------		
 		   
@@ -486,8 +478,20 @@ public class MainController {
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@ModelAttribute Appointment appointment) {				     
 			   appointmentService.saveAppointment(appointment);
-		       return "redirect:/adminHome";
+		       return "redirect:/appointment";
 		   }
+		   
+//		   @PostMapping("/saveAppointment")
+//		    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
+//		        // Check if appointment exists for the given date and time
+//		        if (appointmentService.isAppointmentExists(appointment.getStarttime(), appointment.getEndtime())) {
+//		            model.addAttribute("error", "Current slot already booked, please select another slot.");
+//		            return "appointment"; // Return the form page with error message
+//		        } else {
+//		            appointmentService.saveAppointment(appointment);
+//		            return "redirect:/appointment"; // Redirect to success page or appropriate page
+//		        }
+//		    }
 		      
 		   @GetMapping("/appointment/excel")
 		    public void exportAppointmentsToExcel(HttpServletResponse response) throws IOException {
@@ -501,6 +505,33 @@ public class MainController {
 		        excelData.writeTo(response.getOutputStream());
 		        excelData.close();
 		    }
+		   
+		   
+		   @GetMapping("/viewAppointment")
+		   public String showAppointmentView(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+				
+				return "viewAppointment";
+		   }
+		   
+		   @PostMapping("/filterAppointments")
+		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+			   // Get filtered appointments based on the selected date
+		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
+
+		       // Add filtered appointments to the model for displaying in the view
+		       model.addAttribute("filteredAppointments", filteredAppointments);
+
+		       // Add the selected date to the model for display in the view if needed
+		       model.addAttribute("selectedDate", appointmentDate);
+
+		       return "viewAppointment";
+		   }
 		   
 
 }
