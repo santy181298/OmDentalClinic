@@ -1,27 +1,21 @@
 package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
-
 import java.security.Principal;
-
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.model.PatientInfo;
@@ -34,20 +28,21 @@ import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 import com.Om.DentalClinic.service.UserServiceImpl;
-
-
 import jakarta.servlet.http.HttpSession;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
-
-
 @Controller
 public class MainController {
 
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	
 	@Autowired
 	private PatientInfoService patientInfoService;
 	
@@ -56,38 +51,31 @@ public class MainController {
 	
 	@Autowired
 	private PatientProcedureServiceImpl patientProcedureServiceImpl;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private UserServiceImpl userServiceImpl;
-	
+		
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
 	
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	public MainController(UserServiceImpl userServiceImpl) {
-	this.userServiceImpl=userServiceImpl;
-	}
+	
 	
 
 //Controller for Login-----------------------------------------------------------------------------------------	
 
 	@GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
-
+		User user=new User();
+		model.addAttribute("user", user);
 			return "login";
 
 		}
 	 
-	 @GetMapping("/login")
-	 public String showLogin() {
-
-		 return "login";
-	 }
+	@GetMapping("/login")
+	public ModelAndView homepage() {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
 	 
 	 @GetMapping("/logout")
 	    public String logout() {
@@ -116,7 +104,55 @@ public class MainController {
 	        model.addAttribute("error", "Invalid username or password.");
 	        return "login";
 	    }
+
+	 // Registration Controller (Prasad)
+		@GetMapping("/register")
+		public String home(HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+		     String username = (String) session.getAttribute("username");
+		     
+		     if(username!=null) {
+		    	 model.addAttribute("username", username);
+				 return "register";
+		     }
+		     model.addAttribute("error","User Not Found");
+				return "redirect:/login";
+		}
+		
+		@PostMapping("/register")
+		public String create(@ModelAttribute("users") User user, HttpSession session) {
+			
+			
+			boolean u = userServiceImpl.checkUsername(user.getUsername());
+			if (u) {
+				System.out.println("User is already exist");
+			} else {
+				System.out.println(user);
+				// password encryption
+				//user.setPassword(bp.encode(user.getPassword()));
+				// user.setRole(user.getRole());
+				
+//				if("ADMIN".equals(user.getRole())) {
+//					// Perform the registration process for "ADMIN" users
+//		            // For example, you can save the user to the database here
+//					userRepository.save(user);
+//				}else {
+//					// If the user's role is not "ADMIN," redirect them to the login page
+//		            return "redirect:/login?accessdenied";
+//				}
+
+				session.setAttribute("msg", "Registration  successfully!");
+				userRepository.save(user);
+			}
+
+			return "register";
+		}
 	 
+		@GetMapping("/accessDenied")
+		public String errorpage() {
+			return "accessdenied";
+		}
+		 
 	 
 //User Controller------------------------------------------------------------------------------	 
 	 		
@@ -124,6 +160,7 @@ public class MainController {
 	 public String adminHome(HttpServletRequest request, Model model){
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
+	     
 	     if(username!=null) {
 	    	 model.addAttribute("username", username);
 			 return "adminHome";
@@ -131,9 +168,6 @@ public class MainController {
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 	     
-//	     // Pass the username to the view
-//	     model.addAttribute("username", username);
-//		 return "adminHome";
 	
 	 }
 
@@ -150,9 +184,7 @@ public class MainController {
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 			
-	     // Pass the username to the view
-//	     model.addAttribute("username", username);   
-//	     return "home"; 
+	      
 	  }
 
 
