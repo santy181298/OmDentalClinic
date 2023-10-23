@@ -7,4 +7,5 @@ public interface UserService {
 	User findByUsername(String username);
 	
 	public boolean checkUsername(String username);
+	
 }

@@ -8,16 +8,15 @@ import com.Om.DentalClinic.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService{
-
 	
 	@Autowired
 	private UserRepository userrepo;
 	
-	
 	public UserServiceImpl(UserRepository userrepo) {
-		this.userrepo=userrepo;
+		super();
+		this.userrepo = userrepo;
 	}
-	
+
 	@Override
 	public User findByUsername(String username) {
 		
@@ -30,8 +29,10 @@ public class UserServiceImpl implements UserService{
 		return userrepo.existsByUsername(username);
 	}
 	
+	
 	public void saveUser(User user) {
-		this.userrepo.save(user);
+		
+	    this.userrepo.save(user);
 	}
-
+	
 }
