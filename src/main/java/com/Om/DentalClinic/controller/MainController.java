@@ -2,6 +2,7 @@ package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.ByteArrayOutputStream;
+
 
 @Controller
 public class MainController {
@@ -168,7 +171,7 @@ public class MainController {
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 	     
-	
+
 	 }
 
 	 
@@ -183,8 +186,8 @@ public class MainController {
 	     }
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
-			
-	      
+
+
 	  }
 
 
@@ -199,8 +202,7 @@ public class MainController {
 	     if(username!=null) {
 	    	  PatientInfo patientinfo = new PatientInfo();
 	    	  if(patientinfo!=null) {
-	    		 
-	    	// Pass the username to the view
+
 	 	    	model.addAttribute("username", username);
 	 	    	model.addAttribute("patientinfo", patientinfo);
 	 			return "patientinfo";
@@ -211,12 +213,7 @@ public class MainController {
 			return "redirect:/login";
 	     
 	     
-	     // Pass the username to the view
-	     // model.addAttribute("username", username); 
-		 
-	     // PatientInfo patientinfo = new PatientInfo(); 
-	     // model.addAttribute("patientinfo", patientinfo);	     
-	     // return "patientinfo";
+
 	 } 
 	 
 	
@@ -268,12 +265,7 @@ public class MainController {
  
 			model.addAttribute("error","User Not Found");
 			return "redirect:/login";
-		    
-		     
-		    // model.addAttribute("username", username); 			
-			//PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
-			//model.addAttribute("patientinfo", patientinfo);
-			//return "editPatientInfo";
+
 		}
 		
 		
@@ -347,6 +339,20 @@ public class MainController {
 		    return "redirect:/patientList";
 		}
 		
+		
+		@GetMapping("/patients/excel")
+		public void exportPatientsAndProceduresToExcel(HttpServletResponse response) throws IOException {
+		    ByteArrayOutputStream excelData = patientInfoService.exportPatientsAndProceduresToExcel();
+		    // Generate the file name with the current date
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		    String currentDate = dateFormat.format(new Date());
+		    String fileName = "patient_and_procedure_" + currentDate + ".xlsx";
+		    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		    response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		    excelData.writeTo(response.getOutputStream());
+		    excelData.close();
+		}
+
 			
 //PatientInfo Code Ends here----------------------------------------------------------------------------------------------
 	
@@ -489,23 +495,11 @@ public class MainController {
 		        model.addAttribute("fromDate", fromDate);
 		        model.addAttribute("toDate", toDate);
 		        model.addAttribute("session", session);
-		        
-		        // Add other necessary attributes and logic for your view as needed
-
-		        // Return the name of the Thymeleaf template where you want to display the filtered data
 		        return "displayAmount";
 		    }
 
 
 
-		   @GetMapping("/viewAppointment")
-		   public String showAppointmentView(HttpServletRequest request, Model model) {
-			   HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-				
-				return "viewAppointment";
-		   }
 
 //Appointment controller--------------------------------------------------------------------------------------------------------		
 		   
@@ -522,14 +516,64 @@ public class MainController {
 				return "appointment";
 		   }
 		   
-		   
-		   
+
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@ModelAttribute Appointment appointment) {				     
 			   appointmentService.saveAppointment(appointment);
-		       return "redirect:/patientList";
+		       return "redirect:/appointment";
 		   }
+		   
+//		   @PostMapping("/saveAppointment")
+//		    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
+//		        // Check if appointment exists for the given date and time
+//		        if (appointmentService.isAppointmentExists(appointment.getStarttime(), appointment.getEndtime())) {
+//		            model.addAttribute("error", "Current slot already booked, please select another slot.");
+//		            return "appointment"; // Return the form page with error message
+//		        } else {
+//		            appointmentService.saveAppointment(appointment);
+//		            return "redirect:/appointment"; // Redirect to success page or appropriate page
+//		        }
+//		    }
 		      
+		   @GetMapping("/appointment/excel")
+		    public void exportAppointmentsToExcel(HttpServletResponse response) throws IOException {
+		        ByteArrayOutputStream excelData = appointmentService.exportAppointmentsToExcel();
+		        // Generate the file name with the current date
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		        String currentDate = dateFormat.format(new Date());
+		        String fileName = "appointments_" + currentDate + ".xlsx";
+		        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		        excelData.writeTo(response.getOutputStream());
+		        excelData.close();
+		    }
+		   
+		   
+		   @GetMapping("/viewAppointment")
+		   public String showAppointmentView(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+				
+				return "viewAppointment";
+		   }
+		   
+		   @PostMapping("/filterAppointments")
+		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+			   // Get filtered appointments based on the selected date
+		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
+
+		       // Add filtered appointments to the model for displaying in the view
+		       model.addAttribute("filteredAppointments", filteredAppointments);
+
+		       // Add the selected date to the model for display in the view if needed
+		       model.addAttribute("selectedDate", appointmentDate);
+
+		       return "viewAppointment";
+		   }
 		   
 
 }

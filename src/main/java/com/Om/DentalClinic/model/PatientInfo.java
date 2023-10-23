@@ -83,15 +83,15 @@ public class PatientInfo {
     @OneToMany(mappedBy = "procedurenumber", cascade = CascadeType.ALL)
     private List<PatientProcedure> patientprocedure ;
 
-    
 	public PatientInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public PatientInfo(int patientnumber, String firstname, String middlename, String lastname, int patientage,
-			String patientgender, Date patientregdate, int patientmobile1, int patientmobile2,
-			String patientmedicalhistory, String cashiername, Date timestamp, byte[] patientReports) {
+			String patientgender, Date patientregdate, long patientmobile1, long patientmobile2,
+			String patientmedicalhistory, String cashiername, byte[] patientReports, Date timestamp,
+			List<PatientProcedure> patientprocedure) {
 		super();
 		this.patientnumber = patientnumber;
 		this.firstname = firstname;
@@ -104,8 +104,9 @@ public class PatientInfo {
 		this.patientmobile2 = patientmobile2;
 		this.patientmedicalhistory = patientmedicalhistory;
 		this.cashiername = cashiername;
-		this.timestamp = timestamp;
 		this.patientReports = patientReports;
+		this.timestamp = timestamp;
+		this.patientprocedure = patientprocedure;
 	}
 
 	public int getPatientnumber() {
@@ -168,8 +169,8 @@ public class PatientInfo {
 		return patientmobile1;
 	}
 
-	public void setPatientmobile1(long patientmobile12) {
-		this.patientmobile1 = patientmobile12;
+	public void setPatientmobile1(long patientmobile1) {
+		this.patientmobile1 = patientmobile1;
 	}
 
 	public long getPatientmobile2() {
@@ -196,14 +197,6 @@ public class PatientInfo {
 		this.cashiername = cashiername;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
 	public byte[] getPatientReports() {
 		return patientReports;
 	}
@@ -212,21 +205,38 @@ public class PatientInfo {
 		this.patientReports = patientReports;
 	}
 
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public List<PatientProcedure> getPatientprocedure() {
+		return patientprocedure;
+	}
+
+	public void setPatientprocedure(List<PatientProcedure> patientprocedure) {
+		this.patientprocedure = patientprocedure;
+	}
+
 	@Override
 	public String toString() {
 		return "PatientInfo [patientnumber=" + patientnumber + ", firstname=" + firstname + ", middlename=" + middlename
 				+ ", lastname=" + lastname + ", patientage=" + patientage + ", patientgender=" + patientgender
 				+ ", patientregdate=" + patientregdate + ", patientmobile1=" + patientmobile1 + ", patientmobile2="
 				+ patientmobile2 + ", patientmedicalhistory=" + patientmedicalhistory + ", cashiername=" + cashiername
-				+ ", timestamp=" + timestamp + ", patientReports=" + Arrays.toString(patientReports)
-				+ ", getPatientnumber()=" + getPatientnumber() + ", getFirstname()=" + getFirstname()
-				+ ", getMiddlename()=" + getMiddlename() + ", getLastname()=" + getLastname() + ", getPatientage()="
-				+ getPatientage() + ", getPatientgender()=" + getPatientgender() + ", getPatientregdate()="
-				+ getPatientregdate() + ", getPatientmobile1()=" + getPatientmobile1() + ", getPatientmobile2()="
-				+ getPatientmobile2() + ", getPatientmedicalhistory()=" + getPatientmedicalhistory()
-				+ ", getCashiername()=" + getCashiername() + ", getTimestamp()=" + getTimestamp()
-				+ ", getPatientReports()=" + Arrays.toString(getPatientReports()) + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", patientReports=" + Arrays.toString(patientReports) + ", timestamp=" + timestamp
+				+ ", patientprocedure=" + patientprocedure + ", getPatientnumber()=" + getPatientnumber()
+				+ ", getFirstname()=" + getFirstname() + ", getMiddlename()=" + getMiddlename() + ", getLastname()="
+				+ getLastname() + ", getPatientage()=" + getPatientage() + ", getPatientgender()=" + getPatientgender()
+				+ ", getPatientregdate()=" + getPatientregdate() + ", getPatientmobile1()=" + getPatientmobile1()
+				+ ", getPatientmobile2()=" + getPatientmobile2() + ", getPatientmedicalhistory()="
+				+ getPatientmedicalhistory() + ", getCashiername()=" + getCashiername() + ", getPatientReports()="
+				+ Arrays.toString(getPatientReports()) + ", getTimestamp()=" + getTimestamp()
+				+ ", getPatientprocedure()=" + getPatientprocedure() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
 
