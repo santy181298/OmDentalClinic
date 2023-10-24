@@ -17,4 +17,6 @@ public interface AppointmentService {
 //	public boolean isAppointmentExists(Date startTime, Date endTime);
 
 	public List<Appointment> getAppointmentsByDate(Date appointmentDate);
+	
+	public void deleteAppointmentById(int id);
 }

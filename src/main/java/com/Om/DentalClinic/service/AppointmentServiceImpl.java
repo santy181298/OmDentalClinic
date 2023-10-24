@@ -94,4 +94,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         // Fetch appointments between start and end time
         return appointmentRepository.findByStarttimeBetween(startOfDay.getTime(), endOfDay.getTime());
     }
+	
+	public void deleteAppointmentById(int id) {
+		this.appointmentRepository.deleteById(id);
+	}
+	
 }
