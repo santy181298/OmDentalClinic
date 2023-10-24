@@ -523,6 +523,13 @@ public class MainController {
 		       return "redirect:/appointment";
 		   }
 		   
+		   @GetMapping("/deleteAppointment/{id}")
+			public String deleteAppointment(@PathVariable(value = "id") int id) {
+				this.appointmentService.deleteAppointmentById(id);
+				
+				return "redirect:/viewAppointment";
+			}
+		   
 //		   @PostMapping("/saveAppointment")
 //		    public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, Model model) {
 //		        // Check if appointment exists for the given date and time
