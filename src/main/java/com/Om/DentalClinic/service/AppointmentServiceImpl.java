@@ -100,5 +100,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public void deleteAppointmentById(int id) {
 		this.appointmentRepository.deleteById(id);
 	}
+
+
+	@Override
+	public Appointment getAppointmentById(int id) {
+		return appointmentRepository.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public void updateAppointment(Date starttime, Date endtime, String firstname, String middlename, String lastname,
+			String treatment, long patientmobile1, int appointmentnum) {
+		
+		Appointment existingAppointment = getAppointmentById(appointmentnum);
+	    if (existingAppointment != null) {
+	        // Update the fields of the existing appointment with the values from the form
+	        existingAppointment.setStarttime(starttime);
+	        existingAppointment.setEndtime(endtime);
+	        existingAppointment.setFirstname(firstname);
+	        existingAppointment.setMiddlename(middlename);
+	        existingAppointment.setLastname(lastname);
+	        existingAppointment.setTreatment(treatment);
+	        existingAppointment.setPatientmobile1(patientmobile1);
+
+	        this.appointmentRepository.save(existingAppointment);
+		
+	}
 	
+	}
 }

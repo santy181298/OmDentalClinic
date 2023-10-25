@@ -44,14 +44,11 @@ public class MainController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	
 	@Autowired
 	private PatientInfoService patientInfoService;
 	
 	@Autowired
 	private PatientProcedureService patientProcedureService;
-	
-
 		
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
@@ -501,20 +498,15 @@ public class MainController {
 //Appointment controller--------------------------------------------------------------------------------------------------------		
 		   
 		   
-		   
 		   @GetMapping("/appointment")
 		   public String showAppointment(HttpServletRequest request, Model model) {
 			   HttpSession Session = request.getSession();
 				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-				
+				model.addAttribute("username", username); 				
 				Appointment appointment = new Appointment();
 				model.addAttribute("appointment", appointment); 
 				return "appointment";
-		   }
-		   
-
-		   
+		   }  
 		   
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
@@ -527,17 +519,52 @@ public class MainController {
 		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1);            
 		       return "redirect:/appointment";
 		   }
-
 		   
-		   @GetMapping("/deleteAppointment/{id}")
+		   @PostMapping("/updateAppointment")
+		   public String updateAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
+		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
+		                                 @RequestParam("firstname") String firstname,
+		                                 @RequestParam("middlename") String middlename,
+		                                 @RequestParam("lastname") String lastname,
+		                                 @RequestParam("treatment") String treatment,
+		                                 @RequestParam("patientmobile1") long patientmobile1,
+		                                 @RequestParam("appointmentnum") int appointmentnum) {
+		       appointmentService.updateAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,appointmentnum);            
+		       return "redirect:/viewAppointment";
+		   }
+	
+			@GetMapping("/editAppointment/{id}")
+			public String editAppointment(@PathVariable("id") int id, Model model) {
+				Appointment appointment = appointmentService.getAppointmentById(id);		    							
+				model.addAttribute("appointment", appointment);						
+				return "editAppointment";
+			}
+		   
+			@GetMapping("/deleteAppointment/{id}")
 			public String deleteAppointment(@PathVariable(value = "id") int id) {
-				this.appointmentService.deleteAppointmentById(id);
-				
+				this.appointmentService.deleteAppointmentById(id);				
 				return "redirect:/viewAppointment";
 			}
 		   
-
-		      
+		   @GetMapping("/viewAppointment")
+		   public String showAppointmentView(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 			
+				return "viewAppointment";
+		   }
+		   		   
+		   @PostMapping("/filterAppointments")
+		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
+		       model.addAttribute("filteredAppointments", filteredAppointments);
+		       model.addAttribute("selectedDate", appointmentDate);
+		       return "viewAppointment";
+		   }
+		   		   
 		   @GetMapping("/appointment/excel")
 		    public void exportAppointmentsToExcel(HttpServletResponse response) throws IOException {
 		        ByteArrayOutputStream excelData = appointmentService.exportAppointmentsToExcel();
@@ -551,32 +578,4 @@ public class MainController {
 		        excelData.close();
 		    }
 		   
-		   
-		   @GetMapping("/viewAppointment")
-		   public String showAppointmentView(HttpServletRequest request, Model model) {
-			   HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-				
-				return "viewAppointment";
-		   }
-		   
-		   @PostMapping("/filterAppointments")
-		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
-			   HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-			   // Get filtered appointments based on the selected date
-		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
-
-		       // Add filtered appointments to the model for displaying in the view
-		       model.addAttribute("filteredAppointments", filteredAppointments);
-
-		       // Add the selected date to the model for display in the view if needed
-		       model.addAttribute("selectedDate", appointmentDate);
-
-		       return "viewAppointment";
-		   }
-		   
-
 }
