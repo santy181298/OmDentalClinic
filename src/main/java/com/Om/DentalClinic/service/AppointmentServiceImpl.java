@@ -1,13 +1,16 @@
 package com.Om.DentalClinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Date;
 import org.springframework.stereotype.Service;
+import java.util.Calendar;
 import java.util.List;
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.repository.AppointmentRepository;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -73,6 +76,29 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	    return outputStream;
 	}
+	
+	
+	
+	public List<Appointment> getAppointmentsByDate(Date date) {
+        // Calculate start and end time for the given date
+        Calendar startOfDay = Calendar.getInstance();
+        startOfDay.setTime(date);
+        startOfDay.set(Calendar.HOUR_OF_DAY, 0);
+        startOfDay.set(Calendar.MINUTE, 0);
+        startOfDay.set(Calendar.SECOND, 0);
 
+        Calendar endOfDay = Calendar.getInstance();
+        endOfDay.setTime(date);
+        endOfDay.set(Calendar.HOUR_OF_DAY, 23);
+        endOfDay.set(Calendar.MINUTE, 59);
+        endOfDay.set(Calendar.SECOND, 59);
 
+        // Fetch appointments between start and end time
+        return appointmentRepository.findByStarttimeBetween(startOfDay.getTime(), endOfDay.getTime());
+    }
+	
+	public void deleteAppointmentById(int id) {
+		this.appointmentRepository.deleteById(id);
+	}
+	
 }

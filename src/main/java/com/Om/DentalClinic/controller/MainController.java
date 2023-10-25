@@ -1,27 +1,22 @@
 package com.Om.DentalClinic.controller;
 
 import java.io.IOException;
-
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.model.PatientInfo;
@@ -32,62 +27,56 @@ import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
-import com.Om.DentalClinic.service.PatientProcedureServiceImpl;
 import com.Om.DentalClinic.service.UserServiceImpl;
-
-
 import jakarta.servlet.http.HttpSession;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.ByteArrayOutputStream;
 
+import java.io.ByteArrayOutputStream;
 
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private PatientInfoService patientInfoService;
-	
-	@Autowired
-	private PatientProcedureService patientProcedureService;
-	
-	@Autowired
-	private PatientProcedureServiceImpl patientProcedureServiceImpl;
-	
-	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
+	
+	@Autowired
+	private PatientInfoService patientInfoService;
+	
+	@Autowired
+	private PatientProcedureService patientProcedureService;
+	
+
+		
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
 	
 	@Autowired
 	private AppointmentService appointmentService;
 	
-	public MainController(UserServiceImpl userServiceImpl) {
-	this.userServiceImpl=userServiceImpl;
-	}
+	
 	
 
 //Controller for Login-----------------------------------------------------------------------------------------	
 
 	@GetMapping("/")
 	 public String showLogin(Model model, HttpSession session) {
-
+		User user=new User();
+		model.addAttribute("user", user);
 			return "login";
 
 		}
 	 
-	 @GetMapping("/login")
-	 public String showLogin() {
-
-		 return "login";
-	 }
+	@GetMapping("/login")
+	public ModelAndView homepage() {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
 	 
 	 @GetMapping("/logout")
 	    public String logout() {
@@ -116,7 +105,55 @@ public class MainController {
 	        model.addAttribute("error", "Invalid username or password.");
 	        return "login";
 	    }
+
+	 // Registration Controller (Prasad)
+		@GetMapping("/register")
+		public String home(HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+		     String username = (String) session.getAttribute("username");
+		     
+		     if(username!=null) {
+		    	 model.addAttribute("username", username);
+				 return "register";
+		     }
+		     model.addAttribute("error","User Not Found");
+				return "redirect:/login";
+		}
+		
+		@PostMapping("/register")
+		public String create(@ModelAttribute("users") User user, HttpSession session) {
+			
+			
+			boolean u = userServiceImpl.checkUsername(user.getUsername());
+			if (u) {
+				System.out.println("User is already exist");
+			} else {
+				System.out.println(user);
+				// password encryption
+				//user.setPassword(bp.encode(user.getPassword()));
+				// user.setRole(user.getRole());
+				
+//				if("ADMIN".equals(user.getRole())) {
+//					// Perform the registration process for "ADMIN" users
+//		            // For example, you can save the user to the database here
+//					userRepository.save(user);
+//				}else {
+//					// If the user's role is not "ADMIN," redirect them to the login page
+//		            return "redirect:/login?accessdenied";
+//				}
+
+				session.setAttribute("msg", "Registration  successfully!");
+				userRepository.save(user);
+			}
+
+			return "register";
+		}
 	 
+		@GetMapping("/accessDenied")
+		public String errorpage() {
+			return "accessdenied";
+		}
+		 
 	 
 //User Controller------------------------------------------------------------------------------	 
 	 		
@@ -124,6 +161,7 @@ public class MainController {
 	 public String adminHome(HttpServletRequest request, Model model){
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
+	     
 	     if(username!=null) {
 	    	 model.addAttribute("username", username);
 			 return "adminHome";
@@ -131,6 +169,7 @@ public class MainController {
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 	     
+
 	 }
 
 	 
@@ -145,6 +184,7 @@ public class MainController {
 	     }
 	     model.addAttribute("error","User Not Found");
 			return "redirect:/login";
+
 
 	  }
 
@@ -457,14 +497,6 @@ public class MainController {
 
 
 
-		   @GetMapping("/viewAppointment")
-		   public String showAppointmentView(HttpServletRequest request, Model model) {
-			   HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-				
-				return "viewAppointment";
-		   }
 
 //Appointment controller--------------------------------------------------------------------------------------------------------		
 		   
@@ -496,7 +528,14 @@ public class MainController {
 		       return "redirect:/appointment";
 		   }
 
-			
+		   
+		   @GetMapping("/deleteAppointment/{id}")
+			public String deleteAppointment(@PathVariable(value = "id") int id) {
+				this.appointmentService.deleteAppointmentById(id);
+				
+				return "redirect:/viewAppointment";
+			}
+		   
 
 		      
 		   @GetMapping("/appointment/excel")
@@ -511,6 +550,33 @@ public class MainController {
 		        excelData.writeTo(response.getOutputStream());
 		        excelData.close();
 		    }
+		   
+		   
+		   @GetMapping("/viewAppointment")
+		   public String showAppointmentView(HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+				
+				return "viewAppointment";
+		   }
+		   
+		   @PostMapping("/filterAppointments")
+		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
+			   HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				model.addAttribute("username", username); 
+			   // Get filtered appointments based on the selected date
+		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
+
+		       // Add filtered appointments to the model for displaying in the view
+		       model.addAttribute("filteredAppointments", filteredAppointments);
+
+		       // Add the selected date to the model for display in the view if needed
+		       model.addAttribute("selectedDate", appointmentDate);
+
+		       return "viewAppointment";
+		   }
 		   
 
 }
