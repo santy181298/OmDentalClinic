@@ -33,13 +33,14 @@ public class Appointment {
 	@Column(name = "treatment")
 	private String treatment;
 	
-	@Column(name = "start_time")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date starttime;
-	
-	@Column(name = "end_time")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date endtime;
+    @Column(name = "start_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date starttime;
+
+    @Column(name = "end_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date endtime;
+
 	
 	@Column(name = "mobile_num")
 	private long patientmobile1;

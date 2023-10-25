@@ -1,6 +1,7 @@
 package com.Om.DentalClinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Date;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.Om.DentalClinic.model.Appointment;
@@ -21,8 +22,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentRepository appointmentRepository;
 
 	@Override
-	public void saveAppointment(Appointment appointment) {
-	this.appointmentRepository.save(appointment);
+	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1) {
+		Appointment appointment = new Appointment();		
+		appointment.setStarttime(starttime);
+		appointment.setEndtime(endtime);
+		appointment.setFirstname(firstname);
+		appointment.setMiddlename(middlename);
+		appointment.setLastname(lastname);
+		appointment.setTreatment(treatment);
+		appointment.setPatientmobile1(patientmobile1);
+		
+		this.appointmentRepository.save(appointment);
 	
 	}
 	

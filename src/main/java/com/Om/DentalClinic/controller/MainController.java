@@ -387,7 +387,6 @@ public class MainController {
 		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
 		       return "redirect:/patientDetails/" + patientNumber;
-
 		   }
 
 	
@@ -483,11 +482,22 @@ public class MainController {
 		   }
 		   
 
+		   
+		   
 		   @PostMapping("/saveAppointment")
-		   public String saveAppointment(@ModelAttribute Appointment appointment) {				     
-			   appointmentService.saveAppointment(appointment);
-		       return "redirect:/adminHome";
+		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
+		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
+		                                 @RequestParam("firstname") String firstname,
+		                                 @RequestParam("middlename") String middlename,
+		                                 @RequestParam("lastname") String lastname,
+		                                 @RequestParam("treatment") String treatment,
+		                                 @RequestParam("patientmobile1") long patientmobile1) {
+		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1);            
+		       return "redirect:/appointment";
 		   }
+
+			
+
 		      
 		   @GetMapping("/appointment/excel")
 		    public void exportAppointmentsToExcel(HttpServletResponse response) throws IOException {
