@@ -2,16 +2,14 @@ package com.Om.DentalClinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
 import java.util.Date;
+import org.springframework.stereotype.Service;
+import java.util.Calendar;
 import java.util.List;
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.repository.AppointmentRepository;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -27,8 +25,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentRepository appointmentRepository;
 
 	@Override
-	public void saveAppointment(Appointment appointment) {
-	this.appointmentRepository.save(appointment);
+	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1) {
+		Appointment appointment = new Appointment();		
+		appointment.setStarttime(starttime);
+		appointment.setEndtime(endtime);
+		appointment.setFirstname(firstname);
+		appointment.setMiddlename(middlename);
+		appointment.setLastname(lastname);
+		appointment.setTreatment(treatment);
+		appointment.setPatientmobile1(patientmobile1);
+		
+		this.appointmentRepository.save(appointment);
 	
 	}
 	
@@ -71,11 +78,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 	
 	
-//	public boolean isAppointmentExists(Date startTime, Date endTime) {
-//        // Check if appointment exists for the given date and time
-//        return appointmentRepository.existsByStarttimeBeforeAndEndtimeAfter(startTime, endTime);
-//    }
-	
 	
 	public List<Appointment> getAppointmentsByDate(Date date) {
         // Calculate start and end time for the given date
@@ -98,5 +100,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public void deleteAppointmentById(int id) {
 		this.appointmentRepository.deleteById(id);
 	}
+
+
+	@Override
+	public Appointment getAppointmentById(int id) {
+		return appointmentRepository.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public void updateAppointment(Date starttime, Date endtime, String firstname, String middlename, String lastname,
+			String treatment, long patientmobile1, int appointmentnum) {
+		
+		Appointment existingAppointment = getAppointmentById(appointmentnum);
+	    if (existingAppointment != null) {
+	        // Update the fields of the existing appointment with the values from the form
+	        existingAppointment.setStarttime(starttime);
+	        existingAppointment.setEndtime(endtime);
+	        existingAppointment.setFirstname(firstname);
+	        existingAppointment.setMiddlename(middlename);
+	        existingAppointment.setLastname(lastname);
+	        existingAppointment.setTreatment(treatment);
+	        existingAppointment.setPatientmobile1(patientmobile1);
+
+	        this.appointmentRepository.save(existingAppointment);
+		
+	}
 	
+	}
 }

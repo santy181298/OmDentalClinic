@@ -21,15 +21,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
+    <!-- Templa/te Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
@@ -65,12 +65,6 @@
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
               <i></i><span>Patient List</span>
-            </a>
-          </li>
-          
-       	  <li>
-            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
-              <i></i><span>View Appointments</span>
             </a>
           </li>
         
@@ -148,7 +142,7 @@
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
 
-		<form th:object="${appointment}" th:action="@{saveAppointment}" action="#" class="search-form" id="appointmentForm" name="appointmentForm" method="POST">
+		<form th:object="${appointment}" th:action="@{/updateAppointment}" action="#" class="search-form" id="UpdateappointmentForm" name="UpdateappointmentForm" method="POST">
 				
 					  
 					<div class="row mb-3">
@@ -202,6 +196,7 @@
                         </div>
                     </div>
 
+		
 			         <div class="row mb-3 d-none"><!-- to hide field d-none -->
 				        <label for="inputPassword" class="col-sm-2 col-form-label required">AppointmentID</label>
 				        <div class="col-sm-10">
@@ -209,13 +204,12 @@
 				        </div>
 				     </div>
 		
-
-                    <div class="d-flex justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary">Schedule Appointment</button>
-                    </div>
-                </form>
-       		</main>
-    
+				      <div class="d-flex justify-content-center mt-5">
+		                 <button type="submit" class="btn btn-primary">Update Appointment</button>
+		              </div>
+		    </form>
+	</main>
+		    
 	<br>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
