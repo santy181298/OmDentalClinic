@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.List;
 import com.Om.DentalClinic.model.Appointment;
+import com.Om.DentalClinic.model.User;
 import com.Om.DentalClinic.repository.AppointmentRepository;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentRepository appointmentRepository;
 
 	@Override
-	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1) {
+	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1, String username) {
 		Appointment appointment = new Appointment();		
 		appointment.setStarttime(starttime);
 		appointment.setEndtime(endtime);
@@ -34,6 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointment.setLastname(lastname);
 		appointment.setTreatment(treatment);
 		appointment.setPatientmobile1(patientmobile1);
+		appointment.setCashiername(username);
 		
 		this.appointmentRepository.save(appointment);
 	

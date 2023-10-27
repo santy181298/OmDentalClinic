@@ -10,7 +10,7 @@ import com.Om.DentalClinic.model.Appointment;
 
 public interface AppointmentService {
 
-	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1);
+	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1, String username);
 	
 	public ByteArrayOutputStream exportAppointmentsToExcel() throws IOException;
 	

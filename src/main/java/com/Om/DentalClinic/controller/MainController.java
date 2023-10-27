@@ -510,25 +510,28 @@ public class MainController {
 				return "appointment";
 		   }  
 		   
-		   @PostMapping("/saveAppointment")
-		   public String saveAppointment(@ModelAttribute Appointment appointment,HttpServletRequest request) {				     
-			   HttpSession session = request.getSession(); // Get username from session
-			   String username = (String) session.getAttribute("username");
-			   appointment.setCashiername(username);
-			   
-			   appointmentService.saveAppointment(appointment);
-		       return "redirect:/appointment";
-		   }
+//		   @PostMapping("/saveAppointment")
+//		   public String saveAppointment(@ModelAttribute Appointment appointment,HttpServletRequest request) {				     
+//			   HttpSession session = request.getSession(); // Get username from session
+//			   String username = (String) session.getAttribute("username");
+//			   appointment.setCashiername(username);
+//			   
+//			   appointmentService.saveAppointment(appointment);
+//		       return "redirect:/appointment";
+//		   }
 		   
-		   @GetMapping("/deleteAppointment/{id}")
+		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
 		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
 		                                 @RequestParam("firstname") String firstname,
 		                                 @RequestParam("middlename") String middlename,
 		                                 @RequestParam("lastname") String lastname,
 		                                 @RequestParam("treatment") String treatment,
-		                                 @RequestParam("patientmobile1") long patientmobile1) {
-		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1);            
+		                                 @RequestParam("patientmobile1") long patientmobile1,
+		   								 HttpServletRequest request) {
+		   HttpSession session = request.getSession(); // Get username from session
+		   String username = (String) session.getAttribute("username");
+		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,username);            
 		       return "redirect:/appointment";
 		   }
 		   
