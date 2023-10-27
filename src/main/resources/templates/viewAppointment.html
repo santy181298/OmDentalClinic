@@ -67,7 +67,13 @@
               <i></i><span>Patient List</span>
             </a>
           </li>
-        
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+       	  
         
       </li>
      
@@ -176,8 +182,8 @@
                                 <td th:text="${appointment.treatment}"></td>
                                 <td >
 
-					                		      
-					                <a th:href="@{/deleteAppointment/{id}(id=${appointment.appointmentnum})}" class="btn btn-danger mx-2" >Delete</a>
+					                <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editAppointment/{id}(id=${appointment.appointmentnum})}" >Update</a>		      
+					                <a th:href="@{/deleteAppointment/{id}(id=${appointment.appointmentnum})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
 			
 						        </td>
                                 <!-- Add more table data cells as needed -->

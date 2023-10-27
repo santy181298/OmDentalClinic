@@ -142,16 +142,18 @@
 	   
 
 					<div class="row mb-3">
-					    <label for="patientproceduredate" class="col-sm-2 col-form-label required">Date of Procedure</label>
+					    <label for="patientproceduredate" class="col-sm-2 col-form-label required" >Date of Procedure</label>
 					    <div class="col-sm-10">
-					        <input type="date" th:field="*{proceduredate}" name="patientproceduredate" id="patientproceduredate" class="form-control" required max="">
+					        <input type="date" th:field="*{proceduredate}" name="patientproceduredate" id="patientproceduredate" class="form-control" required  
+					        th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					    </div>
 					</div>
 					
 					<div class="row mb-3">
 					    <label for="proceduretype" class="col-sm-2 col-form-label required">Procedure Type</label>
 					    <div class="col-sm-10">
-					        <select name="proceduretype" th:field="*{proceduretype}" id="proceduretype" class="form-select" aria-label="Default select example" required>
+					        <select name="proceduretype" th:field="*{proceduretype}" id="proceduretype" class="form-select" aria-label="Default select example" required 
+					        th:disabled="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					            <option value="" disabled selected>Select Procedure Type</option>
 					            <option value="OPD">OPD</option>
 					            <option value="Root Canal">Root Canal</option>
@@ -163,7 +165,7 @@
 					<div class="row mb-3">
 					    <label for="patientproceduredetail" class="col-sm-2 col-form-label required">Procedure Details</label>
 					    <div class="col-sm-10">
-					        <textarea class="form-control" th:field="*{proceduredetail}" name="patientproceduredetail" id="patientproceduredetail" required></textarea>
+					        <textarea class="form-control" th:field="*{proceduredetail}" name="patientproceduredetail" id="patientproceduredetail" required th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}"></textarea>
 					        <div id="procedureDetailError" class="invalid-feedback">
 					            Please enter valid details.
 					        </div>
@@ -173,21 +175,21 @@
 					<div class="row mb-3">
 					    <label for="estimate" class="col-sm-2 col-form-label">Estimate</label>
 					    <div class="col-sm-10">
-					        <input type="number" th:field="*{estimateamount}" name="patientprocedureestimateamount" id="estimate" class="form-control">
+					        <input type="number" th:field="*{estimateamount}" name="patientprocedureestimateamount" id="estimate" class="form-control" th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					    </div>
 					</div>
 					
 					<div class="row mb-3">
 					    <label for="cash" class="col-sm-2 col-form-label">Cash Payment</label>
 					    <div class="col-sm-10">
-					        <input type="number" th:field="*{cashpayment}" name="patientprocedurecashpayment" id="cash" class="form-control">
+					        <input type="number" th:field="*{cashpayment}" name="patientprocedurecashpayment" id="cash" class="form-control" th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					    </div>
 					</div>
 					
 					<div class="row mb-3">
 					    <label for="online" class="col-sm-2 col-form-label">Online Payment</label>
 					    <div class="col-sm-10">
-					        <input type="number" th:field="*{onlinepayment}" name="patientprocedureonlinepayment" id="online" class="form-control">
+					        <input type="number" th:field="*{onlinepayment}" name="patientprocedureonlinepayment" id="online" class="form-control" th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					    </div>
 					</div>
 					
@@ -202,7 +204,7 @@
 					<div class="row mb-3">
 					    <label for="payment" class="col-sm-2 col-form-label">Total Amount Paid</label>
 					    <div class="col-sm-10">
-					        <input type="number" th:field="*{paymentamount}" name="patientprocedurepaymentamount" id="payment" class="form-control" readonly>
+					        <input type="number" th:field="*{paymentamount}" name="patientprocedurepaymentamount" id="payment" class="form-control" readonly >
 					    </div>
 					</div>
 					
@@ -216,7 +218,7 @@
 					<div class="row mb-3">
 					    <label for="patientprocedurelabname" class="col-sm-2 col-form-label">Lab Name</label>
 					    <div class="col-sm-10">
-					        <input type="text" th:field="*{labname}" name="patientprocedurelabname" class="form-control" id="patientprocedurelabname">
+					        <input type="text" th:field="*{labname}" name="patientprocedurelabname" class="form-control" id="patientprocedurelabname" th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					        <div id="labNameError" class="invalid-feedback">
 					            Please enter a valid Lab name.
 					        </div>
@@ -226,7 +228,7 @@
 					<div class="row mb-3">
 					    <label for="patientprocedureexternaldoctor" class="col-sm-2 col-form-label">External Doctor</label>
 					    <div class="col-sm-10">
-					        <input type="text" th:field="*{externaldoctor}" id="patientprocedureexternaldoctor" name="patientprocedureexternaldoctor" class="form-control">
+					        <input type="text" th:field="*{externaldoctor}" id="patientprocedureexternaldoctor" name="patientprocedureexternaldoctor" class="form-control" th:readonly="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
 					        <div id="externalDoctorError" class="invalid-feedback">
 					            Please enter a valid doctor name.
 					        </div>
