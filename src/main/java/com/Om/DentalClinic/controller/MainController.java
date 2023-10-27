@@ -433,8 +433,10 @@ public class MainController {
 					@PathVariable("procedureId") int procedureId, Model model) {
 				HttpSession session = request.getSession();
 			     String username = (String) session.getAttribute("username");
+			     User user = userServiceImpl.findByUsername(username);
 			     // Pass the username to the view
-			     model.addAttribute("username", username); 				
+			     model.addAttribute("username", username); 	
+			     model.addAttribute("userRole", user.getRole());
 			    PatientProcedure patientProcedure = patientProcedureService.getPatientProcedureById(procedureId);
 				model.addAttribute("patientProcedure", patientProcedure);
 			    PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientId);
@@ -509,6 +511,16 @@ public class MainController {
 		   }  
 		   
 		   @PostMapping("/saveAppointment")
+		   public String saveAppointment(@ModelAttribute Appointment appointment,HttpServletRequest request) {				     
+			   HttpSession session = request.getSession(); // Get username from session
+			   String username = (String) session.getAttribute("username");
+			   appointment.setCashiername(username);
+			   
+			   appointmentService.saveAppointment(appointment);
+		       return "redirect:/appointment";
+		   }
+		   
+		   @GetMapping("/deleteAppointment/{id}")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
 		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
 		                                 @RequestParam("firstname") String firstname,
@@ -550,6 +562,9 @@ public class MainController {
 		   public String showAppointmentView(HttpServletRequest request, Model model) {
 			   HttpSession Session = request.getSession();
 				String username = (String) Session.getAttribute("username");
+				User user = userServiceImpl.findByUsername(username);
+			     model.addAttribute("userRole", user.getRole());
+				model.addAttribute("username", username); 
 				model.addAttribute("username", username); 			
 				return "viewAppointment";
 		   }
@@ -558,6 +573,9 @@ public class MainController {
 		   public String filterAppointments(@RequestParam("appointmentDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date appointmentDate, HttpServletRequest request, Model model) {
 			   HttpSession Session = request.getSession();
 				String username = (String) Session.getAttribute("username");
+				User user = userServiceImpl.findByUsername(username);
+			     
+			     model.addAttribute("userRole", user.getRole());
 				model.addAttribute("username", username); 
 		       List<Appointment> filteredAppointments = appointmentService.getAppointmentsByDate(appointmentDate);
 		       model.addAttribute("filteredAppointments", filteredAppointments);

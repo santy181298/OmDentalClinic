@@ -44,23 +44,16 @@ public class Appointment {
 	
 	@Column(name = "mobile_num")
 	private long patientmobile1;
-
+	
+	@Column(name = "appoint_cashier_name")
+	private String cashiername;
+	
+	@Column(name = "appoint_timestamp")
+	private Date timestamp;
+	
 	public Appointment() {
 		super();
 		
-	}
-
-	public Appointment(int appointmentnum, String firstname, String middlename, String lastname, String treatment,
-			Date starttime, Date endtime, long patientmobile1) {
-		super();
-		this.appointmentnum = appointmentnum;
-		this.firstname = firstname;
-		this.middlename = middlename;
-		this.lastname = lastname;
-		this.treatment = treatment;
-		this.starttime = starttime;
-		this.endtime = endtime;
-		this.patientmobile1 = patientmobile1;
 	}
 
 	public int getAppointmentnum() {
@@ -127,19 +120,44 @@ public class Appointment {
 		this.patientmobile1 = patientmobile1;
 	}
 
+	public String getCashiername() {
+		return cashiername;
+	}
+
+	public void setCashiername(String cashiername) {
+		this.cashiername = cashiername;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public String toString() {
 		return "Appointment [appointmentnum=" + appointmentnum + ", firstname=" + firstname + ", middlename="
 				+ middlename + ", lastname=" + lastname + ", treatment=" + treatment + ", starttime=" + starttime
-				+ ", endtime=" + endtime + ", patientmobile1=" + patientmobile1 + ", getAppointmentnum()="
-				+ getAppointmentnum() + ", getFirstname()=" + getFirstname() + ", getMiddlename()=" + getMiddlename()
-				+ ", getLastname()=" + getLastname() + ", getTreatment()=" + getTreatment() + ", getStarttime()="
-				+ getStarttime() + ", getEndtime()=" + getEndtime() + ", getPatientmobile1()=" + getPatientmobile1()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ ", endtime=" + endtime + ", patientmobile1=" + patientmobile1 + ", cashiername=" + cashiername
+				+ ", timestamp=" + timestamp + "]";
 	}
 
+	public Appointment(int appointmentnum, String firstname, String middlename, String lastname, String treatment,
+			Date starttime, Date endtime, long patientmobile1, String cashiername, Date timestamp) {
+		super();
+		this.appointmentnum = appointmentnum;
+		this.firstname = firstname;
+		this.middlename = middlename;
+		this.lastname = lastname;
+		this.treatment = treatment;
+		this.starttime = starttime;
+		this.endtime = endtime;
+		this.patientmobile1 = patientmobile1;
+		this.cashiername = cashiername;
+		this.timestamp = timestamp;
+	}
 
-	
 	
 }
