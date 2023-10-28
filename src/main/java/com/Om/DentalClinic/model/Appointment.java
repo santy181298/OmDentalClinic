@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -50,6 +52,16 @@ public class Appointment {
 	
 	@Column(name = "appoint_timestamp")
 	private Date timestamp;
+	
+	@PrePersist
+    protected void onCreate() {
+        timestamp = new Date();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
+        timestamp = new Date();
+    }
 	
 	public Appointment() {
 		super();
