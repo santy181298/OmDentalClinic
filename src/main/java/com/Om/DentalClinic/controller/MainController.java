@@ -510,16 +510,6 @@ public class MainController {
 				return "appointment";
 		   }  
 		   
-//		   @PostMapping("/saveAppointment")
-//		   public String saveAppointment(@ModelAttribute Appointment appointment,HttpServletRequest request) {				     
-//			   HttpSession session = request.getSession(); // Get username from session
-//			   String username = (String) session.getAttribute("username");
-//			   appointment.setCashiername(username);
-//			   
-//			   appointmentService.saveAppointment(appointment);
-//		       return "redirect:/appointment";
-//		   }
-		   
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
 		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
