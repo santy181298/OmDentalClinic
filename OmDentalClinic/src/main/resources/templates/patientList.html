@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Om Dental Clinic</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+<body>
+
+<!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- Company Pages  -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        
+        <li class="nav-item">
+     
+         
+       
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientinfo}">
+              <i></i><span>Patient Registration</span>
+            </a>
+          </li>
+         
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientList}">
+              <i></i><span>Patient List</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+       	  <li>
+            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
+              <i></i><span>View Appointments</span>
+            </a>
+          </li>
+         
+      </li>
+     
+    </ul>
+
+  </aside>
+  
+  <!-- End Of Company Pages  -->
+  
+
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Om Dental Clinic</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+    
+
+	<!-- User Profile nav -->	
+	<nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- End Search Icon-->
+
+       <!-- End Notification Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <h6>Profile</h6> 
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <span>Welcome, <span th:text="${username}"></span></span>
+        	  <a th:href="@{/logout}">Logout</a>
+            </li>
+            
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+
+<main id="main" class="main">
+	
+	<div class="pagetitle">
+	<button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+    <i class="fas fa-arrow-left"></i>Back</button>
+      <h1>Patient List</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Patient List</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Patients</h5>
+              <div class="search-bars-container">
+               <div class="search-bars-container d-flex">
+				  <!-- First Search Bar -->
+
+
+				
+				<!-- Second Search Bar for Patient Name -->
+				<div class="search-bar mx-3" style="width: 250px;">
+				  <div class="search-form d-flex align-items-center">
+				    <div class="input-group">
+				      <input type="text" name="query" id="name-search-input" placeholder="Search by Patient Name" title="Enter search term" class="form-control">
+				      <button type="submit" title="Search" class="input-group-text">
+				        <i class="bi bi-search"></i>
+				      </button>
+				    </div>
+				  </div>
+				</div>
+				
+				<!-- Third Search Bar for Mobile Number -->
+				<div class="search-bar" style="width: 250px;">
+				  <div class="search-form d-flex align-items-center">
+				    <div class="input-group">
+				      <input type="text" name="query" id="mobile-search-input" placeholder="Search by Mobile Number" title="Enter search term" class="form-control">
+				      <button type="submit" title="Search" class="input-group-text">
+				        <i class="bi bi-search"></i>
+				      </button>
+				    </div>
+				  </div>
+				</div>
+					</div> 
+
+              <br>
+              
+              
+            <div class="table-responsive">
+              <table class="table datatable">
+                <thead>
+                  <tr >
+	
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Date of Registration</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Actions</th>
+                    
+                  </tr>
+                </thead>
+               <tbody>
+				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
+                  
+						<td th:text="${patientinfo.firstname} + ' ' + ${patientinfo.middlename} + ' ' + ${patientinfo.lastname}"></td>
+				        <td th:text="${#dates.format(patientinfo.patientregdate, 'dd-MM-yyyy')}"></td> 
+		                <td th:text="${patientinfo.patientmobile1}"></td>				       
+				        <td >
+
+		                <a style="margin-left:6px;" th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary" >Update</a>		      
+		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
+
+						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Proc</a>
+						<a th:href="@{/patientDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-warning mx-2">View Proc</a>
+			        </td>
+				    </tr>
+				</tbody>
+
+              </table>
+              </div>
+              <!-- End Table with stripped rows -->
+			  
+            </div>
+          </div>
+
+        </div>
+     </div>
+    </section>
+  </main><!-- End #main -->
+   <br>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/chart.js/chart.umd.js"></script>
+    <script src="vendor/echarts/echarts.min.js"></script>
+    <script src="vendor/quill/quill.min.js"></script>
+    <script src="vendor/tinymce/tinymce.min.js"></script>
+    <script src="vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script> 
+    
+    <!-- Back Button Scripts -->
+    <!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
+	
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const nameSearchInput = document.getElementById("name-search-input");
+        const mobileSearchInput = document.getElementById("mobile-search-input");
+        const table = document.querySelector(".datatable");
+        const rows = table.getElementsByTagName("tr");
+
+        const filterRows = function () {
+            const nameQuery = nameSearchInput.value.trim().toLowerCase();
+            const mobileQuery = mobileSearchInput.value.trim().toLowerCase();
+
+            for (let i = 1; i < rows.length; i++) {
+                const nameCell = rows[i].getElementsByTagName("td")[0].innerText.toLowerCase(); // Index 0 for the name
+                const mobileCell = rows[i].getElementsByTagName("td")[2].innerText.toLowerCase(); // Index 2 for the mobile number
+
+                const nameMatch = nameCell.includes(nameQuery);
+                const mobileMatch = mobileCell.includes(mobileQuery);
+
+                if (nameMatch && mobileMatch) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        };
+
+        nameSearchInput.addEventListener("input", filterRows);
+        mobileSearchInput.addEventListener("input", filterRows);
+    });
+</script>
+
+
+	
+  
+</body>
+</html>

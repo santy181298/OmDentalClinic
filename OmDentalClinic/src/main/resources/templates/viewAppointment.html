@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Om Dental Clinic</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+ 
+  
+</head>
+
+<body>
+	<!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- Company Pages  -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        
+        <li class="nav-item">
+     
+         
+       
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientinfo}">
+              <i></i><span>Patient Registration</span>
+            </a>
+          </li>
+         
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientList}">
+              <i></i><span>Patient List</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+       	  
+        
+      </li>
+     
+    </ul>
+
+  </aside>
+  
+  <!-- End Of Company Pages  -->
+  
+
+    <div class="d-flex align-items-center justify-content-between" style="position: relative; left: -20px;">
+    <a href="#" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block" style="margin-left: 20px;">Om Dental Clinic</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+	</div><!-- End Logo -->
+	<!-- User Profile nav -->	
+	<nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- End Search Icon-->
+
+       <!-- End Notification Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <h6>Profile</h6> 
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <span>Welcome, <span th:text="${username}"></span></span>
+        	  <a th:href="@{/logout}">Logout</a>
+            </li>
+            
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+    
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+
+    <!-- ======= Header ======= -->
+    
+ <main id="main" class="main">
+
+        <div class="pagetitle">
+            <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+                <i class="fas fa-arrow-left"></i>Back</button>
+            <h1>View Appointments</h1>
+        </div>
+		
+		<nav>
+        	<ol class="breadcrumb">
+
+          		<li class="breadcrumb-item"><a href="#">Home</a></li>
+          		<li class="breadcrumb-item active">Appointments</li>
+
+        	</ol>
+      		</nav>
+      		
+        <!-- Filter Form -->
+        <div class="card">
+            <div class="card-body" style="margin-top: 20px; margin-bottom: -10px;">
+                <form action="/filterAppointments" method="post">
+                    <div class="row mb-3">
+                        <label for="appointmentDate" class="col-sm-2 col-form-label required">Select Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="appointmentDate" name="appointmentDate"
+                                required>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Display Filtered Data -->
+        <div class="card mt-3" th:if="${filteredAppointments != null}">
+            <div class="card-body">
+                <h5 class="card-title">Filtered Appointments</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Mobile Number</th>
+                                <th scope="col">Treatment</th>
+                                <th scope="col">Actions</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appointment : ${filteredAppointments}">
+                                <td th:text="${appointment.firstname + ' ' + appointment.middlename + ' ' + appointment.lastname}"></td>
+                                <td th:text="${appointment.patientmobile1}"></td>
+                                <td th:text="${appointment.treatment}"></td>
+                                <td >
+
+
+					                <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editAppointment/{id}(id=${appointment.appointmentnum})}" >Update</a>		      
+					                <a th:href="@{/deleteAppointment/{id}(id=${appointment.appointmentnum})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
+	
+						        </td>
+                                <!-- Add more table data cells as needed -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    
+	<br>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/chart.js/chart.umd.js"></script>
+    <script src="vendor/echarts/echarts.min.js"></script>
+    <script src="vendor/quill/quill.min.js"></script>
+    <script src="vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="vendor/tinymce/tinymce.min.js"></script>
+    <script src="vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="js/main.js"></script>
+    
+    <!-- Back Button Scripts -->
+    <!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
+	
+	
+	
+	
+</body>
+
+</html>

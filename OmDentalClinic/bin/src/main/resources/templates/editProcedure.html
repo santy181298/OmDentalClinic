@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Om Dental Clinic</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Templa/te Main CSS File -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+	<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- Company Pages  -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+        
+        <li class="nav-item">
+     
+         
+       
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientinfo}">
+              <i></i><span>Patient Registration</span>
+            </a>
+          </li>
+         
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/patientList}">
+              <i></i><span>Patient List</span>
+            </a>
+          </li>
+         
+      </li>
+     
+    </ul>
+
+  </aside>
+  
+  <!-- End Of Company Pages  -->
+  
+
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Om Dental Clinic</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+    
+
+	<!-- User Profile nav -->	
+	<nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- End Search Icon-->
+
+       <!-- End Notification Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <h6>Profile</h6> 
+            <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <span>Welcome, <span th:text="${username}"></span></span>
+        	  <a th:href="@{/logout}">Logout</a>
+            </li>
+            
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+  <!-- ======= Sidebar ======= -->
+
+
+    <!-- ======= Header ======= -->
+    
+   <main id="main" class="main">
+<div class="pagetitle">
+
+    <div class="pagetitle">
+    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+    <i class="fas fa-arrow-left"></i>Back</button>
+      <h1>Patient Procedure Details Form</h1>
+      <nav>
+        <ol class="breadcrumb">
+         	<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
+          	<li class="breadcrumb-item active">Procedure Details</li>
+        </ol>
+      	</nav>
+    </div>
+
+    <div class="card">
+            <div class="card-body"  style="margin-top: 5px;">
+              <h5></h5>
+
+
+		<form th:object="${patientProcedure}" th:action="@{'/UpdatePatientProcedure/' + ${patientinfo.patientnumber}}" method="POST">
+	
+	   
+
+					<div class="row mb-3">
+					    <label for="patientproceduredate" class="col-sm-2 col-form-label required">Date of Procedure</label>
+					    <div class="col-sm-10">
+					        <input type="date" th:field="*{proceduredate}" name="patientproceduredate" id="patientproceduredate" class="form-control" required max="">
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="proceduretype" class="col-sm-2 col-form-label required">Procedure Type</label>
+					    <div class="col-sm-10">
+					        <select name="proceduretype" th:field="*{proceduretype}" id="proceduretype" class="form-select" aria-label="Default select example" required>
+					            <option value="" disabled selected>Select Procedure Type</option>
+					            <option value="OPD">OPD</option>
+					            <option value="Root Canal">Root Canal</option>
+					            <option value="Surgery">Surgery</option>
+					        </select>
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="patientproceduredetail" class="col-sm-2 col-form-label required">Procedure Details</label>
+					    <div class="col-sm-10">
+					        <textarea class="form-control" th:field="*{proceduredetail}" name="patientproceduredetail" id="patientproceduredetail" required></textarea>
+					        <div id="procedureDetailError" class="invalid-feedback">
+					            Please enter valid details.
+					        </div>
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="estimate" class="col-sm-2 col-form-label">Estimate</label>
+					    <div class="col-sm-10">
+					        <input type="number" th:field="*{estimateamount}" name="patientprocedureestimateamount" id="estimate" class="form-control">
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="cash" class="col-sm-2 col-form-label">Cash Payment</label>
+					    <div class="col-sm-10">
+					        <input type="number" th:field="*{cashpayment}" name="patientprocedurecashpayment" id="cash" class="form-control">
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="online" class="col-sm-2 col-form-label">Online Payment</label>
+					    <div class="col-sm-10">
+					        <input type="number" th:field="*{onlinepayment}" name="patientprocedureonlinepayment" id="online" class="form-control">
+					    </div>
+					</div>
+					
+					<style>
+					    /* Style for the readonly fields */
+					    input[readonly] {
+					        background-color: #f0f0f0; /* Grey background color */
+					        cursor: not-allowed; /* Disable cursor */
+					    }
+					</style>
+					
+					<div class="row mb-3">
+					    <label for="payment" class="col-sm-2 col-form-label">Total Amount Paid</label>
+					    <div class="col-sm-10">
+					        <input type="number" th:field="*{paymentamount}" name="patientprocedurepaymentamount" id="payment" class="form-control" readonly>
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="balance" class="col-sm-2 col-form-label">Balance</label>
+					    <div class="col-sm-10">
+					        <input type="text" th:field="*{balanceamount}" id="balance" class="form-control" readonly>
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="patientprocedurelabname" class="col-sm-2 col-form-label">Lab Name</label>
+					    <div class="col-sm-10">
+					        <input type="text" th:field="*{labname}" name="patientprocedurelabname" class="form-control" id="patientprocedurelabname">
+					        <div id="labNameError" class="invalid-feedback">
+					            Please enter a valid Lab name.
+					        </div>
+					    </div>
+					</div>
+					
+					<div class="row mb-3">
+					    <label for="patientprocedureexternaldoctor" class="col-sm-2 col-form-label">External Doctor</label>
+					    <div class="col-sm-10">
+					        <input type="text" th:field="*{externaldoctor}" id="patientprocedureexternaldoctor" name="patientprocedureexternaldoctor" class="form-control">
+					        <div id="externalDoctorError" class="invalid-feedback">
+					            Please enter a valid doctor name.
+					        </div>
+					    </div>
+					</div>
+					
+	         <div class="row mb-3 d-none"><!-- to hide field d-none -->
+		        <label for="inputPassword" class="col-sm-2 col-form-label required">ProcedureID</label>
+		        <div class="col-sm-10">
+		            <input type="text" id="procedureId"  th:field="*{procedureid}" class="form-control" readonly>
+		        </div>
+		     </div>
+
+
+
+		                  <div class="d-flex justify-content-center mt-5">
+							 <button type="submit" class="btn btn-primary">Save</button>
+							 <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+						 </div>
+                    </form><!-- End General Form Elements -->
+</div>
+</div>
+</div>
+    </main><!-- End #main -->
+	<br>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/chart.js/chart.umd.js"></script>
+  <script src="/vendor/echarts/echarts.min.js"></script>
+  <script src="/vendor/quill/quill.min.js"></script>
+  <script src="/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/js/main.js"></script>
+  <style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  
+  color: white;
+  text-align: center;
+}
+</style>
+	<script type="text/css">
+.pagination {
+    text-align: center;
+}
+.pagination button {
+    margin: 10px;
+}
+
+	</script>  
+	
+	<!-- Back Next Button -->
+	<script>
+    function goBack() {
+        window.history.back();
+    }
+	</script>
+	<script>
+    function goForward() {
+        window.history.forward();
+    }
+	</script>
+
+</body>
+
+</html>
