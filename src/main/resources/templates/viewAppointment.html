@@ -168,6 +168,8 @@
                     <table class="table">
                         <thead>
                             <tr>
+								<th scope="col">Start Time</th>
+								<th scope="col">End Time</th>
                                 <th scope="col">Patient Name</th>
                                 <th scope="col">Mobile Number</th>
                                 <th scope="col">Treatment</th>
@@ -177,6 +179,8 @@
                         </thead>
                         <tbody>
                             <tr th:each="appointment : ${filteredAppointments}">
+								<td th:text="${#dates.format(appointment.starttime, 'HH:mm')}"></td>
+                                <td th:text="${#dates.format(appointment.endtime, 'HH:mm')}"></td>
                                 <td th:text="${appointment.firstname + ' ' + appointment.middlename + ' ' + appointment.lastname}"></td>
                                 <td th:text="${appointment.patientmobile1}"></td>
                                 <td th:text="${appointment.treatment}"></td>
