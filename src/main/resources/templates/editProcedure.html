@@ -150,16 +150,10 @@
 					</div>
 					
 					<div class="row mb-3">
-					    <label for="proceduretype" class="col-sm-2 col-form-label required">Procedure Type</label>
-					    <div class="col-sm-10">
-					        <select name="proceduretype" th:field="*{proceduretype}" id="proceduretype" class="form-select" aria-label="Default select example" required 
-					        th:disabled="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">
-					            <option value="" disabled selected>Select Procedure Type</option>
-					            <option value="OPD">OPD</option>
-					            <option value="Root Canal">Root Canal</option>
-					            <option value="Surgery">Surgery</option>
-					        </select>
-					    </div>
+  					  <label for="proceduretype" class="col-sm-2 col-form-label required">Procedure Type</label>
+  					  <div class="col-sm-10">
+      				  <input type="text" th:field="*{proceduretype}" id="proceduretype" name="proceduretype" class="form-control" required>
+   					 </div>
 					</div>
 					
 					<div class="row mb-3">
