@@ -510,6 +510,22 @@ public class MainController {
 				return "appointment";
 		   }  
 		   
+//		   @PostMapping("/saveAppointment")
+//		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
+//		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
+//		                                 @RequestParam("firstname") String firstname,
+//		                                 @RequestParam("middlename") String middlename,
+//		                                 @RequestParam("lastname") String lastname,
+//		                                 @RequestParam("treatment") String treatment,
+//		                                 @RequestParam("patientmobile1") long patientmobile1,
+//		   								 HttpServletRequest request, Model model) {
+//		   HttpSession session = request.getSession(); // Get username from session
+//		   String username = (String) session.getAttribute("username");
+//		   model.addAttribute("username", username); 	
+//		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,username);            
+//		       return "redirect:/appointment";
+//		   }
+		   
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
 		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
@@ -518,12 +534,31 @@ public class MainController {
 		                                 @RequestParam("lastname") String lastname,
 		                                 @RequestParam("treatment") String treatment,
 		                                 @RequestParam("patientmobile1") long patientmobile1,
-		   								 HttpServletRequest request) {
-		   HttpSession session = request.getSession(); // Get username from session
-		   String username = (String) session.getAttribute("username");
-		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,username);            
-		       return "redirect:/appointment";
+		                                 HttpServletRequest request, 
+		                                 Model model) {
+
+		       HttpSession session = request.getSession();
+		       String username = (String) session.getAttribute("username");
+
+		       boolean isAppointmentSaved = appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1, username);
+
+		       if (isAppointmentSaved) {
+		           model.addAttribute("successMessage", "Appointment scheduled successfully!");
+		       } else {
+		           model.addAttribute("dateError", "Error occurred while scheduling the appointment.");
+		       }
+
+		       // Create a new Appointment object and add it to the model for the form
+		       Appointment appointment = new Appointment();
+		       model.addAttribute("appointment", appointment);
+
+		       return "appointment"; // Return to the appointment form with a success message or error
 		   }
+
+
+		
+
+
 		   
 		   @PostMapping("/updateAppointment")
 		   public String updateAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,

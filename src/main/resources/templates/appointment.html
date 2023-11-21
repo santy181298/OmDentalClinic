@@ -151,6 +151,15 @@
 		<form th:object="${appointment}" th:action="@{saveAppointment}" action="#" class="search-form" id="appointmentForm" name="appointmentForm" method="POST">
 				
 					  
+					 <script th:if="${successMessage}" type="text/javascript">
+					    // Show a popup with the success message
+					    alert("[[${successMessage}]]");
+					
+					    // Redirect to the view appointment page after the popup is closed
+					    window.location.href = '/viewAppointment';
+					</script>
+
+					  
 					<div class="row mb-3">
 					    <label for="startTime" class="col-sm-2 col-form-label required">Start Time:</label>
 					    <div class="col-sm-10">
@@ -214,6 +223,7 @@
                     <div class="d-flex justify-content-center mt-5">
                         <button type="submit" class="btn btn-primary">Schedule Appointment</button>
                     </div>
+                    
                 </form>
        		</main>
     

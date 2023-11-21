@@ -26,7 +26,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private AppointmentRepository appointmentRepository;
 
 	@Override
-	public void saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1, String username) {
+	public boolean saveAppointment(Date starttime, Date endtime,String firstname,String middlename, String lastname, String treatment,long patientmobile1, String username) {
 		Appointment appointment = new Appointment();		
 		appointment.setStarttime(starttime);
 		appointment.setEndtime(endtime);
@@ -38,6 +38,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointment.setCashiername(username);
 		
 		this.appointmentRepository.save(appointment);
+		return true;
 	
 	}
 	
