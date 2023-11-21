@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.model.PatientInfo;
@@ -83,7 +84,7 @@ public class MainController {
 
 
 	 @PostMapping("/login")
-	    public String login(HttpServletRequest request, @RequestParam String username, @RequestParam String password, Model model) {
+	    public String login(HttpServletRequest request, @RequestParam String username, @RequestParam String password, Model model,RedirectAttributes redirectAttributes) {
 	        User user = userServiceImpl.findByUsername(username);
 
 	        if (user != null && user.getPassword().equals(password)) {
@@ -91,10 +92,11 @@ public class MainController {
 	            session.setAttribute("username", username);
 
 	            if ("ADMIN".equals(user.getRole())) {
-	                return "redirect:/adminHome";
+	            	redirectAttributes.addFlashAttribute("successMessage", "Login successful!");
+	            	return "redirect:/adminHome";
 	            } else if ("RECEP1".equals(user.getRole()) || "RECEP2".equals(user.getRole()) || "RECEP3".equals(user.getRole())) {
 	                // Update patient_info and patient_procedure tables
-
+	            	redirectAttributes.addFlashAttribute("successMessage", "Login successful!");
 	                return "redirect:/userhome";
 	            }
 	        }
