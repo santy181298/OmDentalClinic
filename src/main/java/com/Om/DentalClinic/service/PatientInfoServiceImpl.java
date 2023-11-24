@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 //import java.io.IOException;
 //import java.util.List;
 
+import org.apache.el.stream.Optional;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -178,5 +179,21 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
 	    return outputStream;
 	}
+	
+	@Override
+    public byte[] getMedicalReportById(int patientId) throws IOException {
+        java.util.Optional<PatientInfo> patientInfoOptional = patientInfoRepository.findById(patientId);
+
+        if (patientInfoOptional.isPresent()) {
+            // Assuming patientReports is a byte[] field in your PatientInfo entity
+            byte[] medicalReportContent = patientInfoOptional.get().getPatientReports();
+
+            // You may want to perform additional checks or processing here
+
+            return medicalReportContent;
+        } else {
+            throw new IOException("Medical report not found for patient ID: " + patientId);
+        }
+    }
 
 }

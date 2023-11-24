@@ -152,11 +152,8 @@
 				
 					  
 					 <script th:if="${successMessage}" type="text/javascript">
-					    // Show a popup with the success message
-					    alert("[[${successMessage}]]");
-					
-					    // Redirect to the view appointment page after the popup is closed
-					    window.location.href = '/viewAppointment';
+					    // Redirect to the view appointment page with the success message in the URL
+					    window.location.href = '/viewAppointment?successMessage=' + encodeURIComponent("[[${successMessage}]]");
 					</script>
 
 					  
