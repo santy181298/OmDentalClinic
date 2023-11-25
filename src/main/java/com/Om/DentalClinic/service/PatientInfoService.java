@@ -31,6 +31,8 @@ public interface PatientInfoService {
 	
 	public ByteArrayOutputStream exportPatientsAndProceduresToExcel() throws IOException;
 	
+	public byte[] getMedicalReportById(int patientId) throws IOException;
+	
 }
 
 

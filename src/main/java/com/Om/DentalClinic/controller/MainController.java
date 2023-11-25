@@ -37,6 +37,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 
 @Controller
 public class MainController {
@@ -260,6 +264,29 @@ public class MainController {
 					model.addAttribute("username", username);
 					model.addAttribute("patientinfo", patientinfo);
 					return "editPatientInfo";
+					
+				}
+				
+			}
+ 
+			model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+
+		}
+		
+		@GetMapping("/viewPatientinfo/{id}")
+		public String viewPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
+			HttpSession session = request.getSession();
+		    String username = (String) session.getAttribute("username");
+		     
+		    // by prasad 
+		    if(username!=null) {
+		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
+				if(patientinfo !=null) {
+					
+					model.addAttribute("username", username);
+					model.addAttribute("patientinfo", patientinfo);
+					return "viewPatient";
 					
 				}
 				
@@ -711,5 +738,24 @@ public class MainController {
 					}
 	   
 //--Sitting Controller Ends-------------------------------------------------------------------------------------------------------------------------------------------------	
-					   
+
+		   @GetMapping("/download/{patientId}")
+		    public ResponseEntity<byte[]> downloadMedicalReport(@PathVariable int patientId) {
+		        try {
+		            byte[] medicalReportContent = patientInfoService.getMedicalReportById(patientId);
+
+		            HttpHeaders headers = new HttpHeaders();
+		            headers.setContentType(MediaType.APPLICATION_PDF);
+		            headers.setContentDispositionFormData("inline", "medical_report.pdf");
+
+		            return ResponseEntity.ok()
+		                .headers(headers)
+		                .body(medicalReportContent);
+		        } catch (IOException e) {
+		            // Handle the case where the medical report is not found
+		            return ResponseEntity.notFound().build();
+		        }
+		    }
+		   
+
 }
