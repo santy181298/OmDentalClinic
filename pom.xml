@@ -12,7 +12,7 @@
 	<artifactId>DentalClinic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>OmDentalClinic</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<description>Springboot project using REST API</description>
 	<properties>
 		<java.version>17</java.version>
