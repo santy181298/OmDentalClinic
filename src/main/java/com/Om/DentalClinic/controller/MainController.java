@@ -22,12 +22,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.Om.DentalClinic.model.Appointment;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
+import com.Om.DentalClinic.model.Sittings;
 import com.Om.DentalClinic.model.User;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
+import com.Om.DentalClinic.service.SittingService;
 import com.Om.DentalClinic.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,6 +58,9 @@ public class MainController {
 	
 	@Autowired
 	private AppointmentService appointmentService;
+	
+	@Autowired
+	private SittingService sittingService;
 	
 	
 	
@@ -512,22 +517,6 @@ public class MainController {
 				return "appointment";
 		   }  
 		   
-//		   @PostMapping("/saveAppointment")
-//		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
-//		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
-//		                                 @RequestParam("firstname") String firstname,
-//		                                 @RequestParam("middlename") String middlename,
-//		                                 @RequestParam("lastname") String lastname,
-//		                                 @RequestParam("treatment") String treatment,
-//		                                 @RequestParam("patientmobile1") long patientmobile1,
-//		   								 HttpServletRequest request, Model model) {
-//		   HttpSession session = request.getSession(); // Get username from session
-//		   String username = (String) session.getAttribute("username");
-//		   model.addAttribute("username", username); 	
-//		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,username);            
-//		       return "redirect:/appointment";
-//		   }
-		   
 		   @PostMapping("/saveAppointment")
 		   public String saveAppointment(@RequestParam("starttime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date starttime,
 		                                 @RequestParam("endtime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date endtime,
@@ -626,4 +615,101 @@ public class MainController {
 		        excelData.close();
 		    }
 		   
+//-Sitting Controller ------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+		   @GetMapping("/sitting/{procedureid}")
+		   public String showSittingForm(HttpServletRequest request, @PathVariable("procedureid") int procedureid, Model model) {
+			     HttpSession session = request.getSession();
+			     String username = (String) session.getAttribute("username");
+			     model.addAttribute("username", username); 	   		   
+			     Sittings sitting = new Sittings();
+			     model.addAttribute("sitting", sitting);		       
+			     PatientProcedure procedureProcedure = patientProcedureService.getPatientProcedureById(procedureid);
+		        model.addAttribute("procedureProcedure", procedureProcedure);
+		       return "sitting";
+		   }
+		   
+
+		   @PostMapping("/saveSitting/{procedureid}")
+		   public String saveSitting(@ModelAttribute Sittings sitting, @PathVariable("procedureid") int procedureId, HttpServletRequest request) {
+		       HttpSession session = request.getSession();
+		       String username = (String) session.getAttribute("username");
+		       
+		       PatientProcedure patientprocedure = patientProcedureService.getPatientProcedureById(procedureId);
+		       double balance = patientprocedure.getBalanceamount();
+		       
+		       double totalPayment = sitting.getSittingcashpayment() + sitting.getSittingonlinepayment();
+		       double finalBalance = balance-totalPayment ;
+		       patientprocedure.setBalanceamount(finalBalance > 0 ? finalBalance : 0.0);
+		       
+		       double paymentamount = patientprocedure.getPaymentamount();
+		       double finalpaymentamount = paymentamount+totalPayment;
+		       patientprocedure.setPaymentamount(finalpaymentamount>0? finalpaymentamount : 0.0);
+		       
+		       sitting.setSittingidproc(patientprocedure);
+		       sitting.setSittingproccashiername(username);
+		       
+		       PatientInfo patientId = patientprocedure.getProcedurenumber();
+		       int id = patientId.getPatientnumber();
+		       
+		       sittingService.saveSitting(sitting);
+		       
+		       return "redirect:/patientDetails/"+id;
+		       
+		   }
+		   
+		   
+
+			 @GetMapping("/sittingList/{procedureid}")
+			 public String showSitting(HttpServletRequest request, @PathVariable("procedureid") int procedureid,Model model) {
+					HttpSession session = request.getSession();
+				     String username = (String) session.getAttribute("username");	
+				     if (username != null) {
+				         User user = userServiceImpl.findByUsername(username);
+				         if (user != null) {
+				             // Pass the user's role to the view
+				             model.addAttribute("userRole", user.getRole());
+				             // Pass the username to the view
+				             model.addAttribute("username", username);   
+				             PatientProcedure patientprocedure = patientProcedureService.getPatientProcedureById(procedureid);
+				             model.addAttribute("patientprocedure", patientprocedure);
+				             List<Sittings> sitting = sittingService.getSittingByProcedureId(procedureid);
+				             model.addAttribute("sitting", sitting);
+				             return "sittingList";
+				         }
+				     }
+				     // Handle the case where the user is null
+				     model.addAttribute("error", "User not found.");
+				     return "redirect:/login";	     
+			 }
+  
+			 
+			 @GetMapping("/deleteSitting/{sittingid}/{procedureid}")
+			   public String deleteSitting(@PathVariable(value = "sittingid") int sittingid,@PathVariable(value = "procedureid") int procedureid) {
+			       this.sittingService.deleteSittingById(sittingid);
+			       return "forward:/sittingList/" + procedureid; // Use "forward" to stay on the same page
+			   }
+
+			 
+
+			 
+			 
+					 @GetMapping("editSitting/{sittingid}/{procedureid}")
+					public String editSittingForm(HttpServletRequest request,@PathVariable(value = "sittingid") int sittingid,
+						@PathVariable("procedureid") int procedureid, Model model) {
+					HttpSession session = request.getSession();
+				     String username = (String) session.getAttribute("username");
+				     User user = userServiceImpl.findByUsername(username);
+				     // Pass the username to the view
+				     model.addAttribute("username", username); 	
+				     model.addAttribute("userRole", user.getRole());
+			  		  PatientProcedure patientProcedure = patientProcedureService.getPatientProcedureById(procedureid);
+					model.addAttribute("patientProcedure", patientProcedure);
+					 Sittings sitting = sittingService.getSittingById(sittingid);
+				   model.addAttribute("sitting", sitting);
+					return "editSitting";
+					}
+	   
+//--Sitting Controller Ends-------------------------------------------------------------------------------------------------------------------------------------------------	
+					   
 }

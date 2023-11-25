@@ -54,6 +54,9 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 			patientInfo.setPatientmedicalhistory(patientmedicalhistory);
 			// Set the info_cashier_name
 			patientInfo.setCashiername(cashierName);
+		    if (patientReports != null && !patientReports.isEmpty()) {
+		    	patientInfo.setPatientReports(patientReports.getBytes());
+		    }
 			
 			// Save the patientInfo object to the database
 			patientInfoRepository.save(patientInfo);
