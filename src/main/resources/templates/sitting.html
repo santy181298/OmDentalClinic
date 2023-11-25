@@ -288,49 +288,7 @@
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Function to update total and balance
-    function updateBalance() {
-        // Get elements
-        var cashInput = document.getElementById('cash');
-        var onlineInput = document.getElementById('online');
-        var paymentInput = document.getElementById('payment');
-        var balanceInput = document.getElementById('balanceAmount'); // Corrected ID here
 
-        // Check if elements exist
-        if (!cashInput || !onlineInput || !paymentInput || !balanceInput) {
-            console.error('One or more required elements not found.');
-            return;
-        }
-
-        // Get values from input fields
-        var cash = parseFloat(cashInput.value) || 0;
-        var online = parseFloat(onlineInput.value) || 0;
-        var balance = parseFloat(balanceInput.value) || 0;
-
-        // Additional logging for debugging
-        console.log('Cash value:', cash);
-        console.log('Online value:', online);
-        console.log('Payment value:', cash + online);
-        console.log('Balance value:', balance);
-
-        // Calculate total payment
-        var totalPayment = cash + online;
-
-        // Update total payment field
-        paymentInput.value = totalPayment.toFixed(2);
-
-    }
-
-    // Attach the updateBalance function to the input fields' input event
-    var cashInput = document.getElementById('cash');
-    var onlineInput = document.getElementById('online');
-
- 
-});
-
-</script>
 
 </body>
 </html>
