@@ -111,13 +111,13 @@ public class Sittings {
 		this.sittingdetails = sittingdetails;
 	}
 	public Double getSittingcashpayment() {
-		return sittingcashpayment;
+		return sittingcashpayment != null ? sittingcashpayment : 0.0;
 	}
 	public void setSittingcashpayment(Double sittingcashpayment) {
 		this.sittingcashpayment = sittingcashpayment;
 	}
 	public Double getSittingonlinepayment() {
-		return sittingonlinepayment;
+		return sittingonlinepayment != null ? sittingonlinepayment : 0.0;
 	}
 	public void setSittingonlinepayment(Double sittingonlinepayment) {
 		this.sittingonlinepayment = sittingonlinepayment;
