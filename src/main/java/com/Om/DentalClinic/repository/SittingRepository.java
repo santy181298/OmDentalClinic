@@ -12,7 +12,7 @@ import com.Om.DentalClinic.model.Sittings;
 @Repository
 public interface SittingRepository extends JpaRepository<Sittings,Integer > {
 	
-	@Query("SELECT s FROM Sittings s WHERE s.sittingidproc.procedureid = :procedureid ORDER BY s.sittingdate DESC")
+	@Query("SELECT s FROM Sittings s WHERE s.sittingidproc.procedureid = :procedureid ORDER BY s.sittingdate DESC , s.timestamp DESC")
 	List<Sittings> findBySittingid_Procedureid(@Param("procedureid") int procedureid );
 
 }

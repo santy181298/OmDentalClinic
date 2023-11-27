@@ -10,7 +10,8 @@ import com.Om.DentalClinic.model.PatientInfo;
 
 public interface PatientInfoRepository extends JpaRepository<PatientInfo,Integer> {
 
-    @Query("SELECT p FROM PatientInfo p ORDER BY p.patientregdate DESC")
+   
+    @Query("SELECT p FROM PatientInfo p ORDER BY p.patientregdate DESC, p.timestamp DESC")
     List<PatientInfo> findAllByOrderByPatientregdateDesc();
     
     

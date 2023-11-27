@@ -404,8 +404,7 @@ if(form !== null){
   });
 }
 //end of submit procedureDetails form validation-------------------
-
-    
+   
 const estimateInput = document.getElementById("estimate");
 const cashInput = document.getElementById("cash"); // Added
 const onlineInput = document.getElementById("online"); // Added
@@ -435,3 +434,7 @@ onlineInput.addEventListener("input", updateBalance);
 
 // Initial calculation when the page loads
 updateBalance();
+
+
+
+

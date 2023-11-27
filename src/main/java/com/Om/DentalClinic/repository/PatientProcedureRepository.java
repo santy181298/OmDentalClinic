@@ -13,7 +13,7 @@ import com.Om.DentalClinic.model.PatientProcedure;
 @Repository
 public interface PatientProcedureRepository extends JpaRepository<PatientProcedure, Integer>{
 
-	@Query("SELECT p FROM PatientProcedure p WHERE p.procedurenumber.patientnumber = :patientId ORDER BY p.proceduredate DESC")
+	@Query("SELECT p FROM PatientProcedure p WHERE p.procedurenumber.patientnumber = :patientId ORDER BY p.proceduredate DESC ,p.timestamp DESC ")
     List<PatientProcedure> findByProcedurenumber_Patientnum(@Param("patientId") int patientId);
 
 	//List<PatientProcedure> findByProceduredateBetween(Date fromDate, Date toDate);
