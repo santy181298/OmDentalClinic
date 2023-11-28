@@ -336,6 +336,34 @@
   }
 //end of patientprocedure future validation------------------
 //---------------validate patientproceduredetail (with numbers)---------------
+
+//------------------validate procedure type By Prasad ---------------------------------
+var procedureType = document.getElementById("patientproceduretype");
+if (procedureType !== null) {
+  // Add an event listener to the name input field
+  procedureType.addEventListener("input", validateProcedureType);
+
+  function validateProcedureType() {
+    var name = procedureType.value;
+    var nameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+(([',. -][a-zA-Z ])?[a-zA-Z0-9]*)*$/;
+    var procedureTypeError = document.getElementById("typeError");
+    
+    if (name.trim() === '') {
+      typeError.style.display = "none"; // Hide error when field is empty
+      return true; // No error when field is empty
+    }
+    
+    if (!nameRegex.test(name)) {
+      typeError.style.display = "block";
+      return false;
+    } else {
+      typeError.style.display = "none";
+      return true;
+    }
+  }
+}
+//---------------------------------------------------------------------------
+
 var procedureDetail = document.getElementById("patientproceduredetail");
 if (procedureDetail !== null) {
   // Add an event listener to the name input field
@@ -435,3 +463,128 @@ onlineInput.addEventListener("input", updateBalance);
 
 // Initial calculation when the page loads
 updateBalance();
+
+// patientInfo page validation
+// future date validation------------------
+ // Get the current date in the format yyyy-mm-dd
+//  const currentRegDate = new Date().toISOString().split('T')[0];
+//  // Set the max attribute of the input element to the current date
+//  var patientregDate = document.querySelector('#registerDate');
+//  if(patientregDate !== null){
+//	  console.log("sdate");
+//	patientregDate.setAttribute('max', currentDate);  
+//  }
+
+
+/*
+const infoform=document.getElementById('patientInfo');
+const firstName=document.getElementById('patientFirstName');
+const middleName=document.getElementById('patientMiddleName');
+const lastName=document.getElementById('patientLastName');
+const age=document.getElementById('patientAge');
+const phone1=document.getElementById('patientPhoneNumber1');
+const regDate=document.getElementById('registerDate');
+
+infoform.addEventListener('submit', e => {
+    e.preventDefault();
+
+    validateInputs();
+});
+
+const setError = (element, message) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = message;
+    inputControl.classList.add('error');
+    inputControl.classList.remove('success')
+}
+
+const setSuccess = element => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
+
+    errorDisplay.innerText = '';
+    inputControl.classList.add('success');
+    inputControl.classList.remove('error');
+};
+
+const validateInputs = () => {
+const firstNameValue=patientFirstName.value.trim();
+const middleNameValue=patientMiddleName.value.trim();
+const lastNameValue=patientLastName.value.trim();
+const ageValue=patientAge.value.trim();
+const phone1Value=patientPhoneNumber1.value.trim();
+//const regDateValue=registerDate.value.trim();
+
+ if(!/^[a-zA-Z]+$/.test(firstNameValue)) {
+        setError(patientFirstName, 'Please enter a valid first name (only characters are allowed)');
+    } else {
+        setSuccess(patientFirstName);
+    }
+    
+   if(!/^[a-zA-Z]+$/.test(middleNameValue)) {
+        setError(patientMiddleName, 'Please enter a valid middle name (only characters are allowed)');
+    } else {
+        setSuccess(patientMiddleName);
+    }
+    
+     if(!/^[a-zA-Z]+$/.test(lastNameValue)) {
+        setError(patientLastName, 'Please enter a valid last name (only characters are allowed)');
+    } else {
+        setSuccess(patientLastName);
+    }
+	
+	if(isNaN(ageValue) || ageValue < 1) {
+        setError(patientAge, 'Please enter a valid age');
+    }  else {
+        setSuccess(patientAge);
+    }
+	
+	if(!phone1Value.value.match(/^[1-9][0-9]{9}$/)) {
+        setError(patientPhoneNumber1, 'Phone number must be 10 characters');
+    }  else {
+        setSuccess(patientPhoneNumber1);
+    }
+};
+// future date validation------------------
+  //Get the current date in the format yyyy-mm-dd
+  const currentRegDate = new Date().toISOString().split('T')[0];
+  // Set the max attribute of the input element to the current date
+  var patientregDate = document.querySelector('#registerDate');
+  if(patientregDate !== null){
+	  console.log("sdate");
+	patientregDate.setAttribute('max', currentDate);  
+  }
+  
+  
+*/
+
+//-------------------------- Appointment Validation -----------------------------------------
+
+//var mobileNumberInput = document.getElementById("mobileNumber");
+//
+//if (mobileNumberInput !== null) {
+//  // Add an event listener to the mobile number input field
+//  mobileNumberInput.addEventListener("input", validateMobileNumber);
+//
+//  function validateMobileNumber() {
+//    var mobileNumber = mobileNumberInput.value;
+//    var mobileNumberRegex = /^[0-9]{10}$/; // Assuming a 10-digit mobile number
+//
+//    var mobileNumberError = document.getElementById("mobileNumberError");
+//
+//    if (mobileNumber.trim() === '') {
+//      mobileNumberError.style.display = "none"; // Hide error when field is empty
+//      return true; // No error when field is empty
+//    }
+//
+//    if (!mobileNumberRegex.test(mobileNumber)) {
+//      mobileNumberError.style.display = "block";
+//      return false;
+//    } else {
+//      mobileNumberError.style.display = "none";
+//      return true;
+//    }
+//  }
+//}

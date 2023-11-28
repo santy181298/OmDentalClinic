@@ -151,35 +151,29 @@
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
-		<form th:object="${patientinfo}" th:action="@{SavePatientInfo}" action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data">
+<form th:object="${patientinfo}" th:action="@{SavePatientInfo}" action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data" >
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">First Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{firstname}" class="form-control" id="patientName" >
-                    <div id="patientNameError" class="invalid-feedback">
-                       Please enter a valid patient name.
-                    </div>              
+                    <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" name="firstName" required>
+                    <div class="error"></div>             
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">Middle Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{middlename}" class="form-control" id="patientName" >
-                    <div id="patientNameError" class="invalid-feedback">
-                       Please enter a valid patient name.
-                    </div>              
+                    <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName" name="middleName" required >
+                    <div class="error"></div>             
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{lastname}" class="form-control" id="patientName" >
-                    <div id="patientNameError" class="invalid-feedback">
-                       Please enter a valid patient name.
-                    </div>              
+                    <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required >
+                    <div class="error"></div>              
                   </div>
                 </div>
                 
@@ -189,15 +183,16 @@
                 <label for="inputText" class="col-sm-2 col-form-label">Age</label>
                 <div class="col-sm-10">
                   <input type="number" th:field="*{patientage}"  name="patient_age" id="patientAge" class="form-control"  style="width: 80px; height: 30px;" required>                       
+                  <div class="error"></div>
                 </div>
-                
-              </div>
+               </div>
 
               <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
                 <div class="col-sm-10">
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male"> Male
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female"> Female                           
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" required> Male
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" required> Female                           
+                	<div class="error"></div>
                 </div>
               </div>
                                
@@ -205,7 +200,8 @@
                 <div class="row mb-3">
                   <label for="inputDate" class="col-sm-2 col-form-label required">Date Of Registration</label>
                   <div class="col-sm-10">
-                    <input type="date" th:field="*{patientregdate}"  class="form-control" required>
+                    <input type="date" th:field="*{patientregdate}" id="registerDate" class="form-control" required>
+                  	<div class="error"></div>
                   </div>
                 </div>
                 
@@ -213,6 +209,7 @@
 				    <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
 				    <div class="col-sm-10">
 				        <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required  maxlength="10">
+				   		<div class="error"></div>
 				    </div>
 				</div>
 				
@@ -220,6 +217,7 @@
 				    <label for="inputText" class="col-sm-2 col-form-label">Mobile Number 2</label>
 				    <div class="col-sm-10">
 				        <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control"  maxlength="10">
+				    	<div class="error"></div>
 				    </div>
 				</div>
 
@@ -260,8 +258,8 @@
 				     </div>
 
                <div class="d-flex justify-content-center mt-5">
-				 <button type="submit" class="btn btn-primary">Save</button>
-				 <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+				 <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+				 <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
 			  </div>
 
               </form>   
@@ -298,6 +296,79 @@
     }
 	</script>
 	
+	<!-- Validation Script -->
+	<script>
+	function validateForm() {
+		// Validate First Name
+        var firstName = document.getElementById("patientFirstName").value;
+        if (!/^[a-zA-Z]+$/.test(firstName)) {
+            alert("Please enter a valid first name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Middle Name
+        var middleName = document.getElementById("patientMiddleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Last Name
+        var lastName = document.getElementById("patientLastName").value;
+        if (!/^[a-zA-Z]+$/.test(lastName)) {
+            alert("Please enter a valid last name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Age
+        var ageInput = document.getElementById("patientAge");
+        var age = ageInput.value.trim(); // Remove leading and trailing spaces
+
+        if (age !== "" && (isNaN(age) || age < 1)) {
+            alert("Please enter a valid age");
+            return false;
+        }
+		
+     	// Validate Phone Number if there's input
+        var phoneNumberInput = document.getElementById("patientPhoneNumber1");
+        var phoneNumber = phoneNumberInput.value.trim(); // Remove leading and trailing spaces
+
+        if (phoneNumber !== "" && !phoneNumber.match(/^[1-9][0-9]{9}$/)) {
+            alert("Phone number must be a 10-digit positive number, and the first digit can't be 0!");
+            phoneNumberInput.focus();
+            return false;
+        }
+        
+     // Validate Date of Registration (should not be a future date)
+		var registerDate = document.getElementById("registerDate").value;
+        var currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+
+        if (registerDate > currentDate) {
+            alert("Date of Registration cannot be a future date");
+            return false;
+        }	
+     
+        return true;
+    }
+	</script>
+	
+	<!-- Submit button script -->
+	<script>
+    document.getElementById('patientInfo').addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+	</script>
+	
+	<!-- Form Reset script -->
+	<script>
+	function resetForm() {
+ 	 	document.getElementById("patientInfo").reset();
+	}
+	</script>
+
+		
 </body>
 
 </html>

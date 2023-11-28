@@ -524,7 +524,7 @@ public class MainController {
 		   HttpSession session = request.getSession(); // Get username from session
 		   String username = (String) session.getAttribute("username");
 		       appointmentService.saveAppointment(starttime, endtime, firstname, middlename, lastname, treatment, patientmobile1,username);            
-		       return "redirect:/appointment";
+		       return "redirect:/viewAppointment";
 		   }
 		   
 		   @PostMapping("/updateAppointment")
