@@ -121,11 +121,11 @@
     <div class="pagetitle">
     <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
     <i class="fas fa-arrow-left"></i>Back</button>
-      <h1>Patient Details Search Form</h1>
+      <h1>Procedure Sitting Details</h1>
       <nav>
         <ol class="breadcrumb">
           	<li class="breadcrumb-item"><a href="#">Home</a></li>
-          	<li class="breadcrumb-item active">Patient Details</li>
+          	<li class="breadcrumb-item active">Sitting List</li>
         </ol>
       	</nav>
     </div><!-- End Page Title -->
@@ -136,38 +136,30 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Patients Procedure</h5>
+              <h5 class="card-title">Sitting List</h5>
 
 			<div class="table-responsive">
 			<table class="table">
 			    <thead>
 			        <tr>
 			            <th>#</th>
-			            <th>Procedure Date</th>
-			            <th>Procedure Detail</th>
-			             <th>Estimated</th>
-			             <th>Amount Paid</th>
-			            <th>Balance</th>
-			            <th>Actions</th>
+			            <th>Sitting Date</th>
+			            <th>Sitting Detail</th>
+			             <th>Amound Paid</th>
+			             <th>Actions</th>
+
 			        </tr>
 			    </thead>
 			    <tbody>
-			        <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
-			            <td th:text="${procedureStat.index + 1}"></td>
-			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
-			            <td th:text="${patientProcedure.proceduredetail}"></td>
-			            <td th:text="${patientProcedure.estimateamount}"></td>
-			            <td th:text="${patientProcedure.paymentamount}"></td>
-			            <td th:text="${patientProcedure.balanceamount}"></td>
+			        <tr th:each="sitting, sittingStat : ${sitting}">
+			            <td th:text="${sittingStat.index + 1}"></td>
+			            <td th:text="${#dates.format(sitting.sittingdate, 'dd-MM-yyyy')}"></td>
+			            <td th:text="${sitting.sittingdetails}"></td>
+			            <td th:text="${sitting.sittingpaymentamount}"></td>
 			            
-			            <td>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Update</a>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a> 
-			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
-						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Sitting</a>
-			              <a class="btn btn-warning mx-2" th:href="@{/sittingList/{procedureid}(procedureid=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">View Sitting</a>
-							
-
+			            <td>		   
+						  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editSitting/{sittingid}/{procedureid}(sittingid=${sitting.sittingid}, procedureid=${patientprocedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a>	
+			              <a class="btn btn-danger mx-2" th:href="@{/deleteSitting/{sittingid}/{procedureid}(sittingid=${sitting.sittingid}, procedureid=${patientprocedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
 			            </td>
 			        </tr>
 			    </tbody>
