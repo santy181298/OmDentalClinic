@@ -441,6 +441,7 @@ public class MainController {
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
 		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
 		       patientProcedure.setProcedurenumber(patientInfo);
+		       patientProcedure.setPaymentamount(patientProcedure.getFirstpayment());//this will add payment amount same as first payment
 		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
 		       return "redirect:/patientList";
@@ -455,6 +456,8 @@ public class MainController {
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
 		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
 		       patientProcedure.setProcedurenumber(patientInfo);
+		       
+		       
 		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
 		       return "redirect:/patientDetails/" + patientNumber;

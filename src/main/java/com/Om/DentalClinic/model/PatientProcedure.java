@@ -50,6 +50,9 @@ public class PatientProcedure {
     @Column(name = "online_payment")
     private Double onlinepayment;
     
+    @Column(name = "first_payment")
+    private Double firstpayment;
+    
     @Column(name = "payment_amount")
     private Double paymentamount;
 	
@@ -87,8 +90,8 @@ public class PatientProcedure {
 
 	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduretype,
 			String proceduredetail, Double estimateamount, Double cashpayment, Double onlinepayment,
-			Double paymentamount, Double balanceamount, String labname, String externaldoctor, String cashiername,
-			Date timestamp) {
+			Double firstpayment, Double paymentamount, Double balanceamount, String labname, String externaldoctor,
+			String cashiername, Date timestamp) {
 		super();
 		this.procedureid = procedureid;
 		this.procedurenumber = procedurenumber;
@@ -98,6 +101,7 @@ public class PatientProcedure {
 		this.estimateamount = estimateamount;
 		this.cashpayment = cashpayment;
 		this.onlinepayment = onlinepayment;
+		this.firstpayment = firstpayment;
 		this.paymentamount = paymentamount;
 		this.balanceamount = balanceamount;
 		this.labname = labname;
@@ -170,6 +174,14 @@ public class PatientProcedure {
 		this.onlinepayment = onlinepayment;
 	}
 
+	public Double getFirstpayment() {
+		return firstpayment;
+	}
+
+	public void setFirstpayment(Double firstpayment) {
+		this.firstpayment = firstpayment;
+	}
+
 	public Double getPaymentamount() {
 		return paymentamount;
 	}
@@ -223,11 +235,11 @@ public class PatientProcedure {
 		return "PatientProcedure [procedureid=" + procedureid + ", procedurenumber=" + procedurenumber
 				+ ", proceduredate=" + proceduredate + ", proceduretype=" + proceduretype + ", proceduredetail="
 				+ proceduredetail + ", estimateamount=" + estimateamount + ", cashpayment=" + cashpayment
-				+ ", onlinepayment=" + onlinepayment + ", paymentamount=" + paymentamount + ", balanceamount="
-				+ balanceamount + ", labname=" + labname + ", externaldoctor=" + externaldoctor + ", cashiername="
-				+ cashiername + ", timestamp=" + timestamp + "]";
+				+ ", onlinepayment=" + onlinepayment + ", firstpayment=" + firstpayment + ", paymentamount="
+				+ paymentamount + ", balanceamount=" + balanceamount + ", labname=" + labname + ", externaldoctor="
+				+ externaldoctor + ", cashiername=" + cashiername + ", timestamp=" + timestamp + "]";
 	}
 
-
+	
 	    
 }

@@ -29,6 +29,11 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
 	}
 
 
+//	@Override
+//	public void savePatientProcedure(PatientProcedure patientProcedure) {	
+//		patientProcedureRepository.save(patientProcedure);
+//	}
+	
 	@Override
 	public void savePatientProcedure(PatientProcedure patientProcedure) {	
 		patientProcedureRepository.save(patientProcedure);
