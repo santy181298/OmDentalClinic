@@ -139,36 +139,30 @@
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}  /updatePatientInfo"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
-<form th:object="${patientinfo}" th:action="@{/updatePatientInfo}" method="POST" enctype="multipart/form-data">
+<form th:object="${patientinfo}" th:action="@{/updatePatientInfo}" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data" >
 
     <!-- Input fields for patient information -->
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">First Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName">
-            <div id="patientFirstNameError" class="invalid-feedback">
-                Please enter a valid first name.
-            </div>
+            <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" name="firstName" required >
+            
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">Middle Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName">
-            <div id="patientMiddleNameError" class="invalid-feedback">
-                Please enter a valid middle name.
-            </div>
+            <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName" name="middleName" required >
+            
         </div>
     </div>
 
     <div class="row mb-3">
-        <label for "inputText" class="col-sm-2 col-form-label required">Last Name</label>
+        <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName">
-            <div id="patientLastNameError" class="invalid-feedback">
-                Please enter a valid last name.
-            </div>
+            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required  >
+            
         </div>
     </div>
 
@@ -182,15 +176,15 @@
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
         <div class="col-sm-10">
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male"> Male
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female"> Female
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" required > Male
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" required > Female
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputDate" class="col-sm-2 col-form-label required">Date Of Registration</label>
         <div class="col-sm-10">
-            <input type="date" th:field="*{patientregdate}" class="form-control" required>
+            <input type="date" th:field="*{patientregdate}" id="registerDate" class="form-control" required>
         </div>
     </div>
 
@@ -231,8 +225,8 @@
     </div>
 
     <div class="d-flex justify-content-center mt-5">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+        <button type="submit" class="btn btn-primary" id="submitButton" >Update</button>
+        
     </div>
 </form>
 
@@ -288,6 +282,72 @@
     }
 	</script>
 	
+	<!-- Validation Script -->
+	<script>
+	function validateForm() {
+		// Validate First Name
+        var firstName = document.getElementById("patientFirstName").value;
+        if (!/^[a-zA-Z]+$/.test(firstName)) {
+            alert("Please enter a valid first name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Middle Name
+        var middleName = document.getElementById("patientMiddleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Last Name
+        var lastName = document.getElementById("patientLastName").value;
+        if (!/^[a-zA-Z]+$/.test(lastName)) {
+            alert("Please enter a valid last name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Age
+        var age = document.getElementById("patientAge").value;
+        if (isNaN(age) || age < 1) {
+            alert("Please enter a valid age");
+            return false;
+        }
+		
+        var age = document.getElementById("patientPhoneNumber1").value;
+        if (!patientPhoneNumber1.value.match(/^[1-9][0-9]{9}$/)) {
+            alert("Phone number must be 10 characters long number and first digit can't be 0!");
+            patientPhoneNumber1.focus();
+            return false;
+        }
+        
+     // Validate Date of Registration (should not be a future date)
+		var registerDate = document.getElementById("registerDate").value;
+        var currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+
+        if (registerDate > currentDate) {
+            alert("Date of Registration cannot be a future date");
+            return false;
+        }	
+     
+        return true;
+    }
+	</script>
+	
+	<!-- Submit button script -->
+	<script>
+    document.getElementById('patientInfo').addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+	</script>
+	
+	<!-- Form Reset script -->
+	<script>
+	function resetForm() {
+ 	 	document.getElementById("patientInfo").reset();
+	}
+	</script>
 
 
 </body>
