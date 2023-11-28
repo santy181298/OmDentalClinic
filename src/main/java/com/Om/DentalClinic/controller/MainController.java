@@ -581,7 +581,6 @@ public class MainController {
 		                                 @RequestParam("lastname") String lastname,
 		                                 @RequestParam("treatment") String treatment,
 		                                 @RequestParam("patientmobile1") long patientmobile1,
-
 		                                 HttpServletRequest request, 
 		                                 Model model) {
 
@@ -600,8 +599,7 @@ public class MainController {
 		       Appointment appointment = new Appointment();
 		       model.addAttribute("appointment", appointment);
 
-		       return "redirect:/viewAppointment"; // Return to the appointment form with a success message or error
-
+		       return "appointment"; // Return to the appointment form with a success message or error
 		   }
 
 
