@@ -25,6 +25,7 @@ import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.model.Sittings;
 import com.Om.DentalClinic.model.User;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
+import com.Om.DentalClinic.repository.PatientProcedureRepository;
 import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
@@ -59,6 +60,9 @@ public class MainController {
 		
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
+	
+	@Autowired
+	private PatientProcedureRepository patientProcedureRepository;
 	
 	@Autowired
 	private AppointmentService appointmentService;
@@ -278,8 +282,6 @@ public class MainController {
 		public String viewPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
 		    String username = (String) session.getAttribute("username");
-		     
-		    // by prasad 
 		    if(username!=null) {
 		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
 				if(patientinfo !=null) {
@@ -289,9 +291,7 @@ public class MainController {
 					return "viewPatient";
 					
 				}
-				
-			}
- 
+			} 
 			model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 
@@ -448,22 +448,48 @@ public class MainController {
 		   }
 		   
 
+//		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
+//		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+//		       // Your controller logic here
+//			   HttpSession session = request.getSession(); // Get username from session
+//		       String username = (String) session.getAttribute("username");
+//		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+//		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
+//		       patientProcedure.setProcedurenumber(patientInfo);
+//		       // Save patient procedure
+//		       patientProcedureService.savePatientProcedure(patientProcedure);
+//		       return "redirect:/patientDetails/" + patientNumber;
+//		   }
+
 		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
-		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+		   public String updatePatientProcedure(@RequestParam("proceduredate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date proceduredate ,
+			   									@RequestParam("proceduretype") String proceduretype,
+			   									@RequestParam("proceduredetail") String proceduredetail,
+			   									@RequestParam("labname") String labname,
+			   									@RequestParam("externaldoctor") String externaldoctor,
+			   									@RequestParam("procedureid") int procedureid,
+			   									@PathVariable("patientnumber") int patientNumber,
+			   									HttpServletRequest request) {
+			   									
 		       // Your controller logic here
-			   HttpSession session = request.getSession(); // Get username from session
+			   HttpSession session = request.getSession();
 		       String username = (String) session.getAttribute("username");
-		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
-		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
-		       patientProcedure.setProcedurenumber(patientInfo);
 		       
+		       PatientProcedure existingprocedure = patientProcedureService.getPatientProcedureById(procedureid);
 		       
-		       // Save patient procedure
-		       patientProcedureService.savePatientProcedure(patientProcedure);
+		       if(existingprocedure!=null) {
+		       existingprocedure.setCashiername(username);
+		       existingprocedure.setProceduredate(proceduredate);
+		       existingprocedure.setProceduretype(proceduretype);
+		       existingprocedure.setProceduredetail(proceduredetail);
+		       existingprocedure.setLabname(labname);
+		       existingprocedure.setExternaldoctor(externaldoctor);
+//		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	
+//		       patientProcedure.setProcedurenumber(patientInfo);
+		       }
+		       patientProcedureRepository.save(existingprocedure);
 		       return "redirect:/patientDetails/" + patientNumber;
 		   }
-
-	
 			
 			@GetMapping("editProcedure/{patientId}/{procedureId}")
 			public String editProcedureForm(HttpServletRequest request,@PathVariable(value = "patientId") int patientId,
