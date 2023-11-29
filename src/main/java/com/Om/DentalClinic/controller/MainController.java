@@ -3,7 +3,7 @@ package com.Om.DentalClinic.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -535,27 +535,61 @@ public class MainController {
 		   }
 
 		   
+//		   @PostMapping("/filterData")
+//		    public String filterProcedures(
+//		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+//		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+//		            @RequestParam("session") String session, HttpServletRequest request,
+//		            Model model) {
+//			   
+//		        // Get filtered procedures based on dates and session
+//		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+//		        
+//		        HttpSession Session = request.getSession();
+//				String username = (String) Session.getAttribute("username");
+//				model.addAttribute("username", username); 
+//		        // Add the filtered procedures to the model for displaying in the view
+//		        model.addAttribute("patientProcedures", filteredProcedures);
+//		        // Add fromDate and toDate to the model for display in the view if needed
+//		        model.addAttribute("fromDate", fromDate);
+//		        model.addAttribute("toDate", toDate);
+//		        model.addAttribute("session", session);
+//		        return "displayAmount";
+//		    }
+		   
 		   @PostMapping("/filterData")
-		    public String filterProcedures(
-		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
-		            @RequestParam("session") String session, HttpServletRequest request,
-		            Model model) {
-			   
-		        // Get filtered procedures based on dates and session
-		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
-		        
-		        HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-		        // Add the filtered procedures to the model for displaying in the view
-		        model.addAttribute("patientProcedures", filteredProcedures);
-		        // Add fromDate and toDate to the model for display in the view if needed
-		        model.addAttribute("fromDate", fromDate);
-		        model.addAttribute("toDate", toDate);
-		        model.addAttribute("session", session);
-		        return "displayAmount";
-		    }
+		   public String filterProcedures(
+		           @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		           @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		           @RequestParam("session") String session, HttpServletRequest request,
+		           Model model) {
+
+		       // Get filtered procedures from tbl_patient_procedure based on dates and session
+		       List<PatientProcedure> filteredPatientProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+
+		       // Get filtered procedures from tbl_proc_sittings based on dates and session
+		       List<Sittings> filteredProcSittings = sittingService.getFilteredProcSittings(fromDate, toDate, session);
+
+		       // Combine the results into a single list
+		       List<Object> combinedResults = new ArrayList<>();
+		       combinedResults.addAll(filteredPatientProcedures);
+		       combinedResults.addAll(filteredProcSittings);
+
+		       HttpSession Session = request.getSession();
+		       String username = (String) Session.getAttribute("username");
+		       model.addAttribute("username", username);
+
+		       // Add the combined procedures to the model for displaying in the view
+		       model.addAttribute("combinedProcedures", combinedResults);
+
+		       // Add fromDate and toDate to the model for display in the view if needed
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+		       model.addAttribute("session", session);
+
+		       return "displayAmount";
+		   }
+
 
 
 

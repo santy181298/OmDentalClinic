@@ -180,22 +180,33 @@
 							            <tr>
 							                <th scope="col">Date</th>
 							                <th scope="col">Patient Name</th>
+							                <th scope="col">Details</th>"
 							                <th scope="col">Payment Amount</th>
 							            </tr>
 							        </thead>
 							        <tbody>
 							            <!-- Initialize totalPaymentAmount variable to store the sum of payment amounts -->
-							            <th:block th:with="totalPaymentAmount=0"></th:block>
-							            <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
-							                <!-- Format the date as per your requirement using Thymeleaf -->
-							                <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
-							                <!-- Access the patient's name assuming it's a property of PatientProcedure -->
-							                <td th:text="${patientProcedure.procedurenumber.firstname} + ' ' + ${patientProcedure.procedurenumber.middlename} + ' ' + ${patientProcedure.procedurenumber.lastname}"></td>
-							                <!-- Access the payment amount property of PatientProcedure -->
-							                <td th:text="${patientProcedure.paymentamount}"></td>
-							                <!-- Add the current payment amount to the totalPaymentAmount variable -->
-							                <!--<th:block th:with="totalPaymentAmount=${totalPaymentAmount + (patientProcedure.paymentamount ?: 0)}"></th:block><-->
-							            </tr>
+							        <th:block th:with="totalPaymentAmount=0"></th:block>
+							        <tr th:each="procedure : ${combinedProcedures}">
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${#dates.format(procedure.proceduredate, 'dd-MM-yyyy')}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${#dates.format(procedure.sittingdate, 'dd-MM-yyyy')}"></td>									   
+									 				   
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.procedurenumber.firstname + ' ' + procedure.procedurenumber.middlename + ' ' + procedure.procedurenumber.lastname}"></td>
+									    <!-- For Sittings, fetch the related PatientProcedure to get the name -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingidproc?.procedurenumber?.firstname + ' ' + procedure.sittingidproc?.procedurenumber?.middlename + ' ' + procedure.sittingidproc?.procedurenumber?.lastname}"></td>									   
+									    
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.proceduredetail}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingdetails}"></td>
+
+									    
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.paymentamount}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingpaymentamount}"></td>
+
+									</tr>
+
 							            <!-- Display the total payment amount below the payment amounts -->
 							            <!--<tr>
 							                <td></td>
