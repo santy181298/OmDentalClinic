@@ -3,7 +3,7 @@ package com.Om.DentalClinic.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.model.Sittings;
 import com.Om.DentalClinic.model.User;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
+import com.Om.DentalClinic.repository.PatientProcedureRepository;
 import com.Om.DentalClinic.repository.UserRepository;
 import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
@@ -59,6 +60,9 @@ public class MainController {
 		
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
+	
+	@Autowired
+	private PatientProcedureRepository patientProcedureRepository;
 	
 	@Autowired
 	private AppointmentService appointmentService;
@@ -278,8 +282,6 @@ public class MainController {
 		public String viewPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
 		    String username = (String) session.getAttribute("username");
-		     
-		    // by prasad 
 		    if(username!=null) {
 		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
 				if(patientinfo !=null) {
@@ -289,9 +291,7 @@ public class MainController {
 					return "viewPatient";
 					
 				}
-				
-			}
- 
+			} 
 			model.addAttribute("error","User Not Found");
 			return "redirect:/login";
 
@@ -441,26 +441,55 @@ public class MainController {
 		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
 		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
 		       patientProcedure.setProcedurenumber(patientInfo);
+		       patientProcedure.setPaymentamount(patientProcedure.getFirstpayment());//this will add payment amount same as first payment
 		       // Save patient procedure
 		       patientProcedureService.savePatientProcedure(patientProcedure);
 		       return "redirect:/patientList";
 		   }
 		   
 
+//		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
+//		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+//		       // Your controller logic here
+//			   HttpSession session = request.getSession(); // Get username from session
+//		       String username = (String) session.getAttribute("username");
+//		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+//		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
+//		       patientProcedure.setProcedurenumber(patientInfo);
+//		       // Save patient procedure
+//		       patientProcedureService.savePatientProcedure(patientProcedure);
+//		       return "redirect:/patientDetails/" + patientNumber;
+//		   }
+
 		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
-		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+		   public String updatePatientProcedure(@RequestParam("proceduredate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date proceduredate ,
+			   									@RequestParam("proceduretype") String proceduretype,
+			   									@RequestParam("proceduredetail") String proceduredetail,
+			   									@RequestParam("labname") String labname,
+			   									@RequestParam("externaldoctor") String externaldoctor,
+			   									@RequestParam("procedureid") int procedureid,
+			   									@PathVariable("patientnumber") int patientNumber,
+			   									HttpServletRequest request) {
+			   									
 		       // Your controller logic here
-			   HttpSession session = request.getSession(); // Get username from session
+			   HttpSession session = request.getSession();
 		       String username = (String) session.getAttribute("username");
-		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
-		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
-		       patientProcedure.setProcedurenumber(patientInfo);
-		       // Save patient procedure
-		       patientProcedureService.savePatientProcedure(patientProcedure);
+		       
+		       PatientProcedure existingprocedure = patientProcedureService.getPatientProcedureById(procedureid);
+		       
+		       if(existingprocedure!=null) {
+		       existingprocedure.setCashiername(username);
+		       existingprocedure.setProceduredate(proceduredate);
+		       existingprocedure.setProceduretype(proceduretype);
+		       existingprocedure.setProceduredetail(proceduredetail);
+		       existingprocedure.setLabname(labname);
+		       existingprocedure.setExternaldoctor(externaldoctor);
+//		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	
+//		       patientProcedure.setProcedurenumber(patientInfo);
+		       }
+		       patientProcedureRepository.save(existingprocedure);
 		       return "redirect:/patientDetails/" + patientNumber;
 		   }
-
-	
 			
 			@GetMapping("editProcedure/{patientId}/{procedureId}")
 			public String editProcedureForm(HttpServletRequest request,@PathVariable(value = "patientId") int patientId,
@@ -506,27 +535,61 @@ public class MainController {
 		   }
 
 		   
+//		   @PostMapping("/filterData")
+//		    public String filterProcedures(
+//		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+//		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+//		            @RequestParam("session") String session, HttpServletRequest request,
+//		            Model model) {
+//			   
+//		        // Get filtered procedures based on dates and session
+//		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+//		        
+//		        HttpSession Session = request.getSession();
+//				String username = (String) Session.getAttribute("username");
+//				model.addAttribute("username", username); 
+//		        // Add the filtered procedures to the model for displaying in the view
+//		        model.addAttribute("patientProcedures", filteredProcedures);
+//		        // Add fromDate and toDate to the model for display in the view if needed
+//		        model.addAttribute("fromDate", fromDate);
+//		        model.addAttribute("toDate", toDate);
+//		        model.addAttribute("session", session);
+//		        return "displayAmount";
+//		    }
+		   
 		   @PostMapping("/filterData")
-		    public String filterProcedures(
-		            @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-		            @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
-		            @RequestParam("session") String session, HttpServletRequest request,
-		            Model model) {
-			   
-		        // Get filtered procedures based on dates and session
-		        List<PatientProcedure> filteredProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
-		        
-		        HttpSession Session = request.getSession();
-				String username = (String) Session.getAttribute("username");
-				model.addAttribute("username", username); 
-		        // Add the filtered procedures to the model for displaying in the view
-		        model.addAttribute("patientProcedures", filteredProcedures);
-		        // Add fromDate and toDate to the model for display in the view if needed
-		        model.addAttribute("fromDate", fromDate);
-		        model.addAttribute("toDate", toDate);
-		        model.addAttribute("session", session);
-		        return "displayAmount";
-		    }
+		   public String filterProcedures(
+		           @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		           @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		           @RequestParam("session") String session, HttpServletRequest request,
+		           Model model) {
+
+		       // Get filtered procedures from tbl_patient_procedure based on dates and session
+		       List<PatientProcedure> filteredPatientProcedures = patientProcedureService.getFilteredProcedures(fromDate, toDate, session);
+
+		       // Get filtered procedures from tbl_proc_sittings based on dates and session
+		       List<Sittings> filteredProcSittings = sittingService.getFilteredProcSittings(fromDate, toDate, session);
+
+		       // Combine the results into a single list
+		       List<Object> combinedResults = new ArrayList<>();
+		       combinedResults.addAll(filteredPatientProcedures);
+		       combinedResults.addAll(filteredProcSittings);
+
+		       HttpSession Session = request.getSession();
+		       String username = (String) Session.getAttribute("username");
+		       model.addAttribute("username", username);
+
+		       // Add the combined procedures to the model for displaying in the view
+		       model.addAttribute("combinedProcedures", combinedResults);
+
+		       // Add fromDate and toDate to the model for display in the view if needed
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+		       model.addAttribute("session", session);
+
+		       return "displayAmount";
+		   }
+
 
 
 
@@ -552,7 +615,6 @@ public class MainController {
 		                                 @RequestParam("lastname") String lastname,
 		                                 @RequestParam("treatment") String treatment,
 		                                 @RequestParam("patientmobile1") long patientmobile1,
-
 		                                 HttpServletRequest request, 
 		                                 Model model) {
 
@@ -571,8 +633,7 @@ public class MainController {
 		       Appointment appointment = new Appointment();
 		       model.addAttribute("appointment", appointment);
 
-		       return "redirect:/viewAppointment"; // Return to the appointment form with a success message or error
-
+		       return "appointment"; // Return to the appointment form with a success message or error
 		   }
 
 

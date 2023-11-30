@@ -16,7 +16,8 @@ public interface PatientInfoService {
                                 long patientmobile2, String patientmedicalhistory, String cashierName) throws IOException;
     public PatientInfo getPatientInfoById(int patientId);
     public void deletePatientInfoById(int id);
-	public void updatePatientInfo(int patientNumber, 
+	
+    public void updatePatientInfo(int patientNumber, 
 	        MultipartFile patientReports, 
 	        String firstname,
 	        String middlename,

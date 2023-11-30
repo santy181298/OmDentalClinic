@@ -336,34 +336,6 @@
   }
 //end of patientprocedure future validation------------------
 //---------------validate patientproceduredetail (with numbers)---------------
-
-//------------------validate procedure type By Prasad ---------------------------------
-var procedureType = document.getElementById("patientproceduretype");
-if (procedureType !== null) {
-  // Add an event listener to the name input field
-  procedureType.addEventListener("input", validateProcedureType);
-
-  function validateProcedureType() {
-    var name = procedureType.value;
-    var nameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+(([',. -][a-zA-Z ])?[a-zA-Z0-9]*)*$/;
-    var procedureTypeError = document.getElementById("typeError");
-    
-    if (name.trim() === '') {
-      typeError.style.display = "none"; // Hide error when field is empty
-      return true; // No error when field is empty
-    }
-    
-    if (!nameRegex.test(name)) {
-      typeError.style.display = "block";
-      return false;
-    } else {
-      typeError.style.display = "none";
-      return true;
-    }
-  }
-}
-//---------------------------------------------------------------------------
-
 var procedureDetail = document.getElementById("patientproceduredetail");
 if (procedureDetail !== null) {
   // Add an event listener to the name input field
@@ -462,5 +434,7 @@ onlineInput.addEventListener("input", updateBalance);
 
 // Initial calculation when the page loads
 updateBalance();
+
+
 
 

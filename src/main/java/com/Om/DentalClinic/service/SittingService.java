@@ -1,4 +1,5 @@
 package com.Om.DentalClinic.service;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,4 +17,6 @@ public interface SittingService {
 	public Sittings getSittingById(int id);
 	
 	public List<Sittings> getSittingByProcedureId(int procedureid);
+	
+	public List<Sittings> getFilteredProcSittings(Date fromDate, Date toDate, String session);
 }

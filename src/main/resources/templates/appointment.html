@@ -205,11 +205,7 @@
                     <div class="row mb-3">
                         <label for="mobileNumber" class="col-sm-2 col-form-label required">Mobile Number:</label>
                         <div class="col-sm-10">
-                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" maxlength="10" required>
-                            <div id="mobileNumberError" class="invalid-feedback">
-                				Invalid Mobile Number. Please enter only digits.
-            				</div>
-								
+                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" required>
                         </div>
                     </div>
 
@@ -222,8 +218,7 @@
 		
 
                     <div class="d-flex justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary" id="submitButton">Schedule Appointment</button>
-                        <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+                        <button type="submit" class="btn btn-primary">Schedule Appointment</button>
                     </div>
                     
                 </form>
@@ -260,65 +255,6 @@
     }
 	</script>
 	
-
-	<!-- Validation Script -->
-	<script>
-	function validateForm() {
-		// Validate First Name
-        var firstName = document.getElementById("firstName").value;
-        if (!/^[a-zA-Z]+$/.test(firstName)) {
-            alert("Please enter a valid first name (only characters are allowed)");
-            return false;
-        }
-
-        // Validate Middle Name
-        var middleName = document.getElementById("middleName").value;
-        if (!/^[a-zA-Z]+$/.test(middleName)) {
-            alert("Please enter a valid middle name (only characters are allowed)");
-            return false;
-        }
-
-        // Validate Last Name
-        var lastName = document.getElementById("lastName").value;
-        if (!/^[a-zA-Z]+$/.test(lastName)) {
-            alert("Please enter a valid last name (only characters are allowed)");
-            return false;
-        }
-
-        
-		
-     	// Validate Phone Number if there's input
-        var phoneNumberInput = document.getElementById("mobileNumber");
-        var phoneNumber = phoneNumberInput.value.trim(); // Remove leading and trailing spaces
-
-        if (phoneNumber !== "" && !phoneNumber.match(/^[1-9][0-9]{9}$/)) {
-            alert("Phone number must be a 10-digit positive number, and the first digit can't be 0!");
-            phoneNumberInput.focus();
-            return false;
-        }
-        
-     
-        return true;
-    }
-	</script>
-	
-	
-	<!-- Submit button script -->
-	<script>
-    document.getElementById('appointmentForm').addEventListener('submit', function(event) {
-        if (!validateForm()) {
-            event.preventDefault(); // Prevent form submission if validation fails
-        }
-    });
-	</script>
-	
-	<!-- Form Reset script -->
-	<script>
-	function resetForm() {
- 	 	document.getElementById("appointmentForm").reset();
-	}
-  </script>
-          
 	<script>
 	function validateDateTime(starttime, endtime) {
 	    var startDate = new Date(document.getElementById(starttime).value);
@@ -336,7 +272,6 @@
 	            event.preventDefault();
 	        });
 	    }
-
 	}
 	</script>
 
