@@ -51,7 +51,16 @@
         
         <li class="nav-item">
      
-         
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
+              <i></i><span>View Appointments</span>
+            </a>
+          </li>
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
@@ -65,8 +74,46 @@
               <i></i><span>Patient List</span>
             </a>
           </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/register}">
+              <i></i><span>Create User</span>
+            </a>
+          </li>
         
         
+          <li>
+            <a class="nav-link collapsed" th:href="@{/displayAmount}">
+              <i></i><span>Display Amount</span>
+            </a>
+          </li>
+          
+          
+          
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      	<ul>
+      	<ul> 
+      	
+      	   <li>
+            <a class="nav-link collapsed" href="/patients/excel">
+              <i class="bi bi-circle" ></i><span>Export Patient</span>
+            </a>
+          </li>
+        
+          <li>
+            <a class="nav-link collapsed" href="/appointment/excel">
+              <i class="bi bi-circle" ></i><span>Export Appointment</span>
+            </a>
+          </li>
+   
+      	 
+      	</ul>
+      
+        </ul>
+              
       </li>
      
     </ul>
@@ -139,72 +186,66 @@
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}  /updatePatientInfo"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
-<form th:object="${patientinfo}" th:action="@{/updatePatientInfo}" method="POST" enctype="multipart/form-data">
+<form th:object="${patientinfo}" th:action="@{/updatePatientInfo}" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data">
 
     <!-- Input fields for patient information -->
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">First Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName">
-            <div id="patientFirstNameError" class="invalid-feedback">
-                Please enter a valid first name.
-            </div>
+            <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" name="firstName" required >
+            
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">Middle Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName">
-            <div id="patientMiddleNameError" class="invalid-feedback">
-                Please enter a valid middle name.
-            </div>
+            <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName" name="middleName" required >
+            
         </div>
     </div>
 
     <div class="row mb-3">
-        <label for "inputText" class="col-sm-2 col-form-label required">Last Name</label>
+        <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName">
-            <div id="patientLastNameError" class="invalid-feedback">
-                Please enter a valid last name.
-            </div>
+            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required >
+            
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Age</label>
         <div class="col-sm-10">
-            <input type="number" th:field="*{patientage}" name="patient_age" id="patientAge" class="form-control" style="width: 80px; height: 30px;" required>
+            <input type="number" th:field="*{patientage}" name="patient_age" id="patientAge" class="form-control" style="width: 80px; height: 30px;">
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
         <div class="col-sm-10">
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male"> Male
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female"> Female
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" required> Male
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" required> Female
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputDate" class="col-sm-2 col-form-label required">Date Of Registration</label>
         <div class="col-sm-10">
-            <input type="date" th:field="*{patientregdate}" class="form-control" required>
+            <input type="date" th:field="*{patientregdate}" id="registerDate" class="form-control" required>
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required maxlength="10">
+            <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required maxlength="10" oninput="validateMobileNumber(this)" >
         </div>
     </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Mobile Number 2</label>
         <div class="col-sm-10">
-            <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control" maxlength="10">
+            <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control" maxlength="10" oninput="validateMobileNumber(this)">
         </div>
     </div>
 
@@ -231,7 +272,7 @@
     </div>
 
     <div class="d-flex justify-content-center mt-5">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" id="submitButton">Update</button>
         <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
     </div>
 </form>
@@ -288,7 +329,79 @@
     }
 	</script>
 	
+	<!-- Validation Script -->
+	<script>
+	function validateForm() {
+		// Validate First Name
+        var firstName = document.getElementById("patientFirstName").value;
+        if (!/^[a-zA-Z]+$/.test(firstName)) {
+            alert("Please enter a valid first name (only characters are allowed)");
+            return false;
+        }
 
+        // Validate Middle Name
+        var middleName = document.getElementById("patientMiddleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Last Name
+        var lastName = document.getElementById("patientLastName").value;
+        if (!/^[a-zA-Z]+$/.test(lastName)) {
+            alert("Please enter a valid last name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Age
+        var age = document.getElementById("patientAge").value;
+        if (isNaN(age) || age < 1) {
+            alert("Please enter a valid age");
+            return false;
+        }
+		
+        var age = document.getElementById("patientPhoneNumber1").value;
+        if (!patientPhoneNumber1.value.match(/^[1-9][0-9]{9}$/)) {
+            alert("Phone number must be 10 characters long number and first digit can't be 0!");
+            patientPhoneNumber1.focus();
+            return false;
+        }
+        
+     // Validate Date of Registration (should not be a future date)
+		var registerDate = document.getElementById("registerDate").value;
+        var currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+
+        if (registerDate > currentDate) {
+            alert("Date of Registration cannot be a future date");
+            return false;
+        }	
+     
+        return true;
+    }
+	</script>
+	
+	<!-- Submit button script -->
+	<script>
+    document.getElementById('patientInfo').addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+	</script>
+	
+	<!-- Form Reset script -->
+	<script>
+	function resetForm() {
+ 	 	document.getElementById("patientInfo").reset();
+	}
+	</script>
+	
+	<script>
+    function validateMobileNumber(input) {
+        // Remove non-numeric characters
+        input.value = input.value.replace(/\D/g, '');
+    }
+	</script>
 
 </body>
 
