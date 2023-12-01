@@ -49,26 +49,73 @@
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+     <ul class="sidebar-nav" id="sidebar-nav">
         
         <li class="nav-item">
      
-         
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
+              <i></i><span>View Appointments</span>
+            </a>
+          </li>
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Registration</span>
             </a>
           </li>
-         
+          
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
               <i></i><span>Patient List</span>
             </a>
           </li>
+          
+          <li>
+            <a class="nav-link collapsed" th:href="@{/register}">
+              <i></i><span>Create User</span>
+            </a>
+          </li>
         
         
+          <li>
+            <a class="nav-link collapsed" th:href="@{/displayAmount}">
+              <i></i><span>Display Amount</span>
+            </a>
+          </li>
+          
+          
+          
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      	<ul>
+      	<ul> 
+      	
+      	   <li>
+            <a class="nav-link collapsed" href="/patients/excel">
+              <i class="bi bi-circle" ></i><span>Export Patient</span>
+            </a>
+          </li>
+        
+          <li>
+            <a class="nav-link collapsed" href="/appointment/excel">
+              <i class="bi bi-circle" ></i><span>Export Appointment</span>
+            </a>
+          </li>
+   
+      	 
+      	</ul>
+      
+        </ul>
+              
       </li>
      
     </ul>
@@ -148,30 +195,32 @@
 					<div class="row mb-3">
 					    <label for="startTime" class="col-sm-2 col-form-label required">Start Time:</label>
 					    <div class="col-sm-10">
-					        <input type="datetime-local" th:field="*{starttime}" class="form-control" id="startTime" name="starttime" required>
+					        <input type="datetime-local" th:field="*{starttime}" class="form-control" id="starttime" name="starttime" required onchange="validateDateTime('starttime', 'endtime')">
 					    </div>
 					</div>
 					
 					<div class="row mb-3">
 					    <label for="endTime" class="col-sm-2 col-form-label required">End Time:</label>
 					    <div class="col-sm-10">
-					        <input type="datetime-local" th:field="*{endtime}" class="form-control" id="endTime" name="endtime" required>
+					        <input type="datetime-local" th:field="*{endtime}" class="form-control" id="endtime" name="endtime" required onchange="validateDateTime('starttime', 'endtime')">
 					    </div>
+						<div id="dateError" style="color: red;"></div>
 					</div>
+					
 									
-		
-
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-2 col-form-label required">First Name:</label>
                         <div class="col-sm-10">
                             <input type="text" th:field="*{firstname}" class="form-control" id="firstName" name="firstName" required>
+                            <div id="firstNameError" style="color: red;"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="middleName" class="col-sm-2 col-form-label required">Middle Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName">
+                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName" required>
+                            <div id="middleNameError" style="color: red;"></div>
                         </div>
                     </div>
 
@@ -179,6 +228,7 @@
                         <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
                         <div class="col-sm-10">
                             <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
+                            <div id="lastNameError" style="color: red;"></div>
                         </div>
                     </div>
 
@@ -186,13 +236,15 @@
                         <label for="treatment" class="col-sm-2 col-form-label required">Treatment:</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" required></textarea>
+                            <div id="treatmentNameError" style="color: red;"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="mobileNumber" class="col-sm-2 col-form-label required">Mobile Number:</label>
                         <div class="col-sm-10">
-                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" required>
+                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" maxlength="10" oninput="validateMobileNumber(this)" required>
+                            <div id="mobileNumberError"  style="color: red;"></div>
                         </div>
                     </div>
 
@@ -205,7 +257,7 @@
 				     </div>
 		
 				      <div class="d-flex justify-content-center mt-5">
-		                 <button type="submit" class="btn btn-primary">Update Appointment</button>
+		                 <button type="submit" class="btn btn-primary" id="submitButton">Update Appointment</button>
 		              </div>
 		    </form>
 	</main>
@@ -238,6 +290,91 @@
 	<script>
     function goForward() {
         window.history.forward();
+    }
+	</script>
+	
+<!-- Validation Script -->
+	<script>
+	function validateForm() {
+		// Validate First Name
+        var firstName = document.getElementById("firstName").value;
+        if (!/^[a-zA-Z]+$/.test(firstName)) {
+            alert("Please enter a valid first name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Middle Name
+        var middleName = document.getElementById("middleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
+
+        // Validate Last Name
+        var lastName = document.getElementById("lastName").value;
+        if (!/^[a-zA-Z]+$/.test(lastName)) {
+            alert("Please enter a valid last name (only characters are allowed)");
+            return false;
+        }
+
+        
+		
+     	// Validate Phone Number if there's input
+        var phoneNumberInput = document.getElementById("mobileNumber");
+        var phoneNumber = phoneNumberInput.value.trim(); // Remove leading and trailing spaces
+        phoneNumberInput.value = phoneNumberInput.value.replace(/\D/g, '');
+        if (phoneNumber !== "" && !phoneNumber.match(/^[1-9][0-9]{9}$/)) {
+            alert("Phone number must be a 10-digit positive number, and the first digit can't be 0!");
+            phoneNumberInput.focus();
+            return false;
+        }
+        
+        return true;
+    }
+	</script>
+	<!-- Submit button script -->
+	<script>
+    document.getElementById('UpdateappointmentForm').addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+	</script>
+	    
+	    
+	 <!--  Validate Date and Time -->   
+	<script>
+	function validateDateTime(starttime, endtime) {
+        var startDate = new Date(document.getElementById(starttime).value);
+        var endDate = new Date(document.getElementById(endtime).value);
+        var currentDate = new Date(); // Get the current date and time
+        var dateError = document.getElementById("dateError");
+
+        // Check if the start date is less than the current date and time
+        if (startDate < currentDate) {
+            dateError.textContent = "Start time must be greater than or equal to the current time.";
+            document.getElementById("UpdateappointmentForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            });
+            return;
+        }
+
+        // Check if the end date is greater than the start date
+        if (startDate >= endDate) {
+            dateError.textContent = "End time must be greater than start time.";
+            document.getElementById("UpdateappointmentForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            });
+            return;
+        }
+
+        // Add additional logic to check if the same date and time was taken earlier (you need to implement this logic on the server-side)
+
+        // Reset error message and remove event listener if validation passes
+        dateError.textContent = "";
+        document.getElementById("UpdateappointmentForm").removeEventListener("submit", function(event) {
+            event.preventDefault();
+        });
     }
 	</script>
 
