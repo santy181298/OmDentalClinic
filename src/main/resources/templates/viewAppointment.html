@@ -53,14 +53,23 @@
         
         <li class="nav-item">
      
-         
+          <li>
+            <a class="nav-link collapsed" th:href="@{/appointment}">
+              <i></i><span>Appointment</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
+              <i></i><span>View Appointments</span>
+            </a>
+          </li>
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Registration</span>
             </a>
           </li>
-         
+          
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
@@ -69,12 +78,44 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/appointment}">
-              <i></i><span>Appointment</span>
+            <a class="nav-link collapsed" th:href="@{/register}">
+              <i></i><span>Create User</span>
             </a>
           </li>
-       	  
         
+        
+          <li>
+            <a class="nav-link collapsed" th:href="@{/displayAmount}">
+              <i></i><span>Display Amount</span>
+            </a>
+          </li>
+          
+          
+          
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      	<ul>
+      	<ul> 
+      	
+      	   <li>
+            <a class="nav-link collapsed" href="/patients/excel">
+              <i class="bi bi-circle" ></i><span>Export Patient</span>
+            </a>
+          </li>
+        
+          <li>
+            <a class="nav-link collapsed" href="/appointment/excel">
+              <i class="bi bi-circle" ></i><span>Export Appointment</span>
+            </a>
+          </li>
+   
+      	 
+      	</ul>
+      
+        </ul>
+              
       </li>
      
     </ul>
