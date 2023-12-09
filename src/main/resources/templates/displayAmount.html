@@ -87,7 +87,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
@@ -249,7 +249,7 @@
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingdetails}"></td>
 
 									    
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.paymentamount}"></td>
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.firstpayment}"></td>
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingpaymentamount}"></td>
 
