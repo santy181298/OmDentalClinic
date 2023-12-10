@@ -346,7 +346,7 @@ public class MainController {
 
 		
 		@PostMapping("/SavePatientInfo")
-		public String savePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
+		public String savePatientInfo(@RequestParam(value ="patientReports",required = false) MultipartFile patientReports,
 		                              @RequestParam("firstname") String firstname,
 		                              @RequestParam("middlename") String middlename,
 		                              @RequestParam("lastname") String lastname,
