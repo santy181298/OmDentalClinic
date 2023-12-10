@@ -39,6 +39,25 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+ 	/* Regular style for the back button */
+.btn-secondary {
+    /* Add any regular styling you want for the button */
+    /* For example, you can set a fixed width */
+    width: 120px;
+}
+
+/* Responsive styling for the back button on smaller screens*/
+@media (max-width: 360px) {
+    .btn-secondary {
+        /* Adjust styling for smaller screens */
+        /* For example, you can set a smaller width */
+        width: 100px;
+    }
+}
+ 	
+ 	</style>
+  
  </head>
 
 <body>
@@ -84,7 +103,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
@@ -171,7 +190,7 @@
 
         <div class="pagetitle">
         <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    	<i class="fas fa-arrow-left"></i>Back</button>
+    	<i class="fas fa-arrow-left"></i>Back</button>  <br>
           <h1>Patient Information</h1>
           <nav>
         	<ol class="breadcrumb">
