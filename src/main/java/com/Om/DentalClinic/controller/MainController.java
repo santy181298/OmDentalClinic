@@ -120,11 +120,15 @@ public class MainController {
 
 	 // Registration Controller (Prasad)
 		@GetMapping("/register")
-		public String home(HttpServletRequest request, Model model) {
+		public String home(HttpServletRequest request, Model model, Principal principal) {
 			HttpSession session = request.getSession();
 		     String username = (String) session.getAttribute("username");
 		     
 		     if(username!=null) {
+		    	 User user=userServiceImpl.findByUsername(username);
+		    	 //pass the user role's to the view
+			     model.addAttribute("userRole",user.getRole());
+			     
 		    	 model.addAttribute("username", username);
 				 return "register";
 		     }
@@ -170,9 +174,12 @@ public class MainController {
 //User Controller------------------------------------------------------------------------------	 
 	 		
 	 @GetMapping("/adminHome")
-	 public String adminHome(HttpServletRequest request, Model model){
+	 public String adminHome(HttpServletRequest request, Model model,Principal principal){
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
+	     
+	     User user = userServiceImpl.findByUsername(username);
+		 model.addAttribute("userRole", user.getRole());
 	     
 	     if(username!=null) {
 	    	 model.addAttribute("username", username);
@@ -186,9 +193,12 @@ public class MainController {
 
 	 
 	 @GetMapping("/userhome")
-	 public String userHome(HttpServletRequest request,Model model) {
+	 public String userHome(HttpServletRequest request,Model model,Principal principal) {
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
+	     
+	     User user = userServiceImpl.findByUsername(username);
+		 model.addAttribute("userRole", user.getRole());
 	     
 	     if(username!=null) {
 	    	 model.addAttribute("username", username);
@@ -204,10 +214,12 @@ public class MainController {
 //Controller for PatientInfo------------------------------------------------------------------------------	 
  
 	 @GetMapping("/patientinfo")
-	 public String showPatientinfo(HttpServletRequest request, Model model) {
+	 public String showPatientinfo(HttpServletRequest request, Model model,Principal principal) {
 		 HttpSession session = request.getSession();
 	     String username = (String) session.getAttribute("username");
 	     
+	     User user = userServiceImpl.findByUsername(username);
+		 model.addAttribute("userRole", user.getRole());
 	     // 
 	     if(username!=null) {
 	    	  PatientInfo patientinfo = new PatientInfo();
@@ -259,7 +271,10 @@ public class MainController {
 		public String editPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
 		    String username = (String) session.getAttribute("username");
-		     
+		    
+		    User user = userServiceImpl.findByUsername(username);
+			model.addAttribute("userRole", user.getRole());
+		    
 		    // by prasad 
 		    if(username!=null) {
 		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
@@ -282,6 +297,10 @@ public class MainController {
 		public String viewPatientInfoForm(HttpServletRequest request, @PathVariable("id") int id, Model model) {
 			HttpSession session = request.getSession();
 		    String username = (String) session.getAttribute("username");
+		    
+		    User user = userServiceImpl.findByUsername(username);
+			model.addAttribute("userRole", user.getRole());
+			
 		    if(username!=null) {
 		    	PatientInfo patientinfo = patientInfoService.getPatientInfoById(id);
 				if(patientinfo !=null) {
@@ -351,7 +370,7 @@ public class MainController {
 		                              @RequestParam("middlename") String middlename,
 		                              @RequestParam("lastname") String lastname,
 		                              @RequestParam("patientage") int patientage,
-		                              @RequestParam("patientgender") String patientgender,
+		                              @RequestParam(value ="patientgender", defaultValue = "") String patientgender,
 		                              @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
 		                              @RequestParam("patientmobile1") long patientmobile1,
 		                              @RequestParam("patientmobile2") long patientmobile2,
@@ -423,6 +442,10 @@ public class MainController {
 		   public String showProcedureDetail(HttpServletRequest request, @PathVariable("patientId") int patientId, Model model) {
 			     HttpSession session = request.getSession();
 			     String username = (String) session.getAttribute("username");
+			     
+			     User user = userServiceImpl.findByUsername(username);
+				 model.addAttribute("userRole", user.getRole());
+			     
 			     // Pass the username to the view
 			     model.addAttribute("username", username); 	   
 			   PatientProcedure patientprocedure = new PatientProcedure();
@@ -519,7 +542,7 @@ public class MainController {
 	
 
 		   @GetMapping("/displayAmount")
-		   public String showAmount(HttpServletRequest request, Model model) {
+		   public String showAmount(HttpServletRequest request, Model model,Principal principal) {
 		       // Initialize fromDate and toDate with default values if needed
 		       Date fromDate = null; // Set your default fromDate value here
 		       Date toDate = null; // Set your default toDate value here
@@ -527,6 +550,10 @@ public class MainController {
 		       // Add fromDate and toDate to the model so they can be pre-populated in the form
 		       HttpSession session = request.getSession();
 			   String username = (String) session.getAttribute("username");
+			   
+			   User user = userServiceImpl.findByUsername(username);
+			   model.addAttribute("userRole", user.getRole());
+			   
 			   model.addAttribute("username", username); 	
 		       model.addAttribute("fromDate", fromDate);
 		       model.addAttribute("toDate", toDate);
@@ -598,9 +625,12 @@ public class MainController {
 		   
 		   
 		   @GetMapping("/appointment")
-		   public String showAppointment(HttpServletRequest request, Model model) {
+		   public String showAppointment(HttpServletRequest request, Model model, Principal principal) {
 			   HttpSession Session = request.getSession();
 				String username = (String) Session.getAttribute("username");
+				User user=userServiceImpl.findByUsername(username);
+				model.addAttribute("userRole",user.getRole());
+				
 				model.addAttribute("username", username); 				
 				Appointment appointment = new Appointment();
 				model.addAttribute("appointment", appointment); 
@@ -655,7 +685,12 @@ public class MainController {
 		   }
 	
 			@GetMapping("/editAppointment/{id}")
-			public String editAppointment(@PathVariable("id") int id, Model model) {
+			public String editAppointment(@PathVariable("id") int id, Model model,Principal principal,HttpServletRequest request) {
+				HttpSession Session = request.getSession();
+				String username = (String) Session.getAttribute("username");
+				User user = userServiceImpl.findByUsername(username);
+			     model.addAttribute("userRole", user.getRole());
+				
 				Appointment appointment = appointmentService.getAppointmentById(id);		    							
 				model.addAttribute("appointment", appointment);						
 				return "editAppointment";
@@ -711,6 +746,9 @@ public class MainController {
 		   public String showSittingForm(HttpServletRequest request, @PathVariable("procedureid") int procedureid, Model model) {
 			     HttpSession session = request.getSession();
 			     String username = (String) session.getAttribute("username");
+			     User user = userServiceImpl.findByUsername(username);
+			     model.addAttribute("userRole", user.getRole());
+			     
 			     model.addAttribute("username", username); 	   		   
 			     Sittings sitting = new Sittings();
 			     model.addAttribute("sitting", sitting);		       

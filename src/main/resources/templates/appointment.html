@@ -95,7 +95,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}">
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>

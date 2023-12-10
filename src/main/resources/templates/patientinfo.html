@@ -95,7 +95,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}">
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>
@@ -249,8 +249,8 @@
               <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
                 <div class="col-sm-10">
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" required> Male
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" required> Female                           
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" > Male
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" > Female                           
                 	<div class="error"></div>
                 </div>
               </div>
@@ -407,15 +407,7 @@
             return false;
         }
 
-        // Validate Age
-        var ageInput = document.getElementById("patientAge");
-        var age = ageInput.value.trim(); // Remove leading and trailing spaces
-
-        if (age !== "" && (isNaN(age) || age < 1)) {
-            alert("Please enter a valid age");
-            return false;
-        }
-		
+        		
      	// Validate Phone Number if there's input
         var phoneNumberInput = document.getElementById("patientPhoneNumber1");
         var phoneNumber = phoneNumberInput.value.trim(); // Remove leading and trailing spaces
