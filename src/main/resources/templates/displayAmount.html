@@ -254,6 +254,7 @@
 							                <th scope="col">Cash Payment</th>
 							                <th scope="col">Online Payment</th>
 							                <th scope="col">Total Payment Amount</th>
+							                <th scope="col">Cashier Name</th>
 							            </tr>
 							        </thead>
 							        <tbody>
@@ -272,6 +273,7 @@
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingdetails}"></td>
 										
+																		
 										<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.cashpayment}"></td>
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingcashpayment}"></td>
@@ -284,6 +286,10 @@
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.firstpayment}"></td>
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingpaymentamount}"></td>
+										
+										<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.cashiername}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingproccashiername}"></td>
 
 									</tr>
 
