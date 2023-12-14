@@ -19,7 +19,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.Om.DentalClinic.model.PatientInfo;
 import com.Om.DentalClinic.model.PatientProcedure;
+import com.Om.DentalClinic.model.Sittings;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
+import com.Om.DentalClinic.repository.SittingRepository;
 
 
 @Service
@@ -27,6 +29,10 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
+	
+	@Autowired
+	private SittingRepository sittingsRepository;
+
 	
 	public List<PatientInfo> getAllPatientInfo() {
 		return patientInfoRepository.findAll();
@@ -113,12 +119,18 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	    // Save the updated patient information
 	    patientInfoRepository.save(existingPatientInfo);
 	}
-
+	
+	
+	
+	
+	
+	
+	@Override
 	public ByteArrayOutputStream exportPatientsAndProceduresToExcel() throws IOException {
 	    List<PatientInfo> patients = patientInfoRepository.findAll();
 
 	    Workbook workbook = new XSSFWorkbook();
-	    Sheet sheet = workbook.createSheet("Patients and Procedures");
+	    Sheet sheet = workbook.createSheet("Patients, Procedures, and Sittings");
 
 	    Row headerRow = sheet.createRow(0);
 	    // Add headers for PatientInfo
@@ -144,35 +156,38 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	    headerRow.createCell(18).setCellValue("Lab Name");
 	    headerRow.createCell(19).setCellValue("External Doctor");
 	    headerRow.createCell(20).setCellValue("Cashier Name");
+	    // Add headers for Sittings
+	    headerRow.createCell(21).setCellValue("Sitting Date");
+	    headerRow.createCell(22).setCellValue("Sitting Details");
+	    headerRow.createCell(23).setCellValue("Sitting Cash Payment");
+	    headerRow.createCell(24).setCellValue("Sitting Online Payment");
+	    headerRow.createCell(25).setCellValue("Sitting Payment Amount");
+	    headerRow.createCell(26).setCellValue("Sitting Lab Name");
+	    headerRow.createCell(27).setCellValue("Sitting External Doctor");
+	    headerRow.createCell(28).setCellValue("Sitting Proc Cashier Name");
+
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 	    int rowNum = 1;
 	    for (PatientInfo patient : patients) {
-	        for (PatientProcedure procedure : patient.getPatientprocedure()) {
+	        if (patient.getPatientprocedure().isEmpty()) {
+	            // Add an empty row for patients with no procedures
 	            Row dataRow = sheet.createRow(rowNum++);
-	            // Add data for PatientInfo
-	            dataRow.createCell(0).setCellValue(patient.getPatientnumber());
-	            dataRow.createCell(1).setCellValue(patient.getFirstname());
-	            dataRow.createCell(2).setCellValue(patient.getMiddlename());
-	            dataRow.createCell(3).setCellValue(patient.getLastname());
-	            dataRow.createCell(4).setCellValue(patient.getPatientage());
-	            dataRow.createCell(5).setCellValue(patient.getPatientgender());
-	            dataRow.createCell(6).setCellValue(dateFormat.format(patient.getPatientregdate()));
-	            dataRow.createCell(7).setCellValue(patient.getPatientmobile1());
-	            dataRow.createCell(8).setCellValue(patient.getPatientmobile2());
-	            dataRow.createCell(9).setCellValue(patient.getCashiername());
-	            // Add data for PatientProcedure
-	            dataRow.createCell(10).setCellValue(dateFormat.format(procedure.getProceduredate()));
-	            dataRow.createCell(11).setCellValue(procedure.getProceduretype());
-	            dataRow.createCell(12).setCellValue(procedure.getProceduredetail());
-	            dataRow.createCell(13).setCellValue(procedure.getEstimateamount());
-	            dataRow.createCell(14).setCellValue(procedure.getCashpayment() != null ? procedure.getCashpayment() : 0.0);
-	            dataRow.createCell(15).setCellValue(procedure.getOnlinepayment() != null ? procedure.getOnlinepayment() : 0.0);
-	            dataRow.createCell(16).setCellValue(procedure.getPaymentamount() != null ? procedure.getPaymentamount() : 0.0);
-	            dataRow.createCell(17).setCellValue(procedure.getBalanceamount() != null ? procedure.getBalanceamount() : 0.0);
-	            dataRow.createCell(18).setCellValue(procedure.getLabname());
-	            dataRow.createCell(19).setCellValue(procedure.getExternaldoctor());
-	            dataRow.createCell(20).setCellValue(procedure.getCashiername());
+	            addPatientInfoToRow(dataRow, patient, dateFormat);
+	        } else {
+	            for (PatientProcedure procedure : patient.getPatientprocedure()) {
+	                if (procedure.getProceduresitting().isEmpty()) {
+	                    // Add a row for patients with procedures but no sittings
+	                    Row dataRow = sheet.createRow(rowNum++);
+	                    addPatientProcedureToRow(dataRow, patient, procedure, dateFormat);
+	                } else {
+	                    for (Sittings sitting : procedure.getProceduresitting()) {
+	                        // Add a row for patients with procedures and sittings
+	                        Row dataRow = sheet.createRow(rowNum++);
+	                        addPatientSittingToRow(dataRow, patient, procedure, sitting, dateFormat);
+	                    }
+	                }
+	            }
 	        }
 	    }
 
@@ -182,6 +197,55 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 
 	    return outputStream;
 	}
+
+	private void addPatientInfoToRow(Row dataRow, PatientInfo patient, SimpleDateFormat dateFormat) {
+	    // Add data for PatientInfo
+	    dataRow.createCell(0).setCellValue(patient.getPatientnumber());
+	    dataRow.createCell(1).setCellValue(patient.getFirstname());
+	    dataRow.createCell(2).setCellValue(patient.getMiddlename());
+	    dataRow.createCell(3).setCellValue(patient.getLastname());
+	    dataRow.createCell(4).setCellValue(patient.getPatientage());
+	    dataRow.createCell(5).setCellValue(patient.getPatientgender());
+	    dataRow.createCell(6).setCellValue(dateFormat.format(patient.getPatientregdate()));
+	    dataRow.createCell(7).setCellValue(patient.getPatientmobile1());
+	    dataRow.createCell(8).setCellValue(patient.getPatientmobile2());
+	    dataRow.createCell(9).setCellValue(patient.getCashiername());
+	}
+
+	private void addPatientProcedureToRow(Row dataRow, PatientInfo patient, PatientProcedure procedure, SimpleDateFormat dateFormat) {
+	    // Add data for PatientInfo
+	    addPatientInfoToRow(dataRow, patient, dateFormat);
+	    // Add data for PatientProcedure
+	    dataRow.createCell(10).setCellValue(dateFormat.format(procedure.getProceduredate()));
+	    dataRow.createCell(11).setCellValue(procedure.getProceduretype());
+	    dataRow.createCell(12).setCellValue(procedure.getProceduredetail());
+	    dataRow.createCell(13).setCellValue(procedure.getEstimateamount());
+	    dataRow.createCell(14).setCellValue(procedure.getCashpayment() != null ? procedure.getCashpayment() : 0.0);
+	    dataRow.createCell(15).setCellValue(procedure.getOnlinepayment() != null ? procedure.getOnlinepayment() : 0.0);
+	    dataRow.createCell(16).setCellValue(procedure.getPaymentamount() != null ? procedure.getPaymentamount() : 0.0);
+	    dataRow.createCell(17).setCellValue(procedure.getBalanceamount() != null ? procedure.getBalanceamount() : 0.0);
+	    dataRow.createCell(18).setCellValue(procedure.getLabname());
+	    dataRow.createCell(19).setCellValue(procedure.getExternaldoctor());
+	    dataRow.createCell(20).setCellValue(procedure.getCashiername());
+	}
+
+	private void addPatientSittingToRow(Row dataRow, PatientInfo patient, PatientProcedure procedure, Sittings sitting, SimpleDateFormat dateFormat) {
+	    // Add data for PatientProcedure
+	    addPatientProcedureToRow(dataRow, patient, procedure, dateFormat);
+	    // Add data for Sittings
+	    dataRow.createCell(21).setCellValue(dateFormat.format(sitting.getSittingdate()));
+	    dataRow.createCell(22).setCellValue(sitting.getSittingdetails());
+	    dataRow.createCell(23).setCellValue(sitting.getSittingcashpayment());
+	    dataRow.createCell(24).setCellValue(sitting.getSittingonlinepayment());
+	    dataRow.createCell(25).setCellValue(sitting.getSittingpaymentamount());
+	    dataRow.createCell(26).setCellValue(sitting.getSittinglabname());
+	    dataRow.createCell(27).setCellValue(sitting.getSittingexternaldoctor());
+	    dataRow.createCell(28).setCellValue(sitting.getSittingproccashiername());
+	}
+
+	
+	
+	
 	
 	@Override
     public byte[] getMedicalReportById(int patientId) throws IOException {
@@ -198,5 +262,7 @@ public class PatientInfoServiceImpl implements PatientInfoService {
             throw new IOException("Medical report not found for patient ID: " + patientId);
         }
     }
+
+	
 
 }

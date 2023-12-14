@@ -61,6 +61,25 @@
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 	
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	
+	<style>
+ 	/* Regular style for the back button */
+.btn-secondary {
+    /* Add any regular styling you want for the button */
+    /* For example, you can set a fixed width */
+    width: 120px;
+}
+
+/* Responsive styling for the back button on smaller screens*/
+@media (max-width: 360px) {
+    .btn-secondary {
+        /* Adjust styling for smaller screens */
+        /* For example, you can set a smaller width */
+        width: 100px;
+    }
+}
+ 	
+ 	</style>
 
 </head>
 
@@ -99,7 +118,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}" >
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>
@@ -107,7 +126,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
@@ -187,7 +206,7 @@
   
    <div class="pagetitle">
       <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    	<i class=""></i>Back</button>
+    	<i class=""></i>Back</button>  <br>
           <h1>User Registration Form</h1>
           <nav>
         	<ol class="breadcrumb">
