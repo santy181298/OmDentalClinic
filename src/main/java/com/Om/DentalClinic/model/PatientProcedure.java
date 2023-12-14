@@ -1,9 +1,11 @@
 package com.Om.DentalClinic.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -28,6 +31,9 @@ public class PatientProcedure {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "proc_patient_num", referencedColumnName = "patient_num")
 	private PatientInfo procedurenumber;
+
+    @OneToMany(mappedBy = "sittingidproc", cascade = CascadeType.ALL)
+    private List<Sittings> proceduresitting ;
 	
  
     @Column(name = "proc_date")
@@ -88,13 +94,16 @@ public class PatientProcedure {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientProcedure(int procedureid, PatientInfo procedurenumber, Date proceduredate, String proceduretype,
-			String proceduredetail, Double estimateamount, Double cashpayment, Double onlinepayment,
-			Double firstpayment, Double paymentamount, Double balanceamount, String labname, String externaldoctor,
-			String cashiername, Date timestamp) {
+	
+	
+	public PatientProcedure(int procedureid, PatientInfo procedurenumber, List<Sittings> proceduresitting,
+			Date proceduredate, String proceduretype, String proceduredetail, Double estimateamount, Double cashpayment,
+			Double onlinepayment, Double firstpayment, Double paymentamount, Double balanceamount, String labname,
+			String externaldoctor, String cashiername, Date timestamp) {
 		super();
 		this.procedureid = procedureid;
 		this.procedurenumber = procedurenumber;
+		this.proceduresitting = proceduresitting;
 		this.proceduredate = proceduredate;
 		this.proceduretype = proceduretype;
 		this.proceduredetail = proceduredetail;
@@ -124,6 +133,14 @@ public class PatientProcedure {
 
 	public void setProcedurenumber(PatientInfo procedurenumber) {
 		this.procedurenumber = procedurenumber;
+	}
+
+	public List<Sittings> getProceduresitting() {
+		return proceduresitting;
+	}
+
+	public void setProceduresitting(List<Sittings> proceduresitting) {
+		this.proceduresitting = proceduresitting;
 	}
 
 	public Date getProceduredate() {
@@ -233,13 +250,14 @@ public class PatientProcedure {
 	@Override
 	public String toString() {
 		return "PatientProcedure [procedureid=" + procedureid + ", procedurenumber=" + procedurenumber
-				+ ", proceduredate=" + proceduredate + ", proceduretype=" + proceduretype + ", proceduredetail="
-				+ proceduredetail + ", estimateamount=" + estimateamount + ", cashpayment=" + cashpayment
-				+ ", onlinepayment=" + onlinepayment + ", firstpayment=" + firstpayment + ", paymentamount="
-				+ paymentamount + ", balanceamount=" + balanceamount + ", labname=" + labname + ", externaldoctor="
-				+ externaldoctor + ", cashiername=" + cashiername + ", timestamp=" + timestamp + "]";
+				+ ", proceduresitting=" + proceduresitting + ", proceduredate=" + proceduredate + ", proceduretype="
+				+ proceduretype + ", proceduredetail=" + proceduredetail + ", estimateamount=" + estimateamount
+				+ ", cashpayment=" + cashpayment + ", onlinepayment=" + onlinepayment + ", firstpayment=" + firstpayment
+				+ ", paymentamount=" + paymentamount + ", balanceamount=" + balanceamount + ", labname=" + labname
+				+ ", externaldoctor=" + externaldoctor + ", cashiername=" + cashiername + ", timestamp=" + timestamp
+				+ "]";
 	}
 
-	
+		
 	    
 }
