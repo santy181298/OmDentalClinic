@@ -353,12 +353,12 @@ public class MainController {
 		
 		
 		@PostMapping("/updatePatientInfo")
-		public String updatePatientInfo(@RequestParam("patientReports") MultipartFile patientReports,
+		public String updatePatientInfo(@RequestParam(value ="patientReports",required = false) MultipartFile patientReports,
 		                                @RequestParam("firstname") String firstname,
 		                                @RequestParam("middlename") String middlename,
 		                                @RequestParam("lastname") String lastname,
 		                                @RequestParam("patientage") int patientage,
-		                                @RequestParam("patientgender") String patientgender,
+		                                @RequestParam(value ="patientgender", defaultValue = "") String patientgender,
 		                                @RequestParam("patientregdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date patientregdate,
 		                                @RequestParam("patientmobile1") long patientmobile1,
 		                                @RequestParam("patientmobile2") long patientmobile2,
