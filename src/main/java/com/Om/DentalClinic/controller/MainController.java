@@ -124,17 +124,25 @@ public class MainController {
 			HttpSession session = request.getSession();
 		     String username = (String) session.getAttribute("username");
 		     
-		     if(username!=null) {
-		    	 User user=userServiceImpl.findByUsername(username);
-		    	 //pass the user role's to the view
-			     model.addAttribute("userRole",user.getRole());
-			     
-		    	 model.addAttribute("username", username);
-				 return "register";
-		     }
-		     model.addAttribute("error","User Not Found");
-				return "redirect:/login";
-		}
+		     if (username != null) {
+		            User user = userServiceImpl.findByUsername(username);
+
+		            // Check if the user has the 'ADMIN' role
+		            if ("ADMIN".equals(user.getRole())) {
+		                // Pass the user role to the view
+		                model.addAttribute("userRole", user.getRole());
+		                model.addAttribute("username", username);
+		                return "register";
+		            } else {
+		                // Redirect to an error page or display an error message
+		                return "redirect:/accessdenied";
+		            }
+		        }
+
+		        model.addAttribute("error", "User Not Found");
+		        return "redirect:/login";
+		    }
+		
 		
 		@PostMapping("/register")
 		public String create(@ModelAttribute("users") User user, HttpSession session) {
@@ -165,11 +173,38 @@ public class MainController {
 			return "register";
 		}
 	 
-		@GetMapping("/accessDenied")
+		@GetMapping("/accessdenied")
 		public String errorpage() {
 			return "accessdenied";
 		}
 		 
+		@GetMapping("/usersList")
+		public String showUsersList(HttpServletRequest request, Model model,Principal principal) {
+			HttpSession session = request.getSession();
+			String username = (String) session.getAttribute("username");		     
+			
+			if(username!=null) {
+				User user=userServiceImpl.findByUsername(username);
+				if("ADMIN".equals(user.getRole())) {
+					model.addAttribute("userRole", user.getRole());
+					model.addAttribute("username", username);
+					
+					model.addAttribute("usersList", userServiceImpl.getAllUsers());
+					return "usersList";
+					
+				}else {
+	                // Redirect to an error page or display an error message
+	                return "redirect:/accessdenied";
+	            }
+				
+			}
+ 
+			model.addAttribute("error","User Not Found");
+			return "redirect:/login";
+		
+			
+		}
+		
 	 
 //User Controller------------------------------------------------------------------------------	 
 	 		
