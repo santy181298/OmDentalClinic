@@ -39,7 +39,24 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
- 
+ <style>
+ 	/* Regular style for the back button */
+.btn-secondary {
+    /* Add any regular styling you want for the button */
+    /* For example, you can set a fixed width */
+    width: 120px;
+}
+
+/* Responsive styling for the back button on smaller screens*/
+@media (max-width: 360px) {
+    .btn-secondary {
+        /* Adjust styling for smaller screens */
+        /* For example, you can set a smaller width */
+        width: 100px;
+    }
+}
+ 	
+ 	</style>
   
 </head>
 
@@ -79,7 +96,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}">
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>
@@ -87,7 +104,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
@@ -172,7 +189,7 @@
 
         <div class="pagetitle">
 
-        <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">Back</button>
+        <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">Back</button> <br>
 
           <h1>Money Received</h1>
           <nav>
@@ -228,8 +245,10 @@
 							            <tr>
 							                <th scope="col">Date</th>
 							                <th scope="col">Patient Name</th>
-							                <th scope="col">Details</th>"
-							                <th scope="col">Payment Amount</th>
+							                <th scope="col">Details</th>
+							                <th scope="col">Cash Payment</th>
+							                <th scope="col">Online Payment</th>
+							                <th scope="col">Total Payment Amount</th>
 							            </tr>
 							        </thead>
 							        <tbody>
@@ -247,22 +266,105 @@
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.proceduredetail}"></td>
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingdetails}"></td>
+										
+										<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.cashpayment}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingcashpayment}"></td>
+
+									 	<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.onlinepayment}"></td>
+									    <!-- Check if the object is an instance of Sittings -->
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingonlinepayment}"></td>
 
 									    
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.paymentamount}"></td>
+									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.firstpayment}"></td>
 									    <!-- Check if the object is an instance of Sittings -->
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingpaymentamount}"></td>
 
 									</tr>
 
-							            <!-- Display the total payment amount below the payment amounts -->
-							            <!--<tr>
-							                <td></td>
-							                <td><strong>Total Payment Amount:</strong></td>
-							                <td th:text="${totalPaymentAmount}"></td>
-							            </tr>-->
 							        </tbody>
+							        <tfoot>
+								        <tr>
+								            <td></td>
+								            <td></td>
+								            <td></td>
+								            <td><div id="totalCashPayment"></div></td>
+								            <td><div id="totalOnlinePayment"></div></td>
+								            <td><div id="totalPaymentSum"></div></td>
+								        </tr>
+								    </tfoot>
 							    </table>
+							    <div id="totalCashPayment"></div>
+							    <div id="totalOnlinePayment"></div>
+							    <div id="totalPaymentSum"></div>
+
+								<!-- Add JavaScript code to calculate and display the total sum -->
+								<script>
+								    // Wait for the DOM to be ready
+								    document.addEventListener("DOMContentLoaded", function () {
+								        // Get all payment amount cells in the table
+								        var paymentAmountCells = document.querySelectorAll("td:nth-child(6)");
+								
+								        // Initialize the total sum
+								        var totalPaymentAmount = 0;
+								
+								        // Loop through each payment amount cell and add the value to the total sum
+								        paymentAmountCells.forEach(function (cell) {
+								            var paymentAmount = parseFloat(cell.textContent || cell.innerText);
+								            if (!isNaN(paymentAmount)) {
+								                totalPaymentAmount += paymentAmount;
+								            }
+								        });
+								
+								        // Display the total sum in the placeholder element
+								        var totalPaymentSumElement = document.getElementById("totalPaymentSum");
+								        if (totalPaymentSumElement) {
+								            totalPaymentSumElement.textContent = "Grand Total: " + totalPaymentAmount.toFixed(2);
+								        }
+								    });
+								</script>
+								<script>
+								    // Wait for the DOM to be ready
+								    document.addEventListener("DOMContentLoaded", function () {
+								        // Get all cash payment cells in the table
+								        var cashPaymentCells = document.querySelectorAll("td:nth-child(4)");
+								
+								        // Get all online payment cells in the table
+								        var onlinePaymentCells = document.querySelectorAll("td:nth-child(5)");
+								
+								        // Initialize the total cash and total online payment
+								        var totalCashPayment = 0;
+								        var totalOnlinePayment = 0;
+								
+								        // Loop through each cash payment cell and add the value to the total cash payment
+								        cashPaymentCells.forEach(function (cell) {
+								            var cashPayment = parseFloat(cell.textContent || cell.innerText);
+								            if (!isNaN(cashPayment)) {
+								                totalCashPayment += cashPayment;
+								            }
+								        });
+								
+								        // Loop through each online payment cell and add the value to the total online payment
+								        onlinePaymentCells.forEach(function (cell) {
+								            var onlinePayment = parseFloat(cell.textContent || cell.innerText);
+								            if (!isNaN(onlinePayment)) {
+								                totalOnlinePayment += onlinePayment;
+								            }
+								        });
+								
+								        // Display the total cash payment in the placeholder element
+								        var totalCashPaymentElement = document.getElementById("totalCashPayment");
+								        if (totalCashPaymentElement) {
+								            totalCashPaymentElement.textContent = "Total Cash Payment: " + totalCashPayment.toFixed(2);
+								        }
+								
+								        // Display the total online payment in the placeholder element
+								        var totalOnlinePaymentElement = document.getElementById("totalOnlinePayment");
+								        if (totalOnlinePaymentElement) {
+								            totalOnlinePaymentElement.textContent = "Total Online Payment: " + totalOnlinePayment.toFixed(2);
+								        }
+								    });
+								</script>
 							</div>
 
 			            </div>

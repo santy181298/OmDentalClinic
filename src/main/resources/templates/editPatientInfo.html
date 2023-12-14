@@ -39,6 +39,25 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+ 	/* Regular style for the back button */
+.btn-secondary {
+    /* Add any regular styling you want for the button */
+    /* For example, you can set a fixed width */
+    width: 120px;
+}
+
+/* Responsive styling for the back button on smaller screens*/
+@media (max-width: 360px) {
+    .btn-secondary {
+        /* Adjust styling for smaller screens */
+        /* For example, you can set a smaller width */
+        width: 100px;
+    }
+}
+ 	
+ 	</style>
+  
  </head>
 
 <body>
@@ -76,7 +95,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}">
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>
@@ -84,7 +103,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
@@ -171,7 +190,7 @@
 
         <div class="pagetitle">
         <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    	<i class="fas fa-arrow-left"></i>Back</button>
+    	<i class="fas fa-arrow-left"></i>Back</button> <br>
           <h1>Patient Information Form</h1>
           <nav>
         	<ol class="breadcrumb">
@@ -223,8 +242,8 @@
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
         <div class="col-sm-10">
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" required> Male
-            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" required> Female
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" > Male
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" > Female
         </div>
     </div>
 
@@ -353,12 +372,7 @@
             return false;
         }
 
-        // Validate Age
-        var age = document.getElementById("patientAge").value;
-        if (isNaN(age) || age < 1) {
-            alert("Please enter a valid age");
-            return false;
-        }
+       
 		
         var age = document.getElementById("patientPhoneNumber1").value;
         if (!patientPhoneNumber1.value.match(/^[1-9][0-9]{9}$/)) {

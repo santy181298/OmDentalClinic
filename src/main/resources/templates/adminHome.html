@@ -78,7 +78,7 @@
           </li>
           
           <li>
-            <a class="nav-link collapsed" th:href="@{/register}">
+            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
               <i></i><span>Create User</span>
             </a>
           </li>
@@ -86,7 +86,7 @@
         
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Display Amount</span>
+              <i></i><span>Money Received</span>
             </a>
           </li>
           
