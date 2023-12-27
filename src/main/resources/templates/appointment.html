@@ -99,8 +99,12 @@
               <i></i><span>Create User</span>
             </a>
           </li>
-        
-        
+          <li>
+            <a class="nav-link collapsed" th:href="@{/usersList}" th:if="${userRole == 'ADMIN'}">
+              <i></i><span>Users List</span>
+            </a>
+          </li>
+                        
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
               <i></i><span>Money Received</span>
@@ -379,39 +383,35 @@
   </script>
           
 	<script>
-	function validateDateTime(starttime, endtime) {
-        var startDate = new Date(document.getElementById(starttime).value);
-        var endDate = new Date(document.getElementById(endtime).value);
-        var currentDate = new Date(); // Get the current date and time
-        var dateError = document.getElementById("dateError");
-
-        // Check if the start date is less than the current date and time
-        if (startDate < currentDate) {
-            dateError.textContent = "Start time must be greater than or equal to the current time.";
-            document.getElementById("appointmentForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent form submission if validation fails
-            });
-            return;
-        }
-
-        // Check if the end date is greater than the start date
-        if (startDate >= endDate) {
-            dateError.textContent = "End time must be greater than start time.";
-            document.getElementById("appointmentForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent form submission if validation fails
-            });
-            return;
-        }
-
-        // Add additional logic to check if the same date and time was taken earlier (you need to implement this logic on the server-side)
-
-        // Reset error message and remove event listener if validation passes
-        dateError.textContent = "";
-        document.getElementById("appointmentForm").removeEventListener("submit", function(event) {
-            event.preventDefault();
-        });
-    }
+	    document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+	        if (!validateForm() || !validateDateTime('starttime', 'endtime')) {
+	            event.preventDefault(); // Prevent form submission if validation fails
+	        }
+	    });
+	
+	    function validateDateTime(starttime, endtime) {
+	        var startDate = new Date(document.getElementById(starttime).value);
+	        var endDate = new Date(document.getElementById(endtime).value);
+	        var currentDate = new Date(); // Get the current date and time
+	        var dateError = document.getElementById("dateError");
+	
+	        // Reset error message
+	        dateError.textContent = "";
+	        
+	
+	        // Check if the end date is greater than the start date
+	        if (startDate >= endDate) {
+	            dateError.textContent = "End time must be greater than start time.";
+	            return false;
+	        }
+	
+	        // Add additional logic to check if the same date and time were taken earlier (server-side validation)
+	
+	        // Validation passed
+	        return true;
+	    }
 	</script>
+
 	<script>
     function validateMobileNumber(input) {
         // Remove non-numeric characters
