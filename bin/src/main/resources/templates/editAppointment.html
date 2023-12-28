@@ -21,15 +21,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
+    <!-- Templa/te Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
@@ -66,7 +66,7 @@
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+     <ul class="sidebar-nav" id="sidebar-nav">
         
         <li class="nav-item">
      
@@ -104,7 +104,8 @@
               <i></i><span>Users List</span>
             </a>
           </li>
-                        
+        
+        
           <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
               <i></i><span>Money Received</span>
@@ -210,14 +211,8 @@
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
 
-		<form th:object="${appointment}" th:action="@{saveAppointment}" action="#" class="search-form" id="appointmentForm" name="appointmentForm" method="POST">
+		<form th:object="${appointment}" th:action="@{/updateAppointment}" action="#" class="search-form" id="UpdateappointmentForm" name="UpdateappointmentForm" method="POST">
 				
-					  
-					 <script th:if="${successMessage}" type="text/javascript">
-					    // Redirect to the view appointment page with the success message in the URL
-					    window.location.href = '/viewAppointment?successMessage=' + encodeURIComponent("[[${successMessage}]]");
-					</script>
-
 					  
 					<div class="row mb-3">
 					    <label for="startTime" class="col-sm-2 col-form-label required">Start Time:</label>
@@ -231,52 +226,51 @@
 					    <div class="col-sm-10">
 					        <input type="datetime-local" th:field="*{endtime}" class="form-control" id="endtime" name="endtime" required onchange="validateDateTime('starttime', 'endtime')">
 					    </div>
-					    <div id="dateError" style="color: red;"></div>
+						<div id="dateError" style="color: red;"></div>
 					</div>
-							
-							
-		
-                    <div class="row mb-3">
-                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
-                        <div class="col-sm-10">
-                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
-                        	<div id="lastNameError" style="color: red;"></div>
-                        </div>
-                    </div>
-
+					
+									
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-2 col-form-label required">First Name:</label>
                         <div class="col-sm-10">
                             <input type="text" th:field="*{firstname}" class="form-control" id="firstName" name="firstName" required>
-                        	<div id="firstNameError" style="color: red;"></div>
+                            <div id="firstNameError" style="color: red;"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="middleName" class="col-sm-2 col-form-label ">Middle Name:</label>
+                        <label for="middleName" class="col-sm-2 col-form-label required">Middle Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName">
-                        	<div id="middleNameError" style="color: red;"></div>
+                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName" required>
+                            <div id="middleNameError" style="color: red;"></div>
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
+                            <div id="lastNameError" style="color: red;"></div>
+                        </div>
+                    </div>
 
                     <div class="row mb-3">
-                        <label for="treatment" class="col-sm-2 col-form-label ">Treatment:</label>
+                        <label for="treatment" class="col-sm-2 col-form-label required">Treatment:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" ></textarea>
-                        	 <div id="treatmentNameError" style="color: red;"></div>
+                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" required></textarea>
+                            <div id="treatmentNameError" style="color: red;"></div>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="mobileNumber" class="col-sm-2 col-form-label required">Mobile Number:</label>
                         <div class="col-sm-10">
-                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" maxlength="10" required oninput="validateMobileNumber(this)">
-                        	<div id="mobileNumberError"  style="color: red;"></div>
+                            <input type="tel" th:field="*{patientmobile1}" class="form-control" id="mobileNumber" name="mobileNumber" maxlength="10" oninput="validateMobileNumber(this)" required>
+                            <div id="mobileNumberError"  style="color: red;"></div>
                         </div>
                     </div>
 
+		
 			         <div class="row mb-3 d-none"><!-- to hide field d-none -->
 				        <label for="inputPassword" class="col-sm-2 col-form-label required">AppointmentID</label>
 				        <div class="col-sm-10">
@@ -284,15 +278,12 @@
 				        </div>
 				     </div>
 		
-
-                    <div class="d-flex justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary" id="submitButton">Schedule Appointment</button>
-                        <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
-                    </div>
-                    
-                </form>
-       		</main>
-    
+				      <div class="d-flex justify-content-center mt-5">
+		                 <button type="submit" class="btn btn-primary" id="submitButton">Update Appointment</button>
+		              </div>
+		    </form>
+	</main>
+		    
 	<br>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -324,8 +315,7 @@
     }
 	</script>
 	
- 
-	<!-- Validation Script -->
+<!-- Validation Script -->
 	<script>
 	function validateForm() {
 		// Validate First Name
@@ -335,7 +325,12 @@
             return false;
         }
 
-
+        // Validate Middle Name
+        var middleName = document.getElementById("middleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
 
         // Validate Last Name
         var lastName = document.getElementById("lastName").value;
@@ -356,64 +351,55 @@
             return false;
         }
         
-        
-     
         return true;
     }
 	</script>
 	<!-- Submit button script -->
 	<script>
-    document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+    document.getElementById('UpdateappointmentForm').addEventListener('submit', function(event) {
         if (!validateForm()) {
             event.preventDefault(); // Prevent form submission if validation fails
         }
     });
 	</script>
-	
-	<!-- Form Reset script -->
+	    
+	    
+	 <!--  Validate Date and Time -->   
 	<script>
-	function resetForm() {
- 	 	document.getElementById("appointmentForm").reset();
-	}
-  </script>
-          
-	<script>
-	    document.getElementById('appointmentForm').addEventListener('submit', function(event) {
-	        if (!validateForm() || !validateDateTime('starttime', 'endtime')) {
-	            event.preventDefault(); // Prevent form submission if validation fails
-	        }
-	    });
-	
-	    function validateDateTime(starttime, endtime) {
-	        var startDate = new Date(document.getElementById(starttime).value);
-	        var endDate = new Date(document.getElementById(endtime).value);
-	        var currentDate = new Date(); // Get the current date and time
-	        var dateError = document.getElementById("dateError");
-	
-	        // Reset error message
-	        dateError.textContent = "";
-	        
-	
-	        // Check if the end date is greater than the start date
-	        if (startDate >= endDate) {
-	            dateError.textContent = "End time must be greater than start time.";
-	            return false;
-	        }
-	
-	        // Add additional logic to check if the same date and time were taken earlier (server-side validation)
-	
-	        // Validation passed
-	        return true;
-	    }
-	</script>
+	function validateDateTime(starttime, endtime) {
+        var startDate = new Date(document.getElementById(starttime).value);
+        var endDate = new Date(document.getElementById(endtime).value);
+        var currentDate = new Date(); // Get the current date and time
+        var dateError = document.getElementById("dateError");
 
-	<script>
-    function validateMobileNumber(input) {
-        // Remove non-numeric characters
-        input.value = input.value.replace(/\D/g, '');
+        // Check if the start date is less than the current date and time
+        if (startDate < currentDate) {
+            dateError.textContent = "Start time must be greater than or equal to the current time.";
+            document.getElementById("UpdateappointmentForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            });
+            return;
+        }
+
+        // Check if the end date is greater than the start date
+        if (startDate >= endDate) {
+            dateError.textContent = "End time must be greater than start time.";
+            document.getElementById("UpdateappointmentForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            });
+            return;
+        }
+
+        // Add additional logic to check if the same date and time was taken earlier (you need to implement this logic on the server-side)
+
+        // Reset error message and remove event listener if validation passes
+        dateError.textContent = "";
+        document.getElementById("UpdateappointmentForm").removeEventListener("submit", function(event) {
+            event.preventDefault();
+        });
     }
 	</script>
-	
+
 </body>
 
 </html>

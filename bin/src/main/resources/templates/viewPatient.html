@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -28,7 +29,7 @@
     <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
+    <!-- Templa/te Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
@@ -57,11 +58,11 @@
  	
  	</style>
   
-</head>
+ </head>
+
 <body>
-	
 	<!-- ======= Header ======= -->
-<header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center">
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
 
@@ -146,7 +147,6 @@
   <!-- End Of Company Pages  -->
   
 
-
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -154,8 +154,8 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
 	
+
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -185,84 +185,146 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+
   <!-- ======= Sidebar ======= -->
 
+
+    <!-- ======= Header ======= -->
+    
  <main id="main" class="main">
 
-    <div class="pagetitle">
-    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    <i class="fas fa-arrow-left"></i>Back</button> <br>
-      <h1>Patient Details Search Form</h1>
-      <nav>
-        <ol class="breadcrumb">
-          	<li class="breadcrumb-item"><a href="#">Home</a></li>
-          	<li class="breadcrumb-item active">Patient Details</li>
-        </ol>
-      	</nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Patients Procedure</h5>
-
-			<div class="table-responsive">
-			<table class="table">
-			    <thead>
-			        <tr>
-			            <th>#</th>
-			            <th>Procedure Date</th>
-			            <th>Procedure Detail</th>
-			             <th>Estimated</th>
-			             <th>Amount Paid</th>
-			            <th>Balance</th>
-			            <th>Actions</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
-			            <td th:text="${procedureStat.index + 1}"></td>
-			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
-			            <td th:text="${patientProcedure.proceduredetail}"></td>
-			            <td th:text="${#numbers.formatDecimal(patientProcedure.estimateamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.paymentamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.balanceamount, 3, 'COMMA', 2, 'POINT')}"></td>
-			            
-			            <td>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Update</a>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a> 
-			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
-						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Sitting</a>
-			              <a class="btn btn-warning mx-2" th:href="@{/sittingList/{procedureid}(procedureid=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">View Sitting</a>
-							
-
-			            </td>
-			        </tr>
-			    </tbody>
-			</table>
-
-			</div>
-              <!-- End Table with stripped rows -->
-			  
-            </div>
-          </div>
-
+        <div class="pagetitle">
+        <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+    	<i class="fas fa-arrow-left"></i>Back</button>  <br>
+          <h1>Patient Information</h1>
+          <nav>
+        	<ol class="breadcrumb">
+          		<li class="breadcrumb-item"><a href="#">Home</a></li>
+          		<li class="breadcrumb-item active">Patient Information</li>
+        	</ol>
+      		</nav>
         </div>
-      </div>
-    </section>
+        <div class="card">
+            <div class="card-body"  style="margin-top: 5px;">
+              <h5></h5>
+    
+              <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}  /updatePatientInfo"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
+          
+<form th:object="${patientinfo}" enctype="multipart/form-data">
+	
+	<style>
+			/* Style for the readonly fields */
+			input[readonly] {
+	        background-color: #f0f0f0; /* Grey background color */
+			cursor: not-allowed; /* Disable cursor */
+		   }
+		   
+		   textarea[readonly] {
+	        background-color: #f0f0f0; /* Grey background color */
+			cursor: not-allowed; /* Disable cursor */
+		   }
+	</style>					
 
-  </main><!-- End #main -->
-  
-  <br>
-<footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Om Dental Clinic</span></strong>. All Rights Reserved
+    <!-- Input fields for patient information -->
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label ">First Name</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" readonly>
+            <div id="patientFirstNameError" class="invalid-feedback">
+                Please enter a valid first name.
+            </div>
+        </div>
     </div>
-   
-  </footer><!-- End Footer -->
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label ">Middle Name</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName" readonly>
+            <div id="patientMiddleNameError" class="invalid-feedback">
+                Please enter a valid middle name.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for "inputText" class="col-sm-2 col-form-label ">Last Name</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" readonly>
+            <div id="patientLastNameError" class="invalid-feedback">
+                Please enter a valid last name.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">Age</label>
+        <div class="col-sm-10">
+            <input type="number" th:field="*{patientage}" name="patient_age" id="patientAge" class="form-control" style="width: 80px; height: 30px;"  readonly>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
+        <div class="col-sm-10">
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" readonly> Male
+            <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" readonly> Female
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputDate" class="col-sm-2 col-form-label ">Date Of Registration</label>
+        <div class="col-sm-10">
+            <input type="date" th:field="*{patientregdate}" class="form-control"  readonly>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label ">Mobile Number 1</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control"  maxlength="10" readonly>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">Mobile Number 2</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control" maxlength="10" readonly>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">Medical History</label>
+        <div class="col-sm-10">
+            <textarea id="patient_medical_history" th:field="*{patientmedicalhistory}" name="patient_medical_history" class="form-control" rows="4" cols="50" readonly></textarea>
+        </div>
+    </div>
+
+   <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Medical Report</label>
+    <div class="col-sm-10">
+        <th:block th:if="${patientinfo.patientReports ne null}">
+            <a th:href="${'/view/' + patientinfo.patientnumber}" target="_blank" class="btn btn-primary">View Medical Report</a>
+        </th:block>
+        <p th:if="${patientinfo.patientReports eq null}">No medical report available.</p>
+    </div>
+</div>
+
+
+
+    <!-- Hidden field for patient ID -->
+    <div class="row mb-3 d-none">
+        <label for="inputPassword" class="col-sm-2 col-form-label ">PatientID</label>
+        <div class="col-sm-10">
+            <input type="text" id="patientId" th:field="*{patientnumber}" class="form-control" readonly>
+        </div>
+    </div>
+
+</form>
+
+            </main>
+    
+	<br>
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -312,5 +374,7 @@
 	</script>
 	
 
+
 </body>
+
 </html>

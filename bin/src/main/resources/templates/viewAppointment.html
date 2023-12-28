@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -38,7 +39,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  <style>
+<style>
  	/* Regular style for the back button */
 .btn-secondary {
     /* Add any regular styling you want for the button */
@@ -55,12 +56,12 @@
     }
 }
  	
- 	</style>
+ 	</style> 
   
 </head>
-<body>
 
-<!-- ======= Header ======= -->
+<body>
+	<!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
@@ -146,16 +147,12 @@
   <!-- End Of Company Pages  -->
   
 
-
-    <div class="d-flex align-items-center justify-content-between">
-      <a class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Om Dental Clinic</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-    
-
+    <div class="d-flex align-items-center justify-content-between" style="position: relative; left: -20px;">
+    <a href="#" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block" style="margin-left: 20px;">Om Dental Clinic</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+	</div><!-- End Logo -->
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -177,113 +174,103 @@
         	  <a th:href="@{/logout}">Logout</a>
             </li>
             
+
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
       </ul>
     </nav><!-- End Icons Navigation -->
+    
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
 
-<main id="main" class="main">
-	
-	<div class="pagetitle">
-	<button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    <i class="fas fa-arrow-left"></i>Back</button> <br>
-      <h1>Patient List</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Patient List</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <!-- ======= Header ======= -->
+    
+ <main id="main" class="main">
+	 
+	 	<div id="successMessageContainer" class="alert alert-success" role="alert" style="display: none;">
+		    <span id="successMessageContent"></span>
+		    <button type="button" class="btn-close" aria-label="Close" onclick="closeSuccessMessage()"></button>
+		</div>
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Patients</h5>
-              <div class="search-bars-container">
-               <div class="search-bars-container d-flex">
-				  <!-- First Search Bar -->
-
-
-				
-				<!-- Second Search Bar for Patient Name -->
-				<div class="search-bar mx-3" style="width: 250px;">
-				  <div class="search-form d-flex align-items-center">
-				    <div class="input-group">
-				      <input type="text" name="query" id="name-search-input" placeholder="Name" title="Enter search term" class="form-control">
-				      <button type="submit" title="Search" class="input-group-text">
-				        <i class="bi bi-search"></i>
-				      </button>
-				    </div>
-				  </div>
-				</div>
-				
-				<!-- Third Search Bar for Mobile Number -->
-				<div class="search-bar" style="width: 250px;">
-				  <div class="search-form d-flex align-items-center">
-				    <div class="input-group">
-				      <input type="text" name="query" id="mobile-search-input" placeholder="Mobile" title="Enter search term" class="form-control">
-				      <button type="submit" title="Search" class="input-group-text">
-				        <i class="bi bi-search"></i>
-				      </button>
-				    </div>
-				  </div>
-				</div>
-					</div> 
-
-              <br>
-              
-              
-            <div class="table-responsive">
-              <table class="table datatable">
-                <thead>
-                  <tr >
-	
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Date of Registration</th>
-                    <th scope="col">Mobile Number</th>
-                    <th scope="col">Actions</th>
-                    
-                  </tr>
-                </thead>
-               <tbody>
-				    <tr th:each="patientinfo, patientinfoStat : ${listpatients}">
-                  
-						<td th:text="${patientinfo.firstname} + ' ' + ${patientinfo.middlename} + ' ' + ${patientinfo.lastname}"></td>
-				        <td th:text="${#dates.format(patientinfo.patientregdate, 'dd-MM-yyyy')}"></td> 
-		                <td th:text="${patientinfo.patientmobile1}"></td>				       
-				        <td >
-
-		                <a style="margin-left:6px;" th:href="@{/editPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary" >Update</a>	
-		                <a style="margin-left:6px;" th:href="@{/viewPatientinfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-primary" >View Patient</a>	      
-		                <a th:href="@{/deletePatientInfo/{id}(id=${patientinfo.patientnumber})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}" >Delete</a>
-
-						<a th:href="@{/procedureDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Proc</a>
-						<a th:href="@{/patientDetails/{patientId}(patientId=${patientinfo.patientnumber})}" class="btn btn-warning mx-2">View Proc</a>
-			        </td>
-				    </tr>
-				</tbody>
-
-              </table>
-              </div>
-              <!-- End Table with stripped rows -->
-			  
-            </div>
-          </div>
-
+        <div class="pagetitle">
+            <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
+                <i class="fas fa-arrow-left"></i>Back</button> <br>
+            <h1>View Appointments</h1>
         </div>
-     </div>
-    </section>
-  </main><!-- End #main -->
-   <br>
+		
+		<nav>
+        	<ol class="breadcrumb">
+
+          		<li class="breadcrumb-item"><a href="#">Home</a></li>
+          		<li class="breadcrumb-item active">Appointments</li>
+
+        	</ol>
+      		</nav>
+      		
+        <!-- Filter Form -->
+        <div class="card">
+            <div class="card-body" style="margin-top: 20px; margin-bottom: -10px;">
+                <form action="/filterAppointments" method="post">
+                    <div class="row mb-3">
+                        <label for="appointmentDate" class="col-sm-2 col-form-label required">Select Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="appointmentDate" name="appointmentDate"
+                                required>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" style="width: 150px;" class="btn btn-primary">Show Appointments</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Display Filtered Data -->
+        <div class="card mt-3" th:if="${filteredAppointments != null}">
+            <div class="card-body">
+                <h5 class="card-title">Filtered Appointments</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+								<th scope="col">Start Time</th>
+								<th scope="col">End Time</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Mobile Number</th>
+                                <th scope="col">Treatment</th>
+                                <th scope="col">Actions</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appointment : ${filteredAppointments}">
+								<td th:text="${#dates.format(appointment.starttime, 'HH:mm')}"></td>
+                                <td th:text="${#dates.format(appointment.endtime, 'HH:mm')}"></td>
+                                <td th:text="${appointment.firstname + ' ' + appointment.middlename + ' ' + appointment.lastname}"></td>
+                                <td th:text="${appointment.patientmobile1}"></td>
+                                <td th:text="${appointment.treatment}"></td>
+                                <td >
+
+
+					                <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editAppointment/{id}(id=${appointment.appointmentnum})}" >Update</a>		      
+					                <a th:href="@{/deleteAppointment/{id}(id=${appointment.appointmentnum})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}">Delete</a>
+	
+						        </td>
+                                <!-- Add more table data cells as needed -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    
+	<br>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -294,11 +281,12 @@
     <script src="vendor/chart.js/chart.umd.js"></script>
     <script src="vendor/echarts/echarts.min.js"></script>
     <script src="vendor/quill/quill.min.js"></script>
+    <script src="vendor/simple-datatables/simple-datatables.js"></script>
     <script src="vendor/tinymce/tinymce.min.js"></script>
     <script src="vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="js/main.js"></script> 
+    <script src="js/main.js"></script>
     
     <!-- Back Button Scripts -->
     <!-- Back Next Button -->
@@ -313,36 +301,42 @@
     }
 	</script>
 	
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const nameSearchInput = document.getElementById("name-search-input");
-        const mobileSearchInput = document.getElementById("mobile-search-input");
-        const table = document.querySelector(".datatable");
-        const rows = table.getElementsByTagName("tr");
+	<script>
+    // Function to get URL parameters
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
-        const filterRows = function () {
-            const nameQuery = nameSearchInput.value.trim().toLowerCase();
-            const mobileQuery = mobileSearchInput.value.trim().toLowerCase();
+    // Function to close the success message
+    function closeSuccessMessage() {
+        var successMessageContainer = document.getElementById('successMessageContainer');
+        successMessageContainer.style.display = 'none';
+    }
 
-            for (let i = 1; i < rows.length; i++) {
-                const nameCell = rows[i].getElementsByTagName("td")[0].innerText.toLowerCase(); // Index 0 for the name
-                const mobileCell = rows[i].getElementsByTagName("td")[2].innerText.toLowerCase(); // Index 2 for the mobile number
+    // Get the success message from the URL
+    var successMessage = getParameterByName('successMessage');
 
-                const nameMatch = nameCell.includes(nameQuery);
-                const mobileMatch = mobileCell.includes(mobileQuery);
-
-                if (nameMatch && mobileMatch) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        };
-
-        nameSearchInput.addEventListener("input", filterRows);
-        mobileSearchInput.addEventListener("input", filterRows);
-    });
+    // Display the success message in the container
+    var successMessageContainer = document.getElementById('successMessageContainer');
+    var successMessageContent = document.getElementById('successMessageContent');
+    
+    if (successMessage) {
+        successMessageContent.innerHTML = successMessage;
+        successMessageContainer.style.display = 'block'; // Show the container
+    }
 </script>
 
+
+	
+	
+	
+	
 </body>
+
 </html>
