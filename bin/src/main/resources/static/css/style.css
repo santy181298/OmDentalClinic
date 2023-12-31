@@ -1457,34 +1457,15 @@ h6 {
 	transform: rotate(-180deg);
 }
 
-
-
 .btn {
     height: 30px;
-    width: 90px;
     line-height: 30px; /* Vertically center the text */
     text-align: center; /* Horizontally center the text */
     white-space: nowrap; /* Prevent text from wrapping to the next line */
     overflow: hidden; /* Hide any overflowing text */
     text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
-    font-size: 12px; /* Adjust the font size as needed */
+    font-size: 14px; /* Adjust the font size as needed */
     padding: 0 7px; /* Optional padding for left and right spacing */
-    margin-bottom: 10px;
-}
-
-@media (min-width: 768px) {
-  .btn {
-    display: inline-block; /* Buttons appear inline on larger screens */
-    margin-right: 10px; /* Adds spacing between adjacent buttons */
-    margin-bottom: 0; /* Removes extra bottom margin */
-  }
-}
-
-@media (max-width: 767px) {
-  .btn {
-    display: block; /* Buttons stack vertically on smaller screens */
-    width: 100%; /* Makes buttons fill the entire width of the container */
-  }
 }
 
 .list-items {

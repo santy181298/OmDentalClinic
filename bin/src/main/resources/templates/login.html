@@ -124,13 +124,7 @@
 
 
 					<div class="card-body">
-						<div th:if="${successMessage}" class="alert alert-success">
-    						<p th:text="${successMessage}"></p>
-						</div>
 
-						<div th:if="${error}" id="errorMessage" class="alert alert-danger">
-   							 <p th:text="${error}"></p>
-						</div>
 
 						<div class="pt-4 pb-2">
 
@@ -163,15 +157,26 @@
 
 		                      <input type="text"  class="form-control" id="username" name="username"  autofocus="autofocus" required/>
 		                      
-		                      <div id="usernameError" class="invalid-feedback">Please enter valid username</div>
+		                      <div class="invalid-feedback">Please enter valid username</div>
 		                    </div>
 							
 							<div class="col-12">
 								<label for="yourPassword" class="form-label">Password</label>
 								<input type="password" name="password" class="form-control" id="password" required>
-								<div class="invalid-feedback">Please enter your password!</div>
 							</div>
-						
+<!-- 							<div class="col-12"> -->
+<!-- 			                  <label for="role" class="col-sm-12 col-form-label">Role</label> -->
+<!-- 			                  <div class="col-sm-12"> -->
+<!-- 			                    <select name="role" id="role"  class="form-select" aria-label="Default select example" required onchange="toggleDropdown(this.value)"> -->
+<!-- 			                      <option value="" disabled selected>-- Please select Role --</option> -->
+<!-- 			                      <option value="ADMIN">Doctor</option> -->
+<!-- 			                      <option value="USER">Receptionist</option> -->
+<!-- 			                   </select> -->
+<!-- 			                   <div id="error" class="invalid-feedback">Please select a role </div> -->
+<!-- 			                  </div> -->
+<!-- 			                </div> -->
+
+							
 							<div class="col-12">
 
 								<button class="btn btn-primary w-100" type="submit">Login</button>
@@ -247,27 +252,7 @@
 
 	<script th:src="@{/js/main.js}"></script>
 
-	<script th:inline="javascript">
-    /*<![CDATA[*/
 
-    // Function to hide the error message after a delay
-    function hideErrorMessage() {
-        setTimeout(function() {
-            var errorMessage = document.getElementById("errorMessage");
-            if (errorMessage) {
-                errorMessage.style.display = "none";
-            }
-        }, 2000); // Adjust the delay (in milliseconds) as needed
-    }
-
-    // Call the function when the page is loaded
-    window.onload = function() {
-        hideErrorMessage();
-    };
-
-    /*]]>*/
-	</script>
-	
 </body>
 
 

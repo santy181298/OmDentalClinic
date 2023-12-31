@@ -523,10 +523,8 @@ public class MainController {
 		   public String updatePatientProcedure(@RequestParam("proceduredate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date proceduredate ,
 			   									@RequestParam("proceduretype") String proceduretype,
 			   									@RequestParam("proceduredetail") String proceduredetail,
-			   								//	@RequestParam("estimateamount") Double estimateamount,
-			   								//	@RequestParam("balanceamount") Double balanceamount,
 			   									@RequestParam("labname") String labname,
-			   									@RequestParam("externaldoctor") String externaldoctor,			   									
+			   									@RequestParam("externaldoctor") String externaldoctor,
 			   									@RequestParam("procedureid") int procedureid,
 			   									@PathVariable("patientnumber") int patientNumber,
 			   									HttpServletRequest request) {
@@ -542,8 +540,6 @@ public class MainController {
 		       existingprocedure.setProceduredate(proceduredate);
 		       existingprocedure.setProceduretype(proceduretype);
 		       existingprocedure.setProceduredetail(proceduredetail);
-		 //      existingprocedure.setEstimateamount(estimateamount);
-		//       existingprocedure.setBalanceamount(balanceamount);
 		       existingprocedure.setLabname(labname);
 		       existingprocedure.setExternaldoctor(externaldoctor);
 //		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	

@@ -236,13 +236,6 @@
 							
 							
 		
-                    <div class="row mb-3">
-                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
-                        <div class="col-sm-10">
-                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
-                        	<div id="lastNameError" style="color: red;"></div>
-                        </div>
-                    </div>
 
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-2 col-form-label required">First Name:</label>
@@ -253,18 +246,25 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="middleName" class="col-sm-2 col-form-label ">Middle Name:</label>
+                        <label for="middleName" class="col-sm-2 col-form-label required">Middle Name:</label>
                         <div class="col-sm-10">
                             <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName">
                         	<div id="middleNameError" style="color: red;"></div>
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
+                        	<div id="lastNameError" style="color: red;"></div>
+                        </div>
+                    </div>
 
                     <div class="row mb-3">
-                        <label for="treatment" class="col-sm-2 col-form-label ">Treatment:</label>
+                        <label for="treatment" class="col-sm-2 col-form-label required">Treatment:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" ></textarea>
+                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" required></textarea>
                         	 <div id="treatmentNameError" style="color: red;"></div>
                         </div>
                     </div>
@@ -335,7 +335,12 @@
             return false;
         }
 
-
+        // Validate Middle Name
+        var middleName = document.getElementById("middleName").value;
+        if (!/^[a-zA-Z]+$/.test(middleName)) {
+            alert("Please enter a valid middle name (only characters are allowed)");
+            return false;
+        }
 
         // Validate Last Name
         var lastName = document.getElementById("lastName").value;

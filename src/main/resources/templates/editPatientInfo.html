@@ -214,13 +214,6 @@
 
     <!-- Input fields for patient information -->
     <div class="row mb-3">
-        <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
-        <div class="col-sm-10">
-            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required >         
-        </div>
-    </div>
-    
-    <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label required">First Name</label>
         <div class="col-sm-10">
             <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" name="firstName" required >
@@ -236,6 +229,13 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
+        <div class="col-sm-10">
+            <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required >
+            
+        </div>
+    </div>
 
     <div class="row mb-3">
         <label for="inputText" class="col-sm-2 col-form-label">Age</label>
@@ -280,14 +280,12 @@
         </div>
     </div>
 
-    <!-- <div class="row mb-3">
+   <div class="row mb-3">
         <label for="inputNumber" class="col-sm-2 col-form-label">Medical Report</label>
         <div class="col-sm-10">
             <input class="form-control" type="file" name="patientReports" id="patientReports" accept=".pdf,.doc,.docx,.jpeg,.jpg" disabled>
         </div>
-    </div> -->
-
-   
+    </div>
 
     <!-- Hidden field for patient ID -->
     <div class="row mb-3 d-none">

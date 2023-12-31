@@ -404,43 +404,9 @@ if(form !== null){
   });
 }
 //end of submit procedureDetails form validation-------------------
- 
-// Function to add ".00" to the value if it's a whole number By PRASAD
-//    function addDecimalIfNeeded(inputId) {
-//        var input = document.getElementById(inputId);
-//        var value = input.value.trim();
-//
-//        if (/^\d+$/.test(value)) {
-//            // If the value is a whole number, add ".00"
-//            input.value = value + ".00";
-//        }
-//    }
-//
-//    // Attach the function to the input fields' "blur" event
-//    document.getElementById('estimate').addEventListener('blur', function () {
-//        addDecimalIfNeeded('estimate');
-//        updateBalance();
-//    });
-//
-//    document.getElementById('cash').addEventListener('blur', function () {
-//        addDecimalIfNeeded('cash');
-//        updateBalance();
-//    });
-//
-//    document.getElementById('online').addEventListener('blur', function () {
-//        addDecimalIfNeeded('online');
-//        updateBalance();
-//    });
-//
-//    // You may also want to add this behavior to the Total Amount Paid and Balance fields
-//
-//    // Format readonly fields as ".00"
-//    document.getElementById('payment').value = "0.00";
-//    document.getElementById('balance').value = "0.00";
-    
 
-    // Existing code for balance calculation
-   const estimateInput = document.getElementById("estimate");
+    
+const estimateInput = document.getElementById("estimate");
 const cashInput = document.getElementById("cash"); // Added
 const onlineInput = document.getElementById("online"); // Added
 const paymentInput = document.getElementById("payment");

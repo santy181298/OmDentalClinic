@@ -39,24 +39,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
- <style>
- 	/* Regular style for the back button */
-.btn-secondary {
-    /* Add any regular styling you want for the button */
-    /* For example, you can set a fixed width */
-    width: 120px;
-}
-
-/* Responsive styling for the back button on smaller screens*/
-@media (max-width: 360px) {
-    .btn-secondary {
-        /* Adjust styling for smaller screens */
-        /* For example, you can set a smaller width */
-        width: 100px;
-    }
-}
- 	
- 	</style>
+ 
   
 </head>
 
@@ -66,79 +49,26 @@
   <!-- Company Pages  -->
   <aside id="sidebar" class="sidebar">
 
-    
     <ul class="sidebar-nav" id="sidebar-nav">
         
         <li class="nav-item">
      
-          <li>
-            <a class="nav-link collapsed" th:href="@{/appointment}">
-              <i></i><span>Appointment</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
-              <i></i><span>View Appointments</span>
-            </a>
-          </li>
+         
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Registration</span>
             </a>
           </li>
-          
+         
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
               <i></i><span>Patient List</span>
             </a>
           </li>
-          
-          <li>
-            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Create User</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/usersList}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Users List</span>
-            </a>
-          </li>
         
         
-          <li>
-            <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Money Received</span>
-            </a>
-          </li>
-          
-          
-          
-      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      	<ul>
-      	<ul> 
-      	
-      	   <li>
-            <a class="nav-link collapsed" href="/patients/excel">
-              <i class="bi bi-circle" ></i><span>Export Patient</span>
-            </a>
-          </li>
-        
-          <li>
-            <a class="nav-link collapsed" href="/appointment/excel">
-              <i class="bi bi-circle" ></i><span>Export Appointment</span>
-            </a>
-          </li>
-   
-      	 
-      	</ul>
-      
-        </ul>
-              
       </li>
      
     </ul>
@@ -154,6 +84,9 @@
     </a>
     <i class="bi bi-list toggle-sidebar-btn"></i>
 	</div><!-- End Logo -->
+    <!-- Back Button -->
+    <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm">Back</button> 
+	<button onclick="goForward()" type="button" class="btn btn-secondary rounded-pill btn-sm">Next</button> 
 
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
@@ -193,13 +126,10 @@
  <main id="main" class="main">
 
         <div class="pagetitle">
-
-        <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">Back</button> <br>
-
           <h1>Money Received</h1>
           <nav>
         	<ol class="breadcrumb">
-          		<li class="breadcrumb-item"><a href="#">Home</a></li>
+          		<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
           		<li class="breadcrumb-item active">Money Received</li>
         	</ol>
       		</nav>
@@ -213,13 +143,13 @@
 				    <div class="row mb-3">
 				        <label for="fromDate" class="col-sm-2 col-form-label required">From Date</label>
 				        <div class="col-sm-10">
-				            <input type="date" class="form-control" id="fromDate" name="fromDate" th:value="${#dates.format(fromDate, 'yyyy-MM-dd')}" required>
+				            <input type="date" class="form-control" id="fromDate" name="fromDate" th:value="${#dates.format(fromDate, 'yyyy-MM-dd')}">
 				        </div>
 				    </div>
 				    <div class="row mb-3">
 				        <label for="toDate" class="col-sm-2 col-form-label required">To Date</label>
 				        <div class="col-sm-10">
-				            <input type="date" class="form-control" id="toDate" name="toDate" th:value="${#dates.format(toDate, 'yyyy-MM-dd')}" required>
+				            <input type="date" class="form-control" id="toDate" name="toDate" th:value="${#dates.format(toDate, 'yyyy-MM-dd')}">
 				        </div>
 				    </div>
 				     <div class="row mb-3">
@@ -250,132 +180,30 @@
 							            <tr>
 							                <th scope="col">Date</th>
 							                <th scope="col">Patient Name</th>
-							                <th scope="col">Details</th>
-							                <th scope="col">Cash Payment</th>
-							                <th scope="col">Online Payment</th>
-							                <th scope="col">Total Payment Amount</th>
-							                <th scope="col">Cashier Name</th>
+							                <th scope="col">Payment Amount</th>
 							            </tr>
 							        </thead>
 							        <tbody>
 							            <!-- Initialize totalPaymentAmount variable to store the sum of payment amounts -->
-							        <th:block th:with="totalPaymentAmount=0"></th:block>
-							        <tr th:each="procedure : ${combinedProcedures}">
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${#dates.format(procedure.proceduredate, 'dd-MM-yyyy')}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${#dates.format(procedure.sittingdate, 'dd-MM-yyyy')}"></td>									   
-									 				   
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.procedurenumber.firstname + ' ' + procedure.procedurenumber.middlename + ' ' + procedure.procedurenumber.lastname}"></td>
-									    <!-- For Sittings, fetch the related PatientProcedure to get the name -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingidproc?.procedurenumber?.firstname + ' ' + procedure.sittingidproc?.procedurenumber?.middlename + ' ' + procedure.sittingidproc?.procedurenumber?.lastname}"></td>									   
-									    
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.proceduredetail}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingdetails}"></td>
-										
-																		
-										<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.cashpayment}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingcashpayment}"></td>
-
-									 	<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.onlinepayment}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingonlinepayment}"></td>
-
-									    
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.firstpayment}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingpaymentamount}"></td>
-										
-										<td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${procedure.cashiername}"></td>
-									    <!-- Check if the object is an instance of Sittings -->
-									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.Sittings)}" th:text="${procedure.sittingproccashiername}"></td>
-
-									</tr>
-
+							            <th:block th:with="totalPaymentAmount=0"></th:block>
+							            <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
+							                <!-- Format the date as per your requirement using Thymeleaf -->
+							                <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
+							                <!-- Access the patient's name assuming it's a property of PatientProcedure -->
+							                <td th:text="${patientProcedure.procedurenumber.firstname} + ' ' + ${patientProcedure.procedurenumber.middlename} + ' ' + ${patientProcedure.procedurenumber.lastname}"></td>
+							                <!-- Access the payment amount property of PatientProcedure -->
+							                <td th:text="${patientProcedure.paymentamount}"></td>
+							                <!-- Add the current payment amount to the totalPaymentAmount variable -->
+							                <!--<th:block th:with="totalPaymentAmount=${totalPaymentAmount + (patientProcedure.paymentamount ?: 0)}"></th:block><-->
+							            </tr>
+							            <!-- Display the total payment amount below the payment amounts -->
+							            <!--<tr>
+							                <td></td>
+							                <td><strong>Total Payment Amount:</strong></td>
+							                <td th:text="${totalPaymentAmount}"></td>
+							            </tr>-->
 							        </tbody>
-							        <tfoot>
-								        <tr>
-								            <td></td>
-								            <td></td>
-								            <td></td>
-								            <td><div id="totalCashPayment"></div></td>
-								            <td><div id="totalOnlinePayment"></div></td>
-								            <td><div id="totalPaymentSum"></div></td>
-								        </tr>
-								    </tfoot>
 							    </table>
-							    <div id="totalCashPayment"></div>
-							    <div id="totalOnlinePayment"></div>
-							    <div id="totalPaymentSum"></div>
-
-								<!-- Add JavaScript code to calculate and display the total sum -->
-								<script>
-								    // Wait for the DOM to be ready
-								    document.addEventListener("DOMContentLoaded", function () {
-								        // Get all payment amount cells in the table
-								        var paymentAmountCells = document.querySelectorAll("td:nth-child(6)");
-								
-								        // Initialize the total sum
-								        var totalPaymentAmount = 0;
-								
-								        // Loop through each payment amount cell and add the value to the total sum
-								        paymentAmountCells.forEach(function (cell) {
-								            var paymentAmount = parseFloat(cell.textContent || cell.innerText);
-								            if (!isNaN(paymentAmount)) {
-								                totalPaymentAmount += paymentAmount;
-								            }
-								        });
-								
-								        // Display the total sum in the placeholder element
-								        var totalPaymentSumElement = document.getElementById("totalPaymentSum");
-								        if (totalPaymentSumElement) {
-								            totalPaymentSumElement.textContent = "Grand Total: " + totalPaymentAmount.toFixed(2);
-								        }
-								    });
-								</script>
-								<script>
-								    // Wait for the DOM to be ready
-								    document.addEventListener("DOMContentLoaded", function () {
-								        // Get all cash payment cells in the table
-								        var cashPaymentCells = document.querySelectorAll("td:nth-child(4)");
-								
-								        // Get all online payment cells in the table
-								        var onlinePaymentCells = document.querySelectorAll("td:nth-child(5)");
-								
-								        // Initialize the total cash and total online payment
-								        var totalCashPayment = 0;
-								        var totalOnlinePayment = 0;
-								
-								        // Loop through each cash payment cell and add the value to the total cash payment
-								        cashPaymentCells.forEach(function (cell) {
-								            var cashPayment = parseFloat(cell.textContent || cell.innerText);
-								            if (!isNaN(cashPayment)) {
-								                totalCashPayment += cashPayment;
-								            }
-								        });
-								
-								        // Loop through each online payment cell and add the value to the total online payment
-								        onlinePaymentCells.forEach(function (cell) {
-								            var onlinePayment = parseFloat(cell.textContent || cell.innerText);
-								            if (!isNaN(onlinePayment)) {
-								                totalOnlinePayment += onlinePayment;
-								            }
-								        });
-								
-								        // Display the total cash payment in the placeholder element
-								        var totalCashPaymentElement = document.getElementById("totalCashPayment");
-								        if (totalCashPaymentElement) {
-								            totalCashPaymentElement.textContent = "Total Cash Payment: " + totalCashPayment.toFixed(2);
-								        }
-								
-								        // Display the total online payment in the placeholder element
-								        var totalOnlinePaymentElement = document.getElementById("totalOnlinePayment");
-								        if (totalOnlinePaymentElement) {
-								            totalOnlinePaymentElement.textContent = "Total Online Payment: " + totalOnlinePayment.toFixed(2);
-								        }
-								    });
-								</script>
 							</div>
 
 			            </div>

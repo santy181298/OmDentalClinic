@@ -39,24 +39,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
- <style>
- 	/* Regular style for the back button */
-.btn-secondary {
-    /* Add any regular styling you want for the button */
-    /* For example, you can set a fixed width */
-    width: 120px;
-}
-
-/* Responsive styling for the back button on smaller screens*/
-@media (max-width: 360px) {
-    .btn-secondary {
-        /* Adjust styling for smaller screens */
-        /* For example, you can set a smaller width */
-        width: 100px;
-    }
-}
- 	
- 	</style>
+ 
   
 </head>
 
@@ -70,74 +53,22 @@
         
         <li class="nav-item">
      
-          <li>
-            <a class="nav-link collapsed" th:href="@{/appointment}">
-              <i></i><span>Appointment</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
-              <i></i><span>View Appointments</span>
-            </a>
-          </li>
+         
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
               <i></i><span>Patient Registration</span>
             </a>
           </li>
-          
+         
           
           <li>
             <a class="nav-link collapsed" th:href="@{/patientList}">
               <i></i><span>Patient List</span>
             </a>
           </li>
-          
-          <li>
-            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Create User</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/usersList}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Users List</span>
-            </a>
-          </li>
         
         
-          <li>
-            <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Money Received</span>
-            </a>
-          </li>
-          
-          
-          
-      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      	<ul>
-      	<ul> 
-      	
-      	   <li>
-            <a class="nav-link collapsed" href="/patients/excel">
-              <i class="bi bi-circle" ></i><span>Export Patient</span>
-            </a>
-          </li>
-        
-          <li>
-            <a class="nav-link collapsed" href="/appointment/excel">
-              <i class="bi bi-circle" ></i><span>Export Appointment</span>
-            </a>
-          </li>
-   
-      	 
-      	</ul>
-      
-        </ul>
-              
       </li>
      
     </ul>
@@ -195,11 +126,11 @@
 
         <div class="pagetitle">
         <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    	<i class="fas fa-arrow-left"></i>Back</button> <br>
+    	<i class="fas fa-arrow-left"></i>Back</button>
           <h1>Patient Information Form</h1>
           <nav>
         	<ol class="breadcrumb">
-          		<li class="breadcrumb-item"><a href="#">Home</a></li>
+          		<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
           		<li class="breadcrumb-item active">Patient Information</li>
         	</ol>
       		</nav>
@@ -210,32 +141,35 @@
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
           
-<form th:object="${patientinfo}" th:action="@{SavePatientInfo}" action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data">
+		<form th:object="${patientinfo}" th:action="@{SavePatientInfo}" action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST" enctype="multipart/form-data">
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">First Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{firstname}" class="form-control" id="patientFirstName" name="firstName" required>
-                    <div class="error"></div> 
-                    <div id="FirstNameError" style="color: red;"></div>                
+                    <input type="text" th:field="*{firstname}" class="form-control" id="patientName" >
+                    <div id="patientNameError" class="invalid-feedback">
+                       Please enter a valid patient name.
+                    </div>              
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">Middle Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{middlename}" class="form-control" id="patientMiddleName" name="middleName" required >
-                    <div class="error"></div>
-                    <div id="MiddleNameError" style="color: red;"></div>               
+                    <input type="text" th:field="*{middlename}" class="form-control" id="patientName" >
+                    <div id="patientNameError" class="invalid-feedback">
+                       Please enter a valid patient name.
+                    </div>              
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label required">Last Name</label>
                   <div class="col-sm-10">
-                    <input type="text" th:field="*{lastname}" class="form-control" id="patientLastName" name="lastName" required >
-                    <div class="error"></div>
-                    <div id="LastNameError" style="color: red;"></div>              
+                    <input type="text" th:field="*{lastname}" class="form-control" id="patientName" >
+                    <div id="patientNameError" class="invalid-feedback">
+                       Please enter a valid patient name.
+                    </div>              
                   </div>
                 </div>
                 
@@ -244,9 +178,7 @@
                <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Age</label>
                 <div class="col-sm-10">
-                  <input type="number" th:field="*{patientage}"  name="patient_age" id="patientAge" class="form-control"  style="width: 80px; height: 30px;">                       
-                  <div class="error"></div>
-                  <div id="ageError" style="color: red;"></div> 
+                  <input type="number" th:field="*{patientage}"  name="patient_age" id="patientAge" class="form-control"  style="width: 80px; height: 30px;" required>                       
                 </div>
                 
               </div>
@@ -254,9 +186,8 @@
               <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Gender</label>
                 <div class="col-sm-10">
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male" > Male
-                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female" > Female                           
-                	<div class="error"></div>
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="male"> Male
+                    <input type="radio" th:field="*{patientgender}" name="patient_gender" value="female"> Female                           
                 </div>
               </div>
                                
@@ -264,18 +195,14 @@
                 <div class="row mb-3">
                   <label for="inputDate" class="col-sm-2 col-form-label required">Date Of Registration</label>
                   <div class="col-sm-10">
-                    <input type="date" th:field="*{patientregdate}" id="registerDate" class="form-control" required>
-                  	<div class="error"></div>
-                  	<div id="registerDateError" style="color: red;"></div> 
+                    <input type="date" th:field="*{patientregdate}"  class="form-control" required>
                   </div>
                 </div>
                 
 				<div class="row mb-3">
 				    <label for="inputText" class="col-sm-2 col-form-label required">Mobile Number 1</label>
 				    <div class="col-sm-10">
-				        <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required  maxlength="10" oninput="validateMobileNumber(this)">
-				    	<div class="error"></div>
-				   		<div id="patientPhoneNumber1Error" style="color: red;"></div> 
+				        <input type="text" th:field="*{patientmobile1}" name="number" id="patientPhoneNumber1" class="form-control" required  maxlength="10">
 				    </div>
 				</div>
 				
@@ -283,7 +210,6 @@
 				    <label for="inputText" class="col-sm-2 col-form-label">Mobile Number 2</label>
 				    <div class="col-sm-10">
 				        <input type="text" th:field="*{patientmobile2}" name="number" id="patientPhoneNumber2" class="form-control"  maxlength="10">
-				    	
 				    </div>
 				</div>
 
@@ -295,29 +221,37 @@
                 </div>
               </div>
 
-	        <div class="row mb-3">
-	            <label for="inputNumber" class="col-sm-2 col-form-label">Medical Report</label>
-	            <div class="col-sm-10">
-	                <input class="form-control" th:field="*{patientReports}" type="file" id="formFile" accept=".pdf,.doc,.docx,.jpeg,.jpg,.png,.bmp" disabled>
-	                <div id="presentationError2" class="invalid-feedback">
-	                    Please select a valid file type for the CV (pdf, doc, docx, jpg, jpeg, png, bmp).
-	                </div>
-	                <div id="presentationError3" class="invalid-feedback">
-	                    The selected file is too large. Please select a file with a size smaller than 4MB.
-	                </div>
-	            </div>
-	        </div>
-	              
-		         <div class="row mb-3 d-none"><!-- to hide field d-none -->
-			        <label for="inputPassword" class="col-sm-2 col-form-label required">PatientID</label>
-			        <div class="col-sm-10">
-			            <input type="text" id="patientId"  th:field="*{patientnumber}" class="form-control" readonly>
-			        </div>
-			     </div>
+              <div class="row mb-3">
+                <label for="inputNumber" class="col-sm-2 col-form-label">Medical Report</label>
+                <div class="col-sm-10">
+                  <input class="form-control" th:field="*{patientReports}" type="file" id="formFile" accept=".pdf,.doc,.docx,.jpeg,.jpg" >
+				<div th:if="${param.fileError}">
+				    <div class="alert alert-danger">
+				        No file has been selected. Please choose a file to upload.
+				    </div>
+				</div>                
+                <div id="presentationError1" class="invalid-feedback">
+                  Please select a file.
+                </div>
+                <div id="presentationError2" class="invalid-feedback">
+                  Please select a valid file type for the CV.(pdf,doc,docx,txt,rtf,jpg)
+                </div>
+                <div id="presentationError3" class="invalid-feedback">
+                  The selected file is too large. Please select a file with a size smaller than 2MB.
+                </div>
+                </div>
+              </div>
+              
+			         <div class="row mb-3 d-none"><!-- to hide field d-none -->
+				        <label for="inputPassword" class="col-sm-2 col-form-label required">PatientID</label>
+				        <div class="col-sm-10">
+				            <input type="text" id="patientId"  th:field="*{patientnumber}" class="form-control" readonly>
+				        </div>
+				     </div>
 
                <div class="d-flex justify-content-center mt-5">
-				 <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-				 <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
+				 <button type="submit" class="btn btn-primary">Save</button>
+				 <button type="submit" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button>
 			  </div>
 
               </form>   
@@ -353,111 +287,7 @@
         window.history.forward();
     }
 	</script>
-
 	
-    <script>
-        const fileInput = document.getElementById('formFile');
-        const allowedExtensions = /\.(pdf|doc|docx|jpeg|jpg|png|bmp)$/i;
-
-        fileInput.addEventListener('change', (event) => {
-            const files = event.target.files;
-
-            document.getElementById('presentationError1').style.display = 'none';
-            document.getElementById('presentationError2').style.display = 'none';
-            document.getElementById('presentationError3').style.display = 'none';
-
-            // Validate each file
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                if (!allowedExtensions.test(file.name)) {
-                    showError('Please select a valid file type for the CV (pdf, doc, docx, jpg, jpeg, png, bmp).');
-                    return;
-                }
-                if (file.size > 4000000) { // Check for 2MB limit (2 * 1024 * 1024)
-                    showError('The selected file is too large. Please select a file with a size smaller than 2MB.');
-                    return;
-                }
-            }
-        });
-
-        function showError(message) {
-            document.getElementById('presentationError1').textContent = message;
-            document.getElementById('presentationError1').style.display = 'block';
-            fileInput.value = ''; // Clear the file input
-        }
-    </script>
-    
-    <!-- Validation Script -->
-	<script>
-	function validateForm() {
-		// Validate First Name
-        var firstName = document.getElementById("patientFirstName").value;
-        if (!/^[a-zA-Z]+$/.test(firstName)) {
-        	
-        	alert("Please enter a valid first name (only characters are allowed)");
-            return false;
-        }
-
-        // Validate Middle Name
-        var middleName = document.getElementById("patientMiddleName").value;
-        if (!/^[a-zA-Z]+$/.test(middleName)) {
-            alert("Please enter a valid middle name (only characters are allowed)");
-            return false;
-        }
-
-        // Validate Last Name
-        var lastName = document.getElementById("patientLastName").value;
-        if (!/^[a-zA-Z]+$/.test(lastName)) {
-            alert("Please enter a valid last name (only characters are allowed)");
-            return false;
-        }
-
-        		
-     	// Validate Phone Number if there's input
-        var phoneNumberInput = document.getElementById("patientPhoneNumber1");
-        var phoneNumber = phoneNumberInput.value.trim(); // Remove leading and trailing spaces
-
-        if (phoneNumber !== "" && !phoneNumber.match(/^[1-9][0-9]{9}$/)) {
-            alert("Phone number must be a 10-digit positive number, and the first digit can't be 0!");
-            phoneNumberInput.focus();
-            return false;
-        }
-        
-     // Validate Date of Registration (should not be a future date)
-		var registerDate = document.getElementById("registerDate").value;
-        var currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
-
-        if (registerDate > currentDate) {
-            alert("Date of Registration cannot be a future date");
-            return false;
-        }	
-     
-        return true;
-    }
-	</script>
-	
-	<!-- Submit button script -->
-	<script>
-    document.getElementById('patientInfo').addEventListener('submit', function(event) {
-        if (!validateForm()) {
-            event.preventDefault(); // Prevent form submission if validation fails
-        }
-    });
- 	</script>
-
-<!-- Form Reset script -->
-	<script>
-	function resetForm() {
- 	 	document.getElementById("patientInfo").reset();
-	}
-	</script>
-	
-	<script>
-    function validateMobileNumber(input) {
-        // Remove non-numeric characters
-        input.value = input.value.replace(/\D/g, '');
-    }
-</script>	
 </body>
 
 </html>

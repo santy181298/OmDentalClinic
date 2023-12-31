@@ -38,25 +38,6 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  <style>
- 	/* Regular style for the back button */
-.btn-secondary {
-    /* Add any regular styling you want for the button */
-    /* For example, you can set a fixed width */
-    width: 120px;
-}
-
-/* Responsive styling for the back button on smaller screens*/
-@media (max-width: 360px) {
-    .btn-secondary {
-        /* Adjust styling for smaller screens */
-        /* For example, you can set a smaller width */
-        width: 100px;
-    }
-}
- 	
- 	</style>
-  
 </head>
 <body>
 	
@@ -69,16 +50,7 @@
         
         <li class="nav-item">
      
-          <li>
-            <a class="nav-link collapsed" th:href="@{/appointment}">
-              <i></i><span>Appointment</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/viewAppointment}">
-              <i></i><span>View Appointments</span>
-            </a>
-          </li>
+         
        
           <li>
             <a class="nav-link collapsed" th:href="@{/patientinfo}">
@@ -92,51 +64,8 @@
               <i></i><span>Patient List</span>
             </a>
           </li>
-          
-          <li>
-            <a class="nav-link collapsed" th:href="@{/register}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Create User</span>
-            </a>
-          </li>
-          <li>
-            <a class="nav-link collapsed" th:href="@{/usersList}" th:if="${userRole == 'ADMIN'}">
-              <i></i><span>Users List</span>
-            </a>
-          </li>
         
         
-          <li>
-            <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Money Received</span>
-            </a>
-          </li>
-          
-          
-          
-      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      	<ul>
-      	<ul> 
-      	
-      	   <li>
-            <a class="nav-link collapsed" href="/patients/excel">
-              <i class="bi bi-circle" ></i><span>Export Patient</span>
-            </a>
-          </li>
-        
-          <li>
-            <a class="nav-link collapsed" href="/appointment/excel">
-              <i class="bi bi-circle" ></i><span>Export Appointment</span>
-            </a>
-          </li>
-   
-      	 
-      	</ul>
-      
-        </ul>
-              
       </li>
      
     </ul>
@@ -191,11 +120,11 @@
 
     <div class="pagetitle">
     <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    <i class="fas fa-arrow-left"></i>Back</button> <br>
+    <i class="fas fa-arrow-left"></i>Back</button>
       <h1>Patient Details Search Form</h1>
       <nav>
         <ol class="breadcrumb">
-          	<li class="breadcrumb-item"><a href="#">Home</a></li>
+          	<li class="breadcrumb-item"><a href="adminHome">Home</a></li>
           	<li class="breadcrumb-item active">Patient Details</li>
         </ol>
       	</nav>
@@ -207,8 +136,48 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Patients Procedure</h5>
-
+              <h5 class="card-title">Patients</h5>
+              <div class="search-bars-container">
+               <div class="search-bars-container d-flex">
+				  <!-- First Search Bar -->
+				  <div class="search-bar" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Patient Number" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				
+				  <!-- Second Search Bar -->
+				  <div class="search-bar mx-3" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Patient Name" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				
+				  <!-- Third Search Bar -->
+				  <div class="search-bar" style="width: 250px;">
+				    <div class="search-form d-flex align-items-center">
+				      <div class="input-group">
+				        <input type="text" name="query" placeholder="Mobile Number" title="Enter search term" class="form-control">
+				        <button type="submit" title="Search" class="input-group-text">
+				          <i class="bi bi-search"></i>
+				        </button>
+				      </div>
+				    </div>
+				  </div>
+				</div> 
+              <br>
+             
+			</div>
 			<div class="table-responsive">
 			<table class="table">
 			    <thead>
@@ -216,9 +185,6 @@
 			            <th>#</th>
 			            <th>Procedure Date</th>
 			            <th>Procedure Detail</th>
-			             <th>Estimated</th>
-			             <th>Amount Paid</th>
-			            <th>Balance</th>
 			            <th>Actions</th>
 			        </tr>
 			    </thead>
@@ -227,17 +193,10 @@
 			            <td th:text="${procedureStat.index + 1}"></td>
 			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
 			            <td th:text="${patientProcedure.proceduredetail}"></td>
-			            <td th:text="${#numbers.formatDecimal(patientProcedure.estimateamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.paymentamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.balanceamount, 3, 'COMMA', 2, 'POINT')}"></td>
-			            
 			            <td>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Update</a>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a> 
+			              <a class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}">Update</a>
 			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
-						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Sitting</a>
-			              <a class="btn btn-warning mx-2" th:href="@{/sittingList/{procedureid}(procedureid=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">View Sitting</a>
-							
+
 
 			            </td>
 			        </tr>

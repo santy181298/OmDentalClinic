@@ -235,7 +235,7 @@
 		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Update</a>
 		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a> 
 			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
-						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" >Add Sitting</a>
+						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Sitting</a>
 			              <a class="btn btn-warning mx-2" th:href="@{/sittingList/{procedureid}(procedureid=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">View Sitting</a>
 							
 

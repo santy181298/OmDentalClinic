@@ -74,7 +74,7 @@
               <i></i><span>Appointment</span>
             </a>
           </li>
-          <li>z
+          <li>
             <a class="nav-link collapsed" th:href="@{/viewAppointment}">
               <i></i><span>View Appointments</span>
             </a>
@@ -368,46 +368,56 @@
  	 	document.getElementById("procedureForm").reset();
 	}
 	</script>
+	<script>
+        // Function to validate the form
+       function validateForm() {
+            var procedureType = document.getElementById('patientproceduretype').value.trim();
+            var procedureDetail = document.getElementById('patientproceduredetail').value.trim();
+            var estimate = parseFloat(document.getElementById('estimate').value) || 0;
+            var cash = parseFloat(document.getElementById('cash').value) || 0;
+            var online = parseFloat(document.getElementById('online').value) || 0;
 
+            // Validate Procedure Type
+            if (procedureType === '') {
+                document.getElementById('typeError').innerText = 'Please fill the Procedure Types details';
+                return false;
+            } else {
+                document.getElementById('typeError').innerText = ''; // Clear error message
+            }
 
-<script>
-    // Function to validate the form
-    function validateForm() {
-        var procedureType = document.getElementById('patientproceduretype').value.trim();
-        var procedureDetail = document.getElementById('patientproceduredetail').value.trim();
-        var estimate = parseFloat(document.getElementById('estimate').value) || 0;
-        var cash = parseFloat(document.getElementById('cash').value) || 0;
-        var online = parseFloat(document.getElementById('online').value) || 0;
+            // Validate Procedure Details
+            if (procedureDetail === '') {
+                document.getElementById('procedureDetailError').innerText = 'Please fill the Procedure Details details';
+                return false;
+            } else {
+                document.getElementById('procedureDetailError').innerText = ''; // Clear error message
+            }
 
-        // Validate Procedure Type
-        if (procedureType === '') {
-            alert('Please fill the Procedure Type details');
-            return false;
+         // Check if the values are zero or less than zero
+            if (estimate < 0 ) {
+                alert('Please enter exact amount for estimate');
+                return false; // Prevent form submission
+            }
+         	// Check if either cash or online has a value
+            if (cash < 0 && online < 0) {
+                alert('Either Cash or Online must have a amount greater than zero.');
+                return false; // Prevent form submission
+            }
+           // Validate either Cash or Online has a value greater than zero
+            if (cash === 0 && online === 0) {
+                alert('Either Cash or Online must have an amount greater than zero.');
+                return false;
+            }
+
+            return true; // Form is valid
         }
 
-        // Validate Procedure Details
-        if (procedureDetail === '') {
-            alert('Please fill the Procedure Details details');
-            return false;
-        }
-
-        // Check if the values are negative
-        if (estimate < 0 || cash < 0 || online < 0) {
-            alert('Please enter non-negative values for Estimate, Cash, and Online');
-            return false; // Prevent form submission
-        }
-
-        return true; // Form is valid
-    }
-
-    document.getElementById('procedureForm').addEventListener('submit', function (event) {
-        if (!validateForm()) {
-            event.preventDefault(); // Prevent form submission if validation fails
-        }
-    });
-</script>
-
-/
+        document.getElementById('procedureForm').addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    </script>
 
 </body>
 
