@@ -229,6 +229,13 @@
 						<div id="dateError" style="color: red;"></div>
 					</div>
 					
+                    <div class="row mb-3">
+                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
+                            <div id="lastNameError" style="color: red;"></div>
+                        </div>
+                    </div>
 									
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-2 col-form-label required">First Name:</label>
@@ -239,25 +246,18 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="middleName" class="col-sm-2 col-form-label required">Middle Name:</label>
+                        <label for="middleName" class="col-sm-2 col-form-label ">Middle Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName" required>
+                            <input type="text" th:field="*{middlename}" class="form-control" id="middleName" name="middleName" >
                             <div id="middleNameError" style="color: red;"></div>
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="lastName" class="col-sm-2 col-form-label required">Last Name:</label>
-                        <div class="col-sm-10">
-                            <input type="text" th:field="*{lastname}" class="form-control" id="lastName" name="lastName" required>
-                            <div id="lastNameError" style="color: red;"></div>
-                        </div>
-                    </div>
 
                     <div class="row mb-3">
-                        <label for="treatment" class="col-sm-2 col-form-label required">Treatment:</label>
+                        <label for="treatment" class="col-sm-2 col-form-label ">Treatment:</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" required></textarea>
+                            <textarea class="form-control" th:field="*{treatment}" id="treatment" name="treatment" ></textarea>
                             <div id="treatmentNameError" style="color: red;"></div>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
 				     </div>
 		
 				      <div class="d-flex justify-content-center mt-5">
-		                 <button type="submit" class="btn btn-primary" id="submitButton">Update Appointment</button>
+		                 <button type="submit" class="btn btn-primary" id="submitButton">Update</button>
 		              </div>
 		    </form>
 	</main>
@@ -325,12 +325,6 @@
             return false;
         }
 
-        // Validate Middle Name
-        var middleName = document.getElementById("middleName").value;
-        if (!/^[a-zA-Z]+$/.test(middleName)) {
-            alert("Please enter a valid middle name (only characters are allowed)");
-            return false;
-        }
 
         // Validate Last Name
         var lastName = document.getElementById("lastName").value;
@@ -365,7 +359,11 @@
 	    
 	    
 	 <!--  Validate Date and Time -->   
-	<script>
+	 
+	 
+	 	 <!--  Validate Date and Time
+	 	 
+	 	 	<script>
 	function validateDateTime(starttime, endtime) {
         var startDate = new Date(document.getElementById(starttime).value);
         var endDate = new Date(document.getElementById(endtime).value);
@@ -382,7 +380,7 @@
         }
 
         // Check if the end date is greater than the start date
-        if (startDate >= endDate) {
+        if ( endDate >=  startDate) {
             dateError.textContent = "End time must be greater than start time.";
             document.getElementById("UpdateappointmentForm").addEventListener("submit", function(event) {
                 event.preventDefault(); // Prevent form submission if validation fails
@@ -399,6 +397,44 @@
         });
     }
 	</script>
+	 	  -->  
+	 	 
+	 	 <script>
+    function validateDateTime(startId, endId) {
+        var startTime = document.getElementById(startId).value;
+        var endTime = document.getElementById(endId).value;
+
+        if (startTime && endTime) {
+            var startDateTime = new Date(startTime);
+            var endDateTime = new Date(endTime);
+
+            if (startDateTime >= endDateTime) {
+                document.getElementById('dateError').innerText = 'End time must be greater than Start time.';
+            } else {
+                document.getElementById('dateError').innerText = '';
+            }
+        }
+    }
+
+    document.getElementById('procedureForm').addEventListener('submit', function (event) {
+        var startTime = document.getElementById('starttime').value;
+        var endTime = document.getElementById('endtime').value;
+
+        if (startTime && endTime) {
+            var startDateTime = new Date(startTime);
+            var endDateTime = new Date(endTime);
+
+            if (startDateTime >= endDateTime) {
+                document.getElementById('dateError').innerText = 'End time must be greater than Start time.';
+                event.preventDefault(); // Prevent form submission if validation fails
+            } else {
+                document.getElementById('dateError').innerText = '';
+            }
+        }
+    });
+</script>
+
+
 
 </body>
 

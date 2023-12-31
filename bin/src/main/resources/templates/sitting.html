@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+    <meta charset="ISO-8859-1">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -28,7 +28,7 @@
     <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
+    <!-- Templa/te Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
 
     <!-- =======================================================
@@ -57,9 +57,9 @@
  	
  	</style>
   
-</head>
+  </head>
+
 <body>
-	
 	<!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
   <!-- Company Pages  -->
@@ -148,14 +148,14 @@
 
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="#" class="logo d-flex align-items-center">
+      <a class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Om Dental Clinic</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-	
+
 	<!-- User Profile nav -->	
 	<nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -173,11 +173,10 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <span>Welcome, <span th:text="${username}">Username</span></span>
+              <span>Welcome, <span th:text="${username}"></span></span>
         	  <a th:href="@{/logout}">Logout</a>
             </li>
             
-
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
@@ -187,82 +186,131 @@
   </header><!-- End Header -->
   <!-- ======= Sidebar ======= -->
 
- <main id="main" class="main">
+    <!-- ======= Header ======= -->
+    
+<main id="main" class="main">
+<div class="pagetitle">
 
     <div class="pagetitle">
     <button onclick="goBack()" type="button" class="btn btn-secondary rounded-pill btn-sm" style="float: right;">
-    <i class="fas fa-arrow-left"></i>Back</button> <br>
-      <h1>Patient Details Search Form</h1>
+    <i class="fas fa-arrow-left"></i>Back</button>  <br>
+      <h1>Procedure Sitting Details Form</h1>
       <nav>
         <ol class="breadcrumb">
-          	<li class="breadcrumb-item"><a href="#">Home</a></li>
-          	<li class="breadcrumb-item active">Patient Details</li>
+         	<li class="breadcrumb-item"><a href="#">Home</a></li>
+          	<li class="breadcrumb-item active">Sitting Details</li>
         </ol>
       	</nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Patients Procedure</h5>
-
-			<div class="table-responsive">
-			<table class="table">
-			    <thead>
-			        <tr>
-			            <th>#</th>
-			            <th>Procedure Date</th>
-			            <th>Procedure Detail</th>
-			             <th>Estimated</th>
-			             <th>Amount Paid</th>
-			            <th>Balance</th>
-			            <th>Actions</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        <tr th:each="patientProcedure, procedureStat : ${patientProcedures}">
-			            <td th:text="${procedureStat.index + 1}"></td>
-			            <td th:text="${#dates.format(patientProcedure.proceduredate, 'dd-MM-yyyy')}"></td>
-			            <td th:text="${patientProcedure.proceduredetail}"></td>
-			            <td th:text="${#numbers.formatDecimal(patientProcedure.estimateamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.paymentamount, 3, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(patientProcedure.balanceamount, 3, 'COMMA', 2, 'POINT')}"></td>
-			            
-			            <td>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Update</a>
-		                  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a> 
-			              <a class="btn btn-danger mx-2" th:href="@{/deleteProcedure/{patientId}/{procedureId}(patientId=${patientinfo.patientnumber}, procedureId=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
-						  <a th:href="@{/sitting/{procedureid}(procedureid=${patientProcedure.procedureid})}" class="btn btn-success mx-2" th:if="${userRole == 'ADMIN'}">Add Sitting</a>
-			              <a class="btn btn-warning mx-2" th:href="@{/sittingList/{procedureid}(procedureid=${patientProcedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3'}">View Sitting</a>
-							
-
-			            </td>
-			        </tr>
-			    </tbody>
-			</table>
-
-			</div>
-              <!-- End Table with stripped rows -->
-			  
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main><!-- End #main -->
-  
-  <br>
-<footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Om Dental Clinic</span></strong>. All Rights Reserved
     </div>
+
+    <div class="card">
+            <div class="card-body"  style="margin-top: 5px;">
+              <h5></h5>
+
    
-  </footer><!-- End Footer -->
+<form th:object="${sitting}" th:action="@{'/saveSitting/' + ${procedureProcedure.procedureid}}" id="sittingForm" name="sittingForm" method="POST">
+				    <div class="row mb-3">
+				        <label for="sittingdatedate" class="col-sm-2 col-form-label required">Date of Sitting</label>
+				        <div class="col-sm-10">
+				            <input type="date" th:field="*{sittingdate}" name="sittingDate" id="sittingDate" class="form-control" required>
+				        	<div id="sittingDateError" style="color: red;"></div>
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3">
+				        <label for="sittingdetails" class="col-sm-2 col-form-label required">Sitting Details</label>
+				        <div class="col-sm-10">
+				            <textarea class="form-control" th:field="*{sittingdetails}" name="sittingdetails" id="sittingdetails" required></textarea>
+				            <div id="procedureDetailError" class="invalid-feedback">
+				                Please enter valid details.
+				            </div>
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3">
+				        <label for="estimate" class="col-sm-2 col-form-label">Estimate</label>
+				        <div class="col-sm-10">
+				            <input type="number" th:value="${procedureProcedure.estimateamount}" name="sittingestimateamount"
+				                id="estimate" class="form-control" readonly>
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3">
+				        <label for="cash" class="col-sm-2 col-form-label">Cash Payment</label>
+				        <div class="col-sm-10">
+				            <input type="number" th:field="*{sittingcashpayment}" name="sittingcashpayment" id="cash" class="form-control" value="0">
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3">
+				        <label for="online" class="col-sm-2 col-form-label">Online Payment</label>
+				        <div class="col-sm-10">
+				          <input type="number" th:field="*{sittingonlinepayment}" name="sittingonlinepayment" id="online" class="form-control" value="0">
+				        </div>
+				    </div>
+				
+				    <style>
+				        /* Style for the readonly fields */
+				        input[readonly] {
+				            background-color: #f0f0f0; /* Grey background color */
+				            cursor: not-allowed; /* Disable cursor */
+				        }
+				    </style>
+				
+				    <div class="row mb-3">
+				        <label for="payment" class="col-sm-2 col-form-label">Total Payment Amount</label>
+				        <div class="col-sm-10">
+				            <input type="number" th:field="*{sittingpaymentamount}" name="sittingamount" id="payment" class="form-control" readonly>
+				        </div>
+				    </div>
+				
+					<div class="row mb-3">
+					    <label class="col-sm-2 col-form-label">Balance</label>
+					    <div class="col-sm-10">
+					        <input id="balanceAmount" type="text" th:value="${procedureProcedure.balanceamount}" class="form-control" readonly>
+					    </div>
+					</div>
+
+				
+				    <div class="row mb-3">
+				        <label for="sittinglabname" class="col-sm-2 col-form-label">Sitting Lab Name</label>
+				        <div class="col-sm-10">
+				            <input type="text" th:field="*{sittinglabname}" name="sittinglabname" class="form-control" id="sittinglabname">
+				            <div id="labNameError" class="invalid-feedback">
+				                Please enter a valid Lab name.
+				            </div>
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3">
+				        <label for="sittingexternaldoctor" class="col-sm-2 col-form-label">Sitting External Doctor</label>
+				        <div class="col-sm-10">
+				            <input type="text" th:field="*{sittingexternaldoctor}" id="sittingexternaldoctor" name="sittingexternaldoctor" class="form-control">
+				            <div id="externalDoctorError" class="invalid-feedback">
+				                Please enter a valid doctor name.
+				            </div>
+				        </div>
+				    </div>
+				
+				    <div class="row mb-3 d-none"><!-- to hide field d-none -->
+				        <label for="sittingid" class="col-sm-2 col-form-label required">SittingID</label>
+				        <div class="col-sm-10">
+				            <input type="text" id="sittingid" th:field="*{sittingid}" class="form-control" readonly>
+				        </div>
+				    </div>
+								
+				    <div class="d-flex justify-content-center mt-5">
+				        <button type="submit" class="btn btn-primary">Save</button>
+				        <button type="reset" class="btn btn-secondary mx-5" id="resetForm">Reset</button>
+				    </div>
+				</form>
+<!-- End General Form Elements -->
+</div>
+</div>
+</div>
+    </main><!-- End #main -->
+	<br>
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -311,6 +359,34 @@
     }
 	</script>
 	
+	
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('sittingForm');
+        form.addEventListener('submit', function (event) {
+            if (!validateDateTime()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+
+    function validateDateTime() {
+        var sittingDate = document.getElementById('sittingDate').value;
+        var currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+
+        if (sittingDate > currentDate) {
+            document.getElementById('sittingDateError').innerText = 'Date of sitting cannot be a future date';
+            return false;
+        }
+
+        document.getElementById('sittingDateError').innerText = '';
+        return true;
+    }
+
+    /*]]>*/
+</script>
 
 </body>
 </html>
