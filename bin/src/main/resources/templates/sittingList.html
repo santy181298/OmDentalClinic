@@ -223,14 +223,7 @@
 			        </tr>
 			    </thead>
 			    <tbody>
-			        <tr>
-					<td></td>
-
-					<td colspan="2" style="text-align:left">First Procedure Payment</td>
-					<td th:text="${#numbers.formatDecimal(patientprocedure.firstpayment , 3, 'COMMA', 2, 'POINT')}"></td>
-
-					<td> </td>
-					</tr>					
+				
 			        <tr th:each="sitting, sittingStat : ${sitting}">
 			            <td th:text="${sittingStat.index + 1}"></td>
 			            <td th:text="${#dates.format(sitting.sittingdate, 'dd-MM-yyyy')}"></td>
@@ -239,9 +232,13 @@
 			            
 			            <td>		   
 						  <a style="margin-left:6px;" class="btn btn-primary" th:href="@{/editSitting/{sittingid}/{procedureid}(sittingid=${sitting.sittingid}, procedureid=${patientprocedure.procedureid})}" th:if="${userRole == 'ADMIN' || userRole == 'RECEP1' || userRole == 'RECEP2' || userRole == 'RECEP3' }" >View</a>	
-			              <a class="btn btn-danger mx-2" th:href="@{/deleteSitting/{sittingid}/{procedureid}(sittingid=${sitting.sittingid}, procedureid=${patientprocedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a>
+			             
+			           <!--  <a class="btn btn-danger mx-2" th:href="@{/deleteSitting/{sittingid}/{procedureid}(sittingid=${sitting.sittingid}, procedureid=${patientprocedure.procedureid})}" th:if="${userRole == 'ADMIN'}">Delete</a> -->
 			            </td>
 			        </tr>
+					<td colspan="2" style="text-align:left">First Procedure Payment</td>
+					<td></td>
+					<td th:text="${#numbers.formatDecimal(patientprocedure.firstpayment , 3, 'COMMA', 2, 'POINT')}"></td>
 			        
 			    </tbody>
 			</table>
