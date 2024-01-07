@@ -599,6 +599,46 @@ public class MainController {
 
 		       return "displayAmount";
 		   }
+		   
+		   @GetMapping("/doctorReport")
+		   public String showDrReport(HttpServletRequest request, Model model,Principal principal) {
+		       // Initialize fromDate and toDate with default values if needed
+		       Date fromDate = null; // Set your default fromDate value here
+		       Date toDate = null; // Set your default toDate value here
+
+		       // Add fromDate and toDate to the model so they can be pre-populated in the form
+		       HttpSession session = request.getSession();
+			   String username = (String) session.getAttribute("username");
+			   
+			   User user = userServiceImpl.findByUsername(username);
+			   model.addAttribute("userRole", user.getRole());
+			   
+			   model.addAttribute("username", username); 	
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+
+		       return "externalDrReport";
+		   }
+		   
+		   @GetMapping("/labReport")
+		   public String showlabReport(HttpServletRequest request, Model model,Principal principal) {
+		       // Initialize fromDate and toDate with default values if needed
+		       Date fromDate = null; // Set your default fromDate value here
+		       Date toDate = null; // Set your default toDate value here
+
+		       // Add fromDate and toDate to the model so they can be pre-populated in the form
+		       HttpSession session = request.getSession();
+			   String username = (String) session.getAttribute("username");
+			   
+			   User user = userServiceImpl.findByUsername(username);
+			   model.addAttribute("userRole", user.getRole());
+			   
+			   model.addAttribute("username", username); 	
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+
+		       return "LabReport";
+		   }
 
 		   
 //		   @PostMapping("/filterData")
@@ -654,6 +694,72 @@ public class MainController {
 		       model.addAttribute("session", session);
 
 		       return "displayAmount";
+		   }
+		   
+		   @PostMapping("/filterDoctor")
+		   public String filterProceduresOnDoctor(
+		           @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		           @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		           @RequestParam("doctor") String doctor, HttpServletRequest request,
+		           Model model) {
+
+		       // Get filtered procedures from tbl_patient_procedure based on dates and session
+		       List<PatientProcedure> filteredPatientProcedures = patientProcedureService.getFilteredProceduresByDoctor(fromDate, toDate, doctor);
+
+		       // Get filtered procedures from tbl_proc_sittings based on dates and session
+		       List<Sittings> filteredProcSittings = sittingService.getFilteredProcSittingsByDoctor(fromDate, toDate, doctor);
+
+		       // Combine the results into a single list
+		       List<Object> combinedResults = new ArrayList<>();
+		       combinedResults.addAll(filteredPatientProcedures);
+		       combinedResults.addAll(filteredProcSittings);
+
+		       HttpSession Session = request.getSession();
+		       String username = (String) Session.getAttribute("username");
+		       model.addAttribute("username", username);
+
+		       // Add the combined procedures to the model for displaying in the view
+		       model.addAttribute("combinedProcedures", combinedResults);
+
+		       // Add fromDate and toDate to the model for display in the view if needed
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+		       model.addAttribute("doctor", doctor);
+
+		       return "externalDrReport";
+		   }
+		   
+		   @PostMapping("/filterLab")
+		   public String filterProceduresOnLab(
+		           @RequestParam("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+		           @RequestParam("toDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+		           @RequestParam("lab") String lab, HttpServletRequest request,
+		           Model model) {
+
+		       // Get filtered procedures from tbl_patient_procedure based on dates and session
+		       List<PatientProcedure> filteredPatientProcedures = patientProcedureService.getFilteredProceduresByLab(fromDate, toDate, lab);
+
+		       // Get filtered procedures from tbl_proc_sittings based on dates and session
+		       List<Sittings> filteredProcSittings = sittingService.getFilteredProcSittingsByLab(fromDate, toDate, lab);
+
+		       // Combine the results into a single list
+		       List<Object> combinedResults = new ArrayList<>();
+		       combinedResults.addAll(filteredPatientProcedures);
+		       combinedResults.addAll(filteredProcSittings);
+
+		       HttpSession Session = request.getSession();
+		       String username = (String) Session.getAttribute("username");
+		       model.addAttribute("username", username);
+
+		       // Add the combined procedures to the model for displaying in the view
+		       model.addAttribute("combinedProcedures", combinedResults);
+
+		       // Add fromDate and toDate to the model for display in the view if needed
+		       model.addAttribute("fromDate", fromDate);
+		       model.addAttribute("toDate", toDate);
+		       model.addAttribute("lab", lab);
+
+		       return "LabReport";
 		   }
 
 

@@ -106,38 +106,49 @@
         
         
           <li>
+    <a class="nav-link collapsed" data-bs-target="#money-received-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Money Received</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="money-received-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Money Received</span>
+                <i class="bi bi-circle"></i><span>By Session</span>
             </a>
-          </li>
-          
-          
-          
-      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        </li>
+
+        <li>
+            <a class="nav-link collapsed" th:href="@{/doctorReport}">
+                <i class="bi bi-circle"></i><span>By External Doctor</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="nav-link collapsed" th:href="@{/labReport}">
+                <i class="bi bi-circle"></i><span>By Lab</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li>
+    <a class="nav-link collapsed" data-bs-target="#export-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      	<ul>
-      	<ul> 
-      	
-      	   <li>
+    </a>
+    <ul id="export-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
             <a class="nav-link collapsed" href="/patients/excel">
-              <i class="bi bi-circle" ></i><span>Export Patient</span>
+                <i class="bi bi-circle"></i><span>Export Patient</span>
             </a>
-          </li>
-        
-          <li>
+        </li>
+
+        <li>
             <a class="nav-link collapsed" href="/appointment/excel">
-              <i class="bi bi-circle" ></i><span>Export Appointment</span>
+                <i class="bi bi-circle"></i><span>Export Appointment</span>
             </a>
-          </li>
-   
-      	 
-      	</ul>
-      
-        </ul>
-              
-      </li>
+        </li>
+    </ul>
+</li>
+
      
     </ul>
 

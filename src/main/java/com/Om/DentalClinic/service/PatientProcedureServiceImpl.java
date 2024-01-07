@@ -62,4 +62,13 @@ public class PatientProcedureServiceImpl implements PatientProcedureService{
         return patientProcedureRepository.findByProceduredateBetweenAndSession(fromDate, toDate, session);
     }	
 	
+	@Override
+    public List<PatientProcedure> getFilteredProceduresByDoctor(Date fromDate, Date toDate, String doctor) {
+        return patientProcedureRepository.findByProceduredateBetweenAndDoctor(fromDate, toDate, doctor);
+    }
+	
+	@Override
+    public List<PatientProcedure> getFilteredProceduresByLab(Date fromDate, Date toDate, String lab) {
+        return patientProcedureRepository.findByProceduredateBetweenAndLab(fromDate, toDate, lab);
+    }
 }

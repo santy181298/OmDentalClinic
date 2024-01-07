@@ -19,4 +19,8 @@ public interface SittingService {
 	public List<Sittings> getSittingByProcedureId(int procedureid);
 	
 	public List<Sittings> getFilteredProcSittings(Date fromDate, Date toDate, String session);
+	
+	public List<Sittings> getFilteredProcSittingsByDoctor(Date fromDate, Date toDate, String doctor);
+	
+	public List<Sittings> getFilteredProcSittingsByLab(Date fromDate, Date toDate, String lab);
 }

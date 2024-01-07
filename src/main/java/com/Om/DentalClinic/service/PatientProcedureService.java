@@ -20,5 +20,9 @@ public interface PatientProcedureService {
 	public PatientProcedure getPatientProcedureById(int id);
 	
 	public List<PatientProcedure> getFilteredProcedures(Date fromDate, Date toDate, String session);
+	
+	public List<PatientProcedure> getFilteredProceduresByDoctor(Date fromDate, Date toDate, String doctor);
+	
+	public List<PatientProcedure> getFilteredProceduresByLab(Date fromDate, Date toDate, String lab);
 
 }

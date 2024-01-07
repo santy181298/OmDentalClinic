@@ -151,6 +151,9 @@
     </ul>
 </li>
 
+              
+      </li>
+     
     </ul>
 
   </aside>
@@ -210,7 +213,7 @@
           <nav>
         	<ol class="breadcrumb">
           		<li class="breadcrumb-item"><a href="#">Home</a></li>
-          		<li class="breadcrumb-item active">Session Report</li>
+          		<li class="breadcrumb-item active">Lab Report</li>
         	</ol>
       		</nav>
         </div>
@@ -219,7 +222,7 @@
               <h5></h5>
     
               <!-- General Form Elements  <form th:object="${patientinfo}" th:action="@{SavePatientInfo}"  action="#" class="search-form" id="patientInfo" name="patientInfo" method="POST"> -->
-          		<form action="/filterData" method="post">
+          		<form action="/filterLab" method="post">
 				    <div class="row mb-3">
 				        <label for="fromDate" class="col-sm-2 col-form-label required">From Date</label>
 				        <div class="col-sm-10">
@@ -233,13 +236,13 @@
 				        </div>
 				    </div>
 				     <div class="row mb-3">
-					    <label for="session" class="col-sm-2 col-form-label required">Session</label>
+					    <label for="lab" class="col-sm-2 col-form-label required">Lab Name</label>
 					    <div class="col-sm-10">
-					        <select class="form-control" id="session" name="session" aria-label="Default select example" required>
-					            <option value="" disabled selected>Select Session</option>
-					            <option value="morning">Morning</option>
-					            <option value="evening">Evening</option>
-					            <option value="both">Both</option>
+					        <select class="form-control" id="lab" name="lab" aria-label="Default select example" required>
+					            <option value="" disabled selected>Select Lab Name</option>
+					            <option value="lab1">Narkar Lab</option>
+					            <option value="lab2">Shivajimore Lab</option>
+					            <option value="lab3">Sandeep Kamble Lab</option>
 					        </select>
 					    </div>
 					</div>
