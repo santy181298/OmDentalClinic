@@ -229,6 +229,7 @@
 					            <option value="" disabled selected>Select Session</option>
 					            <option value="morning">Morning</option>
 					            <option value="evening">Evening</option>
+					            <option value="both">Both</option>
 					        </select>
 					    </div>
 					</div>
@@ -259,6 +260,7 @@
 							        </thead>
 							        <tbody>
 							            <!-- Initialize totalPaymentAmount variable to store the sum of payment amounts -->
+							        
 							        <th:block th:with="totalPaymentAmount=0"></th:block>
 							        <tr th:each="procedure : ${combinedProcedures}">
 									    <td th:if="${procedure instanceof T(com.Om.DentalClinic.model.PatientProcedure)}" th:text="${#dates.format(procedure.proceduredate, 'dd-MM-yyyy')}"></td>
@@ -302,6 +304,7 @@
 								            <td><div id="totalCashPayment"></div></td>
 								            <td><div id="totalOnlinePayment"></div></td>
 								            <td><div id="totalPaymentSum"></div></td>
+								            <td></td>
 								        </tr>
 								    </tfoot>
 							    </table>

@@ -18,7 +18,8 @@
 		
 		
 		@Query("SELECT s FROM Sittings s WHERE s.sittingdate BETWEEN :fromDate AND :toDate AND " +
-		        "((:session = 'morning' AND HOUR(s.timestamp) BETWEEN 1 AND 15) OR " +
+		        "((:session = 'both') OR " +
+				"(:session = 'morning' AND HOUR(s.timestamp) BETWEEN 1 AND 15) OR " +
 		        "(:session = 'evening' AND HOUR(s.timestamp) BETWEEN 15 AND 24))")
 		List<Sittings> findByDateBetweenAndSession(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("session") String session);
