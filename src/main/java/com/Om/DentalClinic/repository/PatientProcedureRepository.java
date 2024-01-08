@@ -23,9 +23,10 @@ public interface PatientProcedureRepository extends JpaRepository<PatientProcedu
 
 	    // Add a query to filter procedures based on session and proceduredate
 	 @Query("SELECT p FROM PatientProcedure p WHERE p.proceduredate BETWEEN :fromDate AND :toDate AND " +
-		        "((:session = 'both') OR " +
-		        "(:session = 'morning' AND HOUR(p.timestamp) BETWEEN 0 AND 14) OR " +
-		        "(:session = 'evening' AND HOUR(p.timestamp) BETWEEN 15 AND 23))")
+
+		        "((:session = 'morning' AND HOUR(p.timestamp) BETWEEN 1 AND 15) OR " +
+		        "(:session = 'evening' AND HOUR(p.timestamp) BETWEEN 15 AND 24))")
+
 		List<PatientProcedure> findByProceduredateBetweenAndSession(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("session") String session);
 	 
