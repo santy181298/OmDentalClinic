@@ -107,38 +107,49 @@
         
         
           <li>
+    <a class="nav-link collapsed" data-bs-target="#money-received-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Money Received</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="money-received-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
             <a class="nav-link collapsed" th:href="@{/displayAmount}">
-              <i></i><span>Money Received</span>
+                <i class="bi bi-circle"></i><span>By Session</span>
             </a>
-          </li>
-          
-          
-          
-      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        </li>
+
+        <li>
+            <a class="nav-link collapsed" th:href="@{/doctorReport}">
+                <i class="bi bi-circle"></i><span>By External Doctor</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="nav-link collapsed" th:href="@{/labReport}">
+                <i class="bi bi-circle"></i><span>By Lab</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li>
+    <a class="nav-link collapsed" data-bs-target="#export-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-journal-text"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      	<ul>
-      	<ul> 
-      	
-      	   <li>
+    </a>
+    <ul id="export-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
             <a class="nav-link collapsed" href="/patients/excel">
-              <i class="bi bi-circle" ></i><span>Export Patient</span>
+                <i class="bi bi-circle"></i><span>Export Patient</span>
             </a>
-          </li>
-        
-          <li>
+        </li>
+
+        <li>
             <a class="nav-link collapsed" href="/appointment/excel">
-              <i class="bi bi-circle" ></i><span>Export Appointment</span>
+                <i class="bi bi-circle"></i><span>Export Appointment</span>
             </a>
-          </li>
-   
-      	 
-      	</ul>
-      
-        </ul>
-              
-      </li>
+        </li>
+    </ul>
+</li>
+
      
     </ul>
 
@@ -296,10 +307,10 @@
                 </div>
               </div>
 
-<!-- 	        <div class="row mb-3">
+	        <div class="row mb-3">
 	            <label for="inputNumber" class="col-sm-2 col-form-label">Medical Report</label>
 	            <div class="col-sm-10">
-	                <input class="form-control" th:field="*{patientReports}" type="file" id="formFile" accept=".pdf,.doc,.docx,.jpeg,.jpg,.png,.bmp" disabled>
+	                <input class="form-control" th:field="*{patientReports}" type="file" id="formFile" accept=".pdf,.doc,.docx,.jpeg,.jpg,.png,.bmp" >
 	                <div id="presentationError2" class="invalid-feedback">
 	                    Please select a valid file type for the CV (pdf, doc, docx, jpg, jpeg, png, bmp).
 	                </div>
@@ -307,7 +318,7 @@
 	                    The selected file is too large. Please select a file with a size smaller than 4MB.
 	                </div>
 	            </div>
-	        </div> -->
+	        </div> 
 	        
 
 

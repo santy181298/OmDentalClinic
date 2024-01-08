@@ -44,5 +44,15 @@ public class SittingServiceImpl implements SittingService {
 	public List<Sittings> getFilteredProcSittings(Date fromDate, Date toDate, String session) {
 	    return sittingRepository.findByDateBetweenAndSession(fromDate, toDate, session);
 	}
+	
+	@Override
+	public List<Sittings> getFilteredProcSittingsByDoctor(Date fromDate, Date toDate, String doctor) {
+	    return sittingRepository.findByDateBetweenAndDoctor(fromDate, toDate, doctor);
+	}
+	
+	@Override
+	public List<Sittings> getFilteredProcSittingsByLab(Date fromDate, Date toDate, String lab) {
+	    return sittingRepository.findByDateBetweenAndLab(fromDate, toDate, lab);
+	}
 
 }
