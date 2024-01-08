@@ -8,4 +8,6 @@ public interface UserService {
 	
 	public boolean checkUsername(String username);
 	
+	public void deleteUserById(int id);
+	
 }
