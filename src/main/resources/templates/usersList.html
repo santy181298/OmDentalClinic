@@ -230,6 +230,7 @@
                     <th scope="col">User Name</th>
                     <th scope="col">Role</th>
                     <th scope="col">Password</th>
+                    <th scope="col">Actions</th>
                     
                     
                   </tr>
@@ -239,6 +240,10 @@
            			 	<td th:text="${user.username}"></td>
           			 	<td th:text="${user.role}"></td>
            				<td th:text="${user.password}"></td>
+           				<td>
+           				<a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="btn btn-danger mx-2" th:if="${userRole == 'ADMIN'}" >Delete</a>
+           				</td>
+           				
        				</tr>
 				</tbody>
 

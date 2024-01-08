@@ -31,6 +31,7 @@ import com.Om.DentalClinic.service.AppointmentService;
 import com.Om.DentalClinic.service.PatientInfoService;
 import com.Om.DentalClinic.service.PatientProcedureService;
 import com.Om.DentalClinic.service.SittingService;
+import com.Om.DentalClinic.service.UserService;
 import com.Om.DentalClinic.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,6 +49,9 @@ public class MainController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
@@ -170,7 +174,7 @@ public class MainController {
 				userRepository.save(user);
 			}
 
-			return "register";
+			return "redirect:/usersList";
 		}
 	 
 		@GetMapping("/accessdenied")
@@ -203,6 +207,13 @@ public class MainController {
 			return "redirect:/login";
 		
 			
+		}
+		
+		@GetMapping("/deleteUser/{id}")
+		public String deleteuser(@PathVariable(value = "id") int id) {
+			this.userService.deleteUserById(id);
+			
+			return "redirect:/usersList";
 		}
 		
 	 

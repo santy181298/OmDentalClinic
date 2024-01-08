@@ -288,6 +288,8 @@
                     
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                      
+<!--                       <button type="reset" class="btn btn-secondary mx-5" id="resetForm" onclick="resetForm()">Reset</button> -->
                     </div>
                     
                   </form>
@@ -355,6 +357,13 @@
         window.history.forward();
     }
 	</script>
+	
+	<!-- Form Reset script -->
+	<script>
+	function resetForm() {
+ 	 	document.getElementById("appointmentForm").reset();
+	}
+  </script>
 
 </body>
 
