@@ -25,6 +25,7 @@ import com.Om.DentalClinic.model.Sittings;
 		List<Sittings> findByDateBetweenAndSession(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("session") String session);
 		
+		
 		@Query("SELECT s FROM Sittings s WHERE s.sittingdate BETWEEN :fromDate AND :toDate AND " +
 		        "((:doctor = 'doctor1' AND  s.sittingexternaldoctor = 'doctor1') OR " +
 		        "(:doctor = 'doctor2' AND  s.sittingexternaldoctor = 'doctor2') OR " +
