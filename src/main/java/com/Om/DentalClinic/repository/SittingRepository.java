@@ -26,17 +26,17 @@ import com.Om.DentalClinic.model.Sittings;
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("session") String session);
 		
 		@Query("SELECT s FROM Sittings s WHERE s.sittingdate BETWEEN :fromDate AND :toDate AND " +
-		        "((:doctor = 'doctor1' AND  s.sittingexternaldoctor = 'doctor1') OR " +
-		        "(:doctor = 'doctor2' AND  s.sittingexternaldoctor = 'doctor2') OR " +
-		        "(:doctor = 'doctor3' AND  s.sittingexternaldoctor = 'doctor3') OR " +
-		        "(:doctor = 'doctor4' AND  s.sittingexternaldoctor = 'doctor4'))")
+		        "((:doctor = 'Dr. Sameet Khode' AND  s.sittingexternaldoctor = 'Dr. Sameet Khode') OR " +
+		        "(:doctor = 'Dr. Amogh Katre' AND  s.sittingexternaldoctor = 'Dr. Amogh Katre') OR " +
+		        "(:doctor = 'Dr. Ajay Mohite' AND  s.sittingexternaldoctor = 'Dr. Ajay Mohite') OR " +
+		        "(:doctor = 'Dr. Dheeraj Wagh' AND  s.sittingexternaldoctor = 'Dr. Dheeraj Wagh'))")
 		List<Sittings> findByDateBetweenAndDoctor(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("doctor") String doctor);
 		
 		@Query("SELECT s FROM Sittings s WHERE s.sittingdate BETWEEN :fromDate AND :toDate AND " +
-		        "((:lab = 'lab1' AND s.sittinglabname = 'lab1') OR " +
-		        "(:lab = 'lab2' AND s.sittinglabname = 'lab2') OR " +
-		        "(:lab = 'lab3' AND s.sittinglabname = 'lab3'))")
+		        "((:lab = 'Narkar Lab' AND s.sittinglabname = 'Narkar Lab') OR " +
+		        "(:lab = 'Shivajimore Lab' AND s.sittinglabname = 'Shivajimore Lab') OR " +
+		        "(:lab = 'Sandeep Kamble Lab' AND s.sittinglabname = 'Sandeep Kamble Lab'))")
 		List<Sittings> findByDateBetweenAndLab(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("lab") String lab);
 

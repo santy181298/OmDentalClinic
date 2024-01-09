@@ -522,9 +522,15 @@ public class MainController {
 //		       // Your controller logic here
 //			   HttpSession session = request.getSession(); // Get username from session
 //		       String username = (String) session.getAttribute("username");
+		   
+		   
 //		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+		   
+		   
 //		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
 //		       patientProcedure.setProcedurenumber(patientInfo);
+		   
+		   
 //		       // Save patient procedure
 //		       patientProcedureService.savePatientProcedure(patientProcedure);
 //		       return "redirect:/patientDetails/" + patientNumber;
@@ -942,6 +948,41 @@ public class MainController {
 		       
 		   }
 		   
+//		   @PostMapping("/UpdatePatientProcedure/{patientnumber}")
+//		   public String updatePatientProcedure(@ModelAttribute PatientProcedure patientProcedure, @PathVariable("patientnumber") int patientNumber, HttpServletRequest request) {
+//		       // Your controller logic here
+//			   HttpSession session = request.getSession(); // Get username from session
+//		       String username = (String) session.getAttribute("username");
+		   
+		   
+//		       PatientInfo patientInfo = patientInfoService.getPatientInfoById(patientNumber);	// Fetch patient information
+		   
+		   
+//		       patientProcedure.setCashiername(username); // Set proc_cashier_name and procedure number
+//		       patientProcedure.setProcedurenumber(patientInfo);
+		   
+		   
+//		       // Save patient procedure
+//		       patientProcedureService.savePatientProcedure(patientProcedure);
+//		       return "redirect:/patientDetails/" + patientNumber;
+//		   }
+		   
+		   
+		   @PostMapping("/updateSitting/{procedureid}")
+		   public String updateSitting(@ModelAttribute Sittings sitting, @PathVariable("procedureid") int procedureId, HttpServletRequest request) {
+		       HttpSession session = request.getSession();
+		       String username = (String) session.getAttribute("username");
+		       
+		       PatientProcedure patientprocedure = patientProcedureService.getPatientProcedureById(procedureId);
+		       
+		       sitting.setSittingidproc(patientprocedure);
+		       sitting.setSittingproccashiername(username);
+
+		       sittingService.saveSitting(sitting);
+		       
+		       return "redirect:/sittingList/"+procedureId;
+		       
+		   }
 		   
 
 			 @GetMapping("/sittingList/{procedureid}")
@@ -978,6 +1019,23 @@ public class MainController {
 
 			 
 			 
+					 @GetMapping("viewSitting/{sittingid}/{procedureid}")
+					public String viewSittingForm(HttpServletRequest request,@PathVariable(value = "sittingid") int sittingid,
+						@PathVariable("procedureid") int procedureid, Model model) {
+					HttpSession session = request.getSession();
+				     String username = (String) session.getAttribute("username");
+				     User user = userServiceImpl.findByUsername(username);
+				     // Pass the username to the view
+				     model.addAttribute("username", username); 	
+				     model.addAttribute("userRole", user.getRole());
+			  		  PatientProcedure patientProcedure = patientProcedureService.getPatientProcedureById(procedureid);
+					model.addAttribute("patientProcedure", patientProcedure);
+					 Sittings sitting = sittingService.getSittingById(sittingid);
+				   model.addAttribute("sitting", sitting);
+					return "viewSitting";
+					}
+					 
+					 
 					 @GetMapping("editSitting/{sittingid}/{procedureid}")
 					public String editSittingForm(HttpServletRequest request,@PathVariable(value = "sittingid") int sittingid,
 						@PathVariable("procedureid") int procedureid, Model model) {
@@ -993,6 +1051,7 @@ public class MainController {
 				   model.addAttribute("sitting", sitting);
 					return "editSitting";
 					}
+					 					 
 	   
 //--Sitting Controller Ends-------------------------------------------------------------------------------------------------------------------------------------------------	
 
