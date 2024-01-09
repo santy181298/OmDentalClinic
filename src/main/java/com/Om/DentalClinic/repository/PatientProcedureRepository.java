@@ -30,18 +30,18 @@ public interface PatientProcedureRepository extends JpaRepository<PatientProcedu
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("session") String session);
 	 
 	 @Query("SELECT p FROM PatientProcedure p WHERE p.proceduredate BETWEEN :fromDate AND :toDate AND " +
-		        "((:doctor = 'doctor1' AND  p.externaldoctor = 'doctor1') OR " +
-		        "(:doctor = 'doctor2' AND p.externaldoctor = 'doctor2') OR " +
-		        "(:doctor = 'doctor3' AND p.externaldoctor = 'doctor3') OR " +
-		        "(:doctor = 'doctor4' AND p.externaldoctor = 'doctor4'))")
+		        "((:doctor = 'Dr. Sameet Khode' AND  p.externaldoctor = 'Dr. Sameet Khode') OR " +
+		        "(:doctor = 'Dr. Amogh Katre' AND p.externaldoctor = 'Dr. Amogh Katre') OR " +
+		        "(:doctor = 'Dr. Ajay Mohite' AND p.externaldoctor = 'Dr. Ajay Mohite') OR " +
+		        "(:doctor = 'Dr. Dheeraj Wagh' AND p.externaldoctor = 'Dr. Dheeraj Wagh'))")
 		List<PatientProcedure> findByProceduredateBetweenAndDoctor(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("doctor") String doctor);
 	 
 	 @Query("SELECT p FROM PatientProcedure p " +
 		        "WHERE p.proceduredate BETWEEN :fromDate AND :toDate AND " +
-		        "((:lab = 'lab1' AND p.labname = 'lab1') OR " +
-		        "(:lab = 'lab2' AND p.labname = 'lab2') OR " +
-		        "(:lab = 'lab3' AND p.labname = 'lab3'))")
+		        "((:lab = 'Narkar Lab' AND p.labname = 'Narkar Lab') OR " +
+		        "(:lab = 'Shivajimore Lab' AND p.labname = 'Shivajimore Lab') OR " +
+		        "(:lab = 'Sandeep Kamble Lab' AND p.labname = 'Sandeep Kamble Lab'))")
 		List<PatientProcedure> findByProceduredateBetweenAndLab(
 		        @Param("fromDate") Date fromDate, @Param("toDate") Date toDate, @Param("lab") String lab);
 
